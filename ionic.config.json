@@ -1,0 +1,7 @@
+{
+  "name": "BookCounter",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
