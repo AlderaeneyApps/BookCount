@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">BookCounter</string>
+    <string name="title_activity_main">BookCounter</string>
+    <string name="package_name">com.alderaeney.bookCounter</string>
+    <string name="custom_url_scheme">com.alderaeney.bookCounter</string>
+</resources>
