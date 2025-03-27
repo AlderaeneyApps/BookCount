@@ -14,8 +14,8 @@ export class CollectionUpgradeStatements {
            TEXT
            NOT
            NULL
-         );`
-      ]
-    }
-  ]
+         );`,
+      ],
+    },
+  ];
 }

@@ -1,1 +1,18 @@
-{}
+{
+  "MENUS": {
+    "ADD_NEW_COLLECTION": "Add new collection",
+    "COLLECTIONS": "Collections"
+  },
+  "COLLECTIONS": {
+    "FORM": {
+      "TITLES": {
+        "CREATE": "",
+        "EDIT": "",
+        "VIEW": ""
+      },
+      "FIELDS": {
+        "NAME": ""
+      }
+    }
+  }
+}

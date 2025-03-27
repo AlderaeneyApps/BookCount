@@ -1,0 +1,25 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>collection-form</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">collection-form</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  @if (!loadingData) {
+
+  } @else {
+    <ion-grid style="margin-top: auto">
+      <ion-row class="ion-justify-content-center ion-align-items-center">
+        <ion-col size="1">
+          <ion-spinner name="dots"></ion-spinner>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  }
+</ion-content>

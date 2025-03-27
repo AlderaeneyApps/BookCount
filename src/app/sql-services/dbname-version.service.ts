@@ -4,10 +4,9 @@ import { Injectable } from '@angular/core';
 export class DbnameVersionService {
   private _dbNameVersionDict: Map<string, number> = new Map();
 
-  constructor() { }
+  constructor() {}
   set(dbName: string, version: number) {
     this._dbNameVersionDict.set(dbName, version);
-
   }
   getVersion(dbName: string) {
     if (this._dbNameVersionDict.has(dbName)) {

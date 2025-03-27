@@ -5,7 +5,7 @@ const config: CapacitorConfig = {
   appName: 'BookCounter',
   webDir: 'www',
   server: {
-    androidScheme: 'https'
+    androidScheme: 'https',
   },
   plugins: {
     CapacitorSQLite: {
@@ -14,16 +14,16 @@ const config: CapacitorConfig = {
       iosKeychainPrefix: 'com-alderaeney-book-counter',
       iosBiometric: {
         biometricAuth: false,
-        biometricTitle : "Biometric login for capacitor sqlite"
+        biometricTitle: 'Biometric login for capacitor sqlite',
       },
       androidIsEncryption: true,
       androidBiometric: {
-        biometricAuth : false,
-        biometricTitle : "Biometric login for capacitor sqlite",
-        biometricSubTitle : "Log in using your biometric"
+        biometricAuth: false,
+        biometricTitle: 'Biometric login for capacitor sqlite',
+        biometricSubTitle: 'Log in using your biometric',
       },
-    }
-  }
+    },
+  },
 };
 
 export default config;

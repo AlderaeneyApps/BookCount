@@ -3,26 +3,41 @@
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
         <ion-list id="inbox-list">
-          <ion-list-header>Inbox</ion-list-header>
-          <ion-note>hi&#64;ionicframework.com</ion-note>
+          <ion-list-header>BookCounter</ion-list-header>
 
           @for (p of appPages; track p; let i = $index) {
             <ion-menu-toggle auto-hide="false">
-              <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
-                <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
-                <ion-label>{{ p.title }}</ion-label>
+              <ion-item
+                routerDirection="root"
+                [routerLink]="[p.url]"
+                lines="none"
+                detail="false"
+                routerLinkActive="selected"
+              >
+                <ion-icon
+                  aria-hidden="true"
+                  slot="start"
+                  [ios]="p.icon + '-outline'"
+                  [md]="p.icon + '-sharp'"
+                ></ion-icon>
+                <ion-label>{{ p.title | transloco }}</ion-label>
               </ion-item>
             </ion-menu-toggle>
           }
         </ion-list>
 
         <ion-list id="labels-list">
-          <ion-list-header>Labels</ion-list-header>
+          <ion-list-header>{{ 'MENUS.COLLECTIONS' | transloco }}</ion-list-header>
 
-          @for (label of labels; track label) {
+          @for (collection of collections; track collection.id) {
             <ion-item lines="none">
-              <ion-icon aria-hidden="true" slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
-              <ion-label>{{ label }}</ion-label>
+              <ion-icon
+                aria-hidden="true"
+                slot="start"
+                ios="book-outline"
+                md="book-sharp"
+              ></ion-icon>
+              <ion-label>{{ collection.name }}</ion-label>
             </ion-item>
           }
         </ion-list>

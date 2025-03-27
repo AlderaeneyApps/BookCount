@@ -1,1 +1,6 @@
-{}
+{
+  "MENUS": {
+    "ADD_NEW_COLLECTION": "Afegir nova col·lecció",
+    "COLLECTIONS": "Col·leccións"
+  }
+}
