@@ -85,7 +85,7 @@ export class CollectionStorageService {
     await this.getCollections();
   }
 
-  async deleteCollectionById(id: string) {
+  async deleteCollectionById(id: number) {
     const sql = `DELETE
                  FROM collection
                  WHERE id = ${id}`;

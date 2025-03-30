@@ -89,4 +89,11 @@ export class SeriesStorageService {
     await this.db.run(sql);
     await this.getSeries(collectionId);
   }
+
+  async countSeriesRelatedToCollection(collectionId: number) {
+    const sql = `SELECT COUNT(name)
+                 FROM series
+                 WHERE collectionId = ${collectionId}`;
+    return await this.db.query(sql);
+  }
 }

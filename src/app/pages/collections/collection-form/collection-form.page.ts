@@ -4,21 +4,32 @@ import {
   FormControl,
   FormGroup,
   FormsModule,
+  ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import {
+  IonBackButton,
+  IonButton,
+  IonButtons,
+  IonCard,
+  IonCardContent,
   IonCol,
   IonContent,
   IonGrid,
   IonHeader,
+  IonInput,
+  IonItem,
   IonRow,
-  IonSpinner,
   IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { CollectionStorageService } from '../../../sql-services/collection-storage/collection-storage.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ACTION_TYPE } from '../../../models';
+import { ACTION_TYPE, Collection } from '../../../models';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
+import { LoadingController } from '@ionic/angular';
+import { of, switchMap } from 'rxjs';
+import { DB_BOOK_COUNTER } from '../../../constants';
 
 @Component({
   selector: 'app-collection-form',
@@ -32,10 +43,18 @@ import { ACTION_TYPE } from '../../../models';
     IonToolbar,
     CommonModule,
     FormsModule,
-    IonSpinner,
+    TranslocoPipe,
+    IonCard,
+    IonCardContent,
+    ReactiveFormsModule,
+    IonItem,
+    IonInput,
+    IonButton,
     IonGrid,
     IonRow,
     IonCol,
+    IonButtons,
+    IonBackButton,
   ],
 })
 export class CollectionFormPage implements OnInit {
@@ -44,28 +63,81 @@ export class CollectionFormPage implements OnInit {
   public form: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
   });
-  public loadingData: boolean = true;
+  public title: string;
+  private collectionId!: number;
+  private collection!: Collection;
 
   constructor(
     private collectionStorageService: CollectionStorageService,
     private route: ActivatedRoute,
     private router: Router,
+    private loadingCtrl: LoadingController,
+    private translocoService: TranslocoService,
     private cdRef: ChangeDetectorRef,
   ) {
     this.mode = this.route.snapshot.data['mode'];
     this.isCreation = this.mode === ACTION_TYPE.CREATE;
+    this.title = `COLLECTIONS.FORM.TITLES.${this.mode.toUpperCase()}`;
   }
 
-  ngOnInit() {
-    if (this.isCreation) {
-    } else {
+  async ngOnInit() {
+    try {
+      await this.collectionStorageService.initializeDatabase(DB_BOOK_COUNTER);
+      if (!this.isCreation) {
+        const loading = await this.loadingCtrl.create({
+          message: this.translocoService.translate('GLOBAL.LOADING'),
+        });
+        loading.present();
+        this.cdRef.markForCheck();
+        this.collectionStorageService
+          .collectionState()
+          .pipe(
+            switchMap((res) => {
+              if (res) {
+                this.collectionId = this.route.snapshot.params['id'];
+                return this.collectionStorageService.getCollectionById(
+                  this.collectionId,
+                );
+              } else {
+                return of(false);
+              }
+            }),
+          )
+          .subscribe((collection: Collection | boolean) => {
+            if (collection) {
+              if (!this.isCreation) {
+                this.form.get('name')?.setValue(this.collection.name);
+              }
+              loading.dismiss();
+              this.cdRef.markForCheck();
+            }
+          });
+      }
+    } catch (e) {
+      console.error(e);
     }
   }
 
-  public submit() {
+  public async submit() {
     this.form.updateValueAndValidity();
     if (this.form.invalid) {
       return;
+    }
+
+    const data = this.form.getRawValue() as Collection;
+    if (this.isCreation) {
+      try {
+        await this.collectionStorageService.addCollection(data.name!);
+        this.router.navigateByUrl('/collections');
+      } catch (e) {
+        console.error(e);
+      }
+    } else {
+      this.collectionStorageService
+        .updateCollectionById(this.collectionId, data.name!)
+        .then(() => {
+          this.router.navigate(['/collections']);
+        });
     }
   }
 }

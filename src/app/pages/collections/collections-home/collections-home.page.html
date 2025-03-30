@@ -1,13 +1,29 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>collections-home</ion-title>
+    <ion-title>{{ 'MENUS.COLLECTIONS' | transloco }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">collections-home</ion-title>
+      <ion-title size="large">{{ 'MENUS.COLLECTIONS' | transloco }}</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  @if (!!collections && collections.length > 0) {
+    @for (collection of collections; track collection.id) {
+      <app-collection-list-item [collection]="collection"></app-collection-list-item>
+    }
+  } @else {
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{ 'COLLECTIONS.LIST.NO_COLLECTIONS' | transloco }}</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-button expand="block" href="/collections/create">{{ 'MENUS.ADD_NEW_COLLECTION' | transloco }}</ion-button>
+      </ion-card-content>
+    </ion-card>
+  }
 </ion-content>

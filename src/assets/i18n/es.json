@@ -2,5 +2,26 @@
   "MENUS": {
     "ADD_NEW_COLLECTION": "Añadir nueva colección",
     "COLLECTIONS": "Colecciones"
+  },
+  "GLOBAL": {
+    "LOADING": "Cargando",
+    "SUBMIT": "Enviar"
+  },
+  "COLLECTIONS": {
+    "FORM": {
+      "TITLES": {
+        "CREATE": "Crear colección",
+        "EDIT": "Editar colección",
+        "VIEW": "Ver colección"
+      },
+      "FIELDS": {
+        "NAME": "Nombre"
+      }
+    },
+    "LIST": {
+      "TITLE": "Colección",
+      "SERIES_AMOUNT": "Cantidad de series: {{amount}}",
+      "NO_COLLECTIONS": "No hay colecciones, añade una nueva"
+    }
   }
 }

@@ -8,6 +8,13 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
+    path: 'collections',
+    loadComponent: () =>
+      import('./pages/collections/collections-home/collections-home.page').then(
+        (m) => m.CollectionsHomePage,
+      ),
+  },
+  {
     path: 'collections/create',
     loadComponent: () =>
       import('./pages/collections/collection-form/collection-form.page').then(
@@ -18,10 +25,13 @@ export const routes: Routes = [
     },
   },
   {
-    path: 'collections',
+    path: 'collections/edit/:id',
     loadComponent: () =>
-      import('./pages/collections/collections-home/collections-home.page').then(
-        (m) => m.CollectionsHomePage,
+      import('./pages/collections/collection-form/collection-form.page').then(
+        (m) => m.CollectionFormPage,
       ),
+    data: {
+      mode: ACTION_TYPE.EDIT,
+    },
   },
 ];

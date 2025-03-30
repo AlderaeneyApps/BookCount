@@ -3,6 +3,7 @@ import { SQLiteService } from './sqlite.service';
 import { CollectionStorageService } from './collection-storage/collection-storage.service';
 import { Toast } from '@capacitor/toast';
 import { SeriesStorageService } from './series-storage/series-storage.service';
+import { DB_BOOK_COUNTER } from '../constants';
 
 @Injectable()
 export class InitializeAppService {
@@ -23,7 +24,6 @@ export class InitializeAppService {
           await this.sqliteService.initWebStore();
         }
         // Initialize the myuserdb database
-        const DB_BOOK_COUNTER = 'book-counter';
         await this.collectionStorageService.initializeDatabase(DB_BOOK_COUNTER);
         await this.seriesStorageService.initializeDatabase(DB_BOOK_COUNTER);
         // Here Initialize MOCK_DATA if required

@@ -1,0 +1,18 @@
+{
+  "short_name": "BookCounter",
+  "name": "BookCounter: Track your book collection",
+  "icons": [
+    {
+      "src": "/icon/favicon.png",
+      "type": "image/png",
+      "sizes": "64x64"
+    }
+  ],
+  "id": "/?source=pwa",
+  "start_url": "/?source=pwa",
+  "background_color": "#3367D6",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#3367D6",
+  "description": "Book collection tracker"
+}

@@ -3,16 +3,25 @@
     "ADD_NEW_COLLECTION": "Add new collection",
     "COLLECTIONS": "Collections"
   },
+  "GLOBAL": {
+    "LOADING": "Loading",
+    "SUBMIT": "Submit"
+  },
   "COLLECTIONS": {
     "FORM": {
       "TITLES": {
-        "CREATE": "",
-        "EDIT": "",
-        "VIEW": ""
+        "CREATE": "Create collection",
+        "EDIT": "Edit collection",
+        "VIEW": "View collection"
       },
       "FIELDS": {
-        "NAME": ""
+        "NAME": "Name"
       }
+    },
+    "LIST": {
+      "TITLE": "Collection",
+      "SERIES_AMOUNT": "Series amount: {{amount}}",
+      "NO_COLLECTIONS": "There's no collections, add a new one"
     }
   }
 }

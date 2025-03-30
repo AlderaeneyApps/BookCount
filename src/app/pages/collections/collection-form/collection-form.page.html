@@ -1,25 +1,39 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>collection-form</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="#"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ title | transloco }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">collection-form</ion-title>
+      <ion-buttons slot="start">
+        <ion-back-button default-href="#"></ion-back-button>
+      </ion-buttons>
+      <ion-title size="large">{{ title | transloco }}</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  @if (!loadingData) {
-
-  } @else {
-    <ion-grid style="margin-top: auto">
-      <ion-row class="ion-justify-content-center ion-align-items-center">
-        <ion-col size="1">
-          <ion-spinner name="dots"></ion-spinner>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  }
+  <ion-card>
+    <ion-card-content>
+      <form (ngSubmit)="submit()" [formGroup]="form">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12">
+              <ion-item>
+                <ion-input [label]="'COLLECTIONS.FORM.FIELDS.NAME' | transloco" formControlName="name"
+                           labelPlacement="floating"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-button expand="block" type="submit">{{ 'GLOBAL.SUBMIT' | transloco }}</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </form>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

@@ -1,4 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  EnvironmentInjector,
+  inject,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import {
   IonApp,
   IonContent,
@@ -20,7 +27,7 @@ import { Collection } from './models/collection.model';
 import { startWith, Subject, takeUntil, tap } from 'rxjs';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { addIcons } from 'ionicons';
-import { addOutline, addSharp } from 'ionicons/icons';
+import { addOutline, addSharp, bookSharp } from 'ionicons/icons';
 import { SideMenuItem } from './models';
 
 @Component({
@@ -48,8 +55,10 @@ import { SideMenuItem } from './models';
     TranslocoPipe,
   ],
   providers: [CollectionStorageService, DbnameVersionService],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppComponent implements OnInit, OnDestroy {
+  public environmentInjector = inject(EnvironmentInjector);
   public appPages: SideMenuItem[] = [];
   public collections: Collection[] = [];
 
@@ -62,6 +71,7 @@ export class AppComponent implements OnInit, OnDestroy {
     addIcons({
       addSharp,
       addOutline,
+      bookSharp,
     });
   }
 

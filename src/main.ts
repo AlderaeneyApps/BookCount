@@ -15,6 +15,7 @@ import { AppComponent } from './app/app.component';
 import { provideHttpClient } from '@angular/common/http';
 import {
   enableProdMode,
+  importProvidersFrom,
   inject,
   isDevMode,
   provideAppInitializer,
@@ -31,6 +32,7 @@ import { SQLiteService } from './app/sql-services/sqlite.service';
 import { CollectionStorageService } from './app/sql-services/collection-storage/collection-storage.service';
 import { SeriesStorageService } from './app/sql-services/series-storage/series-storage.service';
 import { DbnameVersionService } from './app/sql-services/dbname-version.service';
+import { IonicModule } from '@ionic/angular';
 
 if (environment.production) {
   enableProdMode();
@@ -54,16 +56,14 @@ if (platform === 'web') {
   });
 }
 
-export function initializeFactory() {}
-
 bootstrapApplication(AppComponent, {
   providers: [
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    InitializeAppService,
     SQLiteService,
-    DbnameVersionService,
+    InitializeAppService,
     CollectionStorageService,
     SeriesStorageService,
+    DbnameVersionService,
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
     provideHttpClient(),
@@ -76,9 +76,10 @@ bootstrapApplication(AppComponent, {
       },
       loader: TranslocoHttpLoader,
     }),
-    provideAppInitializer(async () => {
+    importProvidersFrom(IonicModule.forRoot({})),
+    provideAppInitializer(() => {
       const init = inject(InitializeAppService);
-      return async () => await init.initializeApp();
+      return init.initializeApp();
     }),
     provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode(),
