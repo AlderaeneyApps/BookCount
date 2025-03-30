@@ -4,6 +4,7 @@ import { CollectionStorageService } from './collection-storage/collection-storag
 import { Toast } from '@capacitor/toast';
 import { SeriesStorageService } from './series-storage/series-storage.service';
 import { DB_BOOK_COUNTER } from '../constants';
+import { VolumesStorageService } from './volumes-storage/volumes-storage.service';
 
 @Injectable()
 export class InitializeAppService {
@@ -14,6 +15,7 @@ export class InitializeAppService {
     private sqliteService: SQLiteService,
     private collectionStorageService: CollectionStorageService,
     private seriesStorageService: SeriesStorageService,
+    private volumeStorageService: VolumesStorageService,
   ) {}
 
   async initializeApp() {
@@ -26,6 +28,7 @@ export class InitializeAppService {
         // Initialize the myuserdb database
         await this.collectionStorageService.initializeDatabase(DB_BOOK_COUNTER);
         await this.seriesStorageService.initializeDatabase(DB_BOOK_COUNTER);
+        await this.volumeStorageService.initializeDatabase(DB_BOOK_COUNTER);
         // Here Initialize MOCK_DATA if required
 
         // Initialize whatever database and/or MOCK_DATA you like

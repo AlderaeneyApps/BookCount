@@ -98,6 +98,7 @@ export class AppComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.setAppMenus();
       });
+    this.setAppLanguage();
   }
 
   private setAppMenus(): void {
@@ -108,5 +109,25 @@ export class AppComponent implements OnInit, OnDestroy {
         icon: 'add',
       },
     ];
+  }
+
+  private setAppLanguage() {
+    const userLang = navigator.language;
+    let primaryLang: string;
+    if (userLang.includes('_')) {
+      primaryLang = userLang.split('_')[0];
+    } else if (userLang.includes('-')) {
+      primaryLang = userLang.split('-')[0];
+    } else {
+      primaryLang = userLang;
+    }
+    const languages = this.translocoService.getAvailableLangs();
+    let languageToSet: string;
+    if ((languages as string[]).includes(primaryLang)) {
+      languageToSet = primaryLang;
+    } else {
+      languageToSet = 'en';
+    }
+    this.translocoService.setActiveLang(languageToSet);
   }
 }

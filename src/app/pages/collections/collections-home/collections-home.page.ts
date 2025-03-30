@@ -7,10 +7,6 @@ import {
   IonCardContent,
   IonCardHeader,
   IonCardTitle,
-  IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
 } from '@ionic/angular/standalone';
 import { CollectionStorageService } from '../../../sql-services/collection-storage/collection-storage.service';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
@@ -19,6 +15,7 @@ import { Collection } from '../../../models';
 import { of, Subject, switchMap } from 'rxjs';
 import { CollectionListItemComponent } from '../../../ui/components/collection-list-item/collection-list-item.component';
 import { DB_BOOK_COUNTER } from '../../../constants';
+import { PageComponent } from '../../../ui/components/page/page.component';
 
 @Component({
   selector: 'app-collections-home',
@@ -26,10 +23,6 @@ import { DB_BOOK_COUNTER } from '../../../constants';
   styleUrls: ['./collections-home.page.scss'],
   standalone: true,
   imports: [
-    IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
     CommonModule,
     FormsModule,
     IonCard,
@@ -39,6 +32,7 @@ import { DB_BOOK_COUNTER } from '../../../constants';
     TranslocoPipe,
     IonButton,
     CollectionListItemComponent,
+    PageComponent,
   ],
 })
 export class CollectionsHomePage implements OnInit, OnDestroy {

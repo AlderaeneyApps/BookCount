@@ -5,7 +5,10 @@
   },
   "GLOBAL": {
     "LOADING": "Loading",
-    "SUBMIT": "Submit"
+    "SUBMIT": "Submit",
+    "SURE_DELETE": "Delete?",
+    "DELETE": "Delete",
+    "CANCEL": "Cancel"
   },
   "COLLECTIONS": {
     "FORM": {
@@ -21,7 +24,9 @@
     "LIST": {
       "TITLE": "Collection",
       "SERIES_AMOUNT": "Series amount: {{amount}}",
-      "NO_COLLECTIONS": "There's no collections, add a new one"
+      "NO_COLLECTIONS": "There's no collections, add a new one",
+      "GO_TO_COLLECTION": "Go to collection",
+      "DELETE_COLLECTION": "Are you sure you want to delete the collection?"
     }
   }
 }

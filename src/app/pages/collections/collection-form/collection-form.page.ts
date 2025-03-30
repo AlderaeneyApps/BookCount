@@ -8,20 +8,14 @@ import {
   Validators,
 } from '@angular/forms';
 import {
-  IonBackButton,
   IonButton,
-  IonButtons,
   IonCard,
   IonCardContent,
   IonCol,
-  IonContent,
   IonGrid,
-  IonHeader,
   IonInput,
   IonItem,
   IonRow,
-  IonTitle,
-  IonToolbar,
 } from '@ionic/angular/standalone';
 import { CollectionStorageService } from '../../../sql-services/collection-storage/collection-storage.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -30,6 +24,7 @@ import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { LoadingController } from '@ionic/angular';
 import { of, switchMap } from 'rxjs';
 import { DB_BOOK_COUNTER } from '../../../constants';
+import { PageComponent } from '../../../ui/components/page/page.component';
 
 @Component({
   selector: 'app-collection-form',
@@ -37,10 +32,6 @@ import { DB_BOOK_COUNTER } from '../../../constants';
   styleUrls: ['./collection-form.page.scss'],
   standalone: true,
   imports: [
-    IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
     CommonModule,
     FormsModule,
     TranslocoPipe,
@@ -53,8 +44,7 @@ import { DB_BOOK_COUNTER } from '../../../constants';
     IonGrid,
     IonRow,
     IonCol,
-    IonButtons,
-    IonBackButton,
+    PageComponent,
   ],
 })
 export class CollectionFormPage implements OnInit {

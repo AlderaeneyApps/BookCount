@@ -5,7 +5,10 @@
   },
   "GLOBAL": {
     "LOADING": "Carregant",
-    "SUBMIT": "Enviar"
+    "SUBMIT": "Enviar",
+    "SURE_DELETE": "Esborrar?",
+    "DELETE": "Esborrar",
+    "CANCEL": "Cancelar"
   },
   "COLLECTIONS": {
     "FORM": {
@@ -21,7 +24,9 @@
     "LIST": {
       "TITLE": "Col·lecció",
       "SERIES_AMOUNT": "Quantitat de series: {{amount}}",
-      "NO_COLLECTIONS": "No hi ha col·leccións, afegix una nova"
+      "NO_COLLECTIONS": "No hi ha col·leccións, afegix una nova",
+      "GO_TO_COLLECTION": "Anar a la col·lecció",
+      "DELETE_COLLECTION": "Estás segur que vols esborrar la col·lecció?"
     }
   }
 }

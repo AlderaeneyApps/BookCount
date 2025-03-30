@@ -5,7 +5,10 @@
   },
   "GLOBAL": {
     "LOADING": "Cargando",
-    "SUBMIT": "Enviar"
+    "SUBMIT": "Enviar",
+    "SURE_DELETE": "¿Borrar?",
+    "DELETE": "Borrar",
+    "CANCEL": "Cancelar"
   },
   "COLLECTIONS": {
     "FORM": {
@@ -21,7 +24,9 @@
     "LIST": {
       "TITLE": "Colección",
       "SERIES_AMOUNT": "Cantidad de series: {{amount}}",
-      "NO_COLLECTIONS": "No hay colecciones, añade una nueva"
+      "NO_COLLECTIONS": "No hay colecciones, añade una nueva",
+      "GO_TO_COLLECTION": "Ir a la colección",
+      "DELETE_COLLECTION": "¿Estás seguro que quieres borrar la colección?"
     }
   }
 }

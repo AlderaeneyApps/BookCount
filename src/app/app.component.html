@@ -30,7 +30,7 @@
           <ion-list-header>{{ 'MENUS.COLLECTIONS' | transloco }}</ion-list-header>
 
           @for (collection of collections; track collection.id) {
-            <ion-item lines="none">
+            <ion-item lines="none" [routerLink]="['/series', collection.id]">
               <ion-icon
                 aria-hidden="true"
                 slot="start"

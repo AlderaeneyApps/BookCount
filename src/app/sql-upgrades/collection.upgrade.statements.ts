@@ -5,15 +5,8 @@ export class CollectionUpgradeStatements {
       statements: [
         `CREATE TABLE IF NOT EXISTS collection
          (
-           id
-           INTEGER
-           PRIMARY
-           KEY
-           AUTOINCREMENT,
-           name
-           TEXT
-           NOT
-           NULL
+           id   INTEGER PRIMARY KEY AUTOINCREMENT,
+           name TEXT NOT NULL
          );`,
       ],
     },

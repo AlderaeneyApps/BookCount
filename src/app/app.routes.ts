@@ -34,4 +34,31 @@ export const routes: Routes = [
       mode: ACTION_TYPE.EDIT,
     },
   },
+  {
+    path: 'series/:id',
+    loadComponent: () =>
+      import('./pages/series/series-home/series-home.page').then(
+        (m) => m.SeriesHomePage,
+      ),
+  },
+  {
+    path: 'series/create/:id',
+    loadComponent: () =>
+      import('./pages/series/series-form/series-form.page').then(
+        (m) => m.SeriesFormPage,
+      ),
+    data: {
+      mode: ACTION_TYPE.CREATE,
+    },
+  },
+  {
+    path: 'series/edit/:id',
+    loadComponent: () =>
+      import('./pages/series/series-form/series-form.page').then(
+        (m) => m.SeriesFormPage,
+      ),
+    data: {
+      mode: ACTION_TYPE.EDIT,
+    },
+  },
 ];

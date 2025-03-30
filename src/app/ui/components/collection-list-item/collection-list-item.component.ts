@@ -14,12 +14,13 @@ import {
   IonIcon,
   IonRow,
 } from '@ionic/angular/standalone';
-import { TranslocoPipe } from '@jsverse/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { DB_BOOK_COUNTER } from '../../../constants';
 import { CollectionStorageService } from '../../../sql-services/collection-storage/collection-storage.service';
 import { addIcons } from 'ionicons';
 import { trashSharp } from 'ionicons/icons';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-collection-list-item',
@@ -37,6 +38,7 @@ import { Router } from '@angular/router';
     IonCol,
     IonButton,
     IonIcon,
+    RouterLink,
   ],
 })
 export class CollectionListItemComponent implements OnInit {
@@ -46,6 +48,8 @@ export class CollectionListItemComponent implements OnInit {
   constructor(
     private collectionStorageService: CollectionStorageService,
     private seriesStorageService: SeriesStorageService,
+    private alertController: AlertController,
+    private translocoService: TranslocoService,
     private router: Router,
     private cdRef: ChangeDetectorRef,
   ) {
@@ -70,12 +74,30 @@ export class CollectionListItemComponent implements OnInit {
   }
 
   public async deleteCollection() {
-    await this.collectionStorageService.deleteCollectionById(
-      this.collection.id!,
-    );
-  }
+    const alert = await this.alertController.create({
+      header: this.translocoService.translate('GLOBAL.SURE_DELETE'),
+      message: this.translocoService.translate(
+        'COLLECTIONS.LIST.DELETE_COLLECTION',
+      ),
+      buttons: [
+        {
+          handler: async () => {
+            await this.collectionStorageService.deleteCollectionById(
+              this.collection.id!,
+            );
+            await alert.dismiss();
+          },
+          text: this.translocoService.translate('GLOBAL.DELETE'),
+        },
+        {
+          text: this.translocoService.translate('GLOBAL.CANCEL'),
+          handler: async () => {
+            await alert.dismiss();
+          },
+        },
+      ],
+    });
 
-  public goToSeriesList() {
-    this.router.navigate(['/series']);
+    await alert.present();
   }
 }
