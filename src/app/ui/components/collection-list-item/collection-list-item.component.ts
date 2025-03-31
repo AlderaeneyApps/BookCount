@@ -2,44 +2,18 @@ import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { Collection } from '../../../models';
 import { SeriesStorageService } from '../../../sql-services/series-storage/series-storage.service';
 import { DBSQLiteValues } from '@capacitor-community/sqlite';
-import {
-  IonButton,
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
-  IonCol,
-  IonGrid,
-  IonIcon,
-  IonRow,
-} from '@ionic/angular/standalone';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
-import { DB_BOOK_COUNTER } from '../../../constants';
 import { CollectionStorageService } from '../../../sql-services/collection-storage/collection-storage.service';
 import { addIcons } from 'ionicons';
 import { trashSharp } from 'ionicons/icons';
 import { Router, RouterLink } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, IonicModule } from '@ionic/angular';
 
 @Component({
   selector: 'app-collection-list-item',
   templateUrl: './collection-list-item.component.html',
   styleUrls: ['./collection-list-item.component.scss'],
-  imports: [
-    IonCard,
-    IonCardHeader,
-    IonCardTitle,
-    IonCardSubtitle,
-    TranslocoPipe,
-    IonCardContent,
-    IonGrid,
-    IonRow,
-    IonCol,
-    IonButton,
-    IonIcon,
-    RouterLink,
-  ],
+  imports: [IonicModule, TranslocoPipe, RouterLink],
 })
 export class CollectionListItemComponent implements OnInit {
   @Input() collection!: Collection;
@@ -60,8 +34,6 @@ export class CollectionListItemComponent implements OnInit {
 
   async ngOnInit() {
     try {
-      await this.collectionStorageService.initializeDatabase(DB_BOOK_COUNTER);
-      await this.seriesStorageService.initializeDatabase(DB_BOOK_COUNTER);
       const values: DBSQLiteValues =
         await this.seriesStorageService.countSeriesRelatedToCollection(
           this.collection.id!,

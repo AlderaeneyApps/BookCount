@@ -6,55 +6,21 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import {
-  IonApp,
-  IonContent,
-  IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonListHeader,
-  IonMenu,
-  IonMenuToggle,
-  IonRouterLink,
-  IonRouterOutlet,
-  IonSplitPane,
-} from '@ionic/angular/standalone';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CollectionStorageService } from './sql-services/collection-storage/collection-storage.service';
-import { DbnameVersionService } from './sql-services/dbname-version.service';
 import { Collection } from './models/collection.model';
 import { startWith, Subject, takeUntil, tap } from 'rxjs';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { addIcons } from 'ionicons';
 import { addOutline, addSharp, bookSharp } from 'ionicons/icons';
 import { SideMenuItem } from './models';
+import { IonicModule } from '@ionic/angular';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
-  imports: [
-    IonApp,
-    IonSplitPane,
-    IonRouterOutlet,
-    IonContent,
-    IonIcon,
-    IonMenu,
-    RouterLink,
-    RouterLinkActive,
-    IonMenu,
-    IonContent,
-    IonList,
-    IonListHeader,
-    IonMenuToggle,
-    IonItem,
-    IonIcon,
-    IonLabel,
-    IonRouterLink,
-    TranslocoPipe,
-  ],
-  providers: [CollectionStorageService, DbnameVersionService],
+  imports: [IonicModule, RouterLink, RouterLinkActive, TranslocoPipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppComponent implements OnInit, OnDestroy {

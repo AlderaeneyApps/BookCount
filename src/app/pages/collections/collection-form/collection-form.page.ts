@@ -7,23 +7,12 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import {
-  IonButton,
-  IonCard,
-  IonCardContent,
-  IonCol,
-  IonGrid,
-  IonInput,
-  IonItem,
-  IonRow,
-} from '@ionic/angular/standalone';
 import { CollectionStorageService } from '../../../sql-services/collection-storage/collection-storage.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ACTION_TYPE, Collection } from '../../../models';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
-import { LoadingController } from '@ionic/angular';
+import { IonicModule, LoadingController } from '@ionic/angular';
 import { of, switchMap } from 'rxjs';
-import { DB_BOOK_COUNTER } from '../../../constants';
 import { PageComponent } from '../../../ui/components/page/page.component';
 
 @Component({
@@ -33,17 +22,10 @@ import { PageComponent } from '../../../ui/components/page/page.component';
   standalone: true,
   imports: [
     CommonModule,
+    IonicModule,
     FormsModule,
     TranslocoPipe,
-    IonCard,
-    IonCardContent,
     ReactiveFormsModule,
-    IonItem,
-    IonInput,
-    IonButton,
-    IonGrid,
-    IonRow,
-    IonCol,
     PageComponent,
   ],
 })
@@ -72,7 +54,6 @@ export class CollectionFormPage implements OnInit {
 
   async ngOnInit() {
     try {
-      await this.collectionStorageService.initializeDatabase(DB_BOOK_COUNTER);
       if (!this.isCreation) {
         const loading = await this.loadingCtrl.create({
           message: this.translocoService.translate('GLOBAL.LOADING'),

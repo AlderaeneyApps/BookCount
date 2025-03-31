@@ -1,21 +1,14 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {
-  IonButton,
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardTitle,
-} from '@ionic/angular/standalone';
 import { CollectionStorageService } from '../../../sql-services/collection-storage/collection-storage.service';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { Router } from '@angular/router';
 import { Collection } from '../../../models';
 import { of, Subject, switchMap } from 'rxjs';
 import { CollectionListItemComponent } from '../../../ui/components/collection-list-item/collection-list-item.component';
-import { DB_BOOK_COUNTER } from '../../../constants';
 import { PageComponent } from '../../../ui/components/page/page.component';
+import { IonicModule } from '@ionic/angular';
 
 @Component({
   selector: 'app-collections-home',
@@ -24,13 +17,9 @@ import { PageComponent } from '../../../ui/components/page/page.component';
   standalone: true,
   imports: [
     CommonModule,
+    IonicModule,
     FormsModule,
-    IonCard,
-    IonCardHeader,
-    IonCardTitle,
-    IonCardContent,
     TranslocoPipe,
-    IonButton,
     CollectionListItemComponent,
     PageComponent,
   ],
@@ -54,7 +43,6 @@ export class CollectionsHomePage implements OnInit, OnDestroy {
 
   async ngOnInit() {
     try {
-      await this.collectionStorageService.initializeDatabase(DB_BOOK_COUNTER);
       this.collectionStorageService
         .collectionState()
         .pipe(
