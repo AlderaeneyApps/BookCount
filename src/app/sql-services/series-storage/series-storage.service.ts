@@ -45,11 +45,11 @@ export class SeriesStorageService {
     this.dbVerService.set(this.databaseName, this.loadToVersion);
   }
 
-  collectionState() {
+  seriesState() {
     return this.isSeriesReady.asObservable();
   }
 
-  fetchCollections(): Observable<any[]> {
+  fetchSeries(): Observable<Series[]> {
     return this.seriesList.asObservable();
   }
 
@@ -82,7 +82,7 @@ export class SeriesStorageService {
     await this.getSeries(collectionId);
   }
 
-  async deleteSeriesById(id: string, collectionId: number) {
+  async deleteSeriesById(id: number, collectionId: number) {
     const sql = `DELETE
                  FROM series
                  WHERE id = ${id}`;

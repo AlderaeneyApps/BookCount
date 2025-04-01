@@ -93,4 +93,11 @@ export class VolumesStorageService {
                  WHERE id = ${id}`;
     return (await this.db.query(sql)).values as Volume;
   }
+
+  async countVolumesRelatedToSeries(seriesId: number) {
+    const sql = `SELECT COUNT(name)
+                 FROM volumes
+                 WHERE seriesId = ${seriesId}`;
+    return await this.db.query(sql);
+  }
 }

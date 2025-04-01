@@ -1,7 +1,8 @@
 {
   "MENUS": {
     "ADD_NEW_COLLECTION": "Afegir nova col·lecció",
-    "COLLECTIONS": "Col·leccións"
+    "COLLECTIONS": "Col·leccións",
+    "SERIES": "Serie"
   },
   "GLOBAL": {
     "LOADING": "Carregant",

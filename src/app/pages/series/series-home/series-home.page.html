@@ -1,1 +1,11 @@
-<app-page title="MENUS.SERIES"></app-page>
+<app-page title="MENUS.SERIES">
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    @for (serie of series; track serie.id) {
+      <app-series-list-item [series]="serie"></app-series-list-item>
+    }
+    <ion-fab-button [routerLink]="['/series/create', collectionId]">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</app-page>

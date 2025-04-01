@@ -10,7 +10,7 @@
           {{ 'COLLECTIONS.LIST.SERIES_AMOUNT' | transloco: {amount: amountOfRelatedSeries} }}
         </ion-col>
         <ion-col class="ion-justify-content-end" style="display: flex">
-          <ion-button (click)="$event.preventDefault(); deleteCollection()" aria-label="Delete" color="danger">
+          <ion-button (click)="deleteCollection()" aria-label="Delete" color="danger">
             <ion-icon name="trash-sharp"></ion-icon>
           </ion-button>
         </ion-col>
