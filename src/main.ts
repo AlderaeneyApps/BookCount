@@ -34,6 +34,7 @@ import { SeriesStorageService } from './app/sql-services/series-storage/series-s
 import { DbnameVersionService } from './app/sql-services/dbname-version.service';
 import { IonicModule } from '@ionic/angular';
 import { VolumesStorageService } from './app/sql-services/volumes-storage/volumes-storage.service';
+import { PicturesStorageService } from "./app/sql-services/pictures-storage/pictures-storage.service";
 
 if (environment.production) {
   enableProdMode();
@@ -61,11 +62,11 @@ bootstrapApplication(AppComponent, {
   providers: [
     SQLiteService,
     InitializeAppService,
-    CollectionStorageService,
-    VolumesStorageService,
-    SeriesStorageService,
-    SeriesStorageService,
     DbnameVersionService,
+    CollectionStorageService,
+    SeriesStorageService,
+    VolumesStorageService,
+    PicturesStorageService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),

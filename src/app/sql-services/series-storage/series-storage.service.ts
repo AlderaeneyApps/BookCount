@@ -4,7 +4,7 @@ import { DbnameVersionService } from '../dbname-version.service';
 import { SQLiteDBConnection } from '@capacitor-community/sqlite';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { SeriesUpgradeStatements } from '../../sql-upgrades/series.upgrade.statements';
-import { Series } from '../../models';
+import { Collection, Series } from "../../models";
 
 @Injectable()
 export class SeriesStorageService {
@@ -30,18 +30,18 @@ export class SeriesStorageService {
   async initializeDatabase(dbName: string) {
     this.databaseName = dbName;
     // create upgrade statements
-    await this.sqliteService.addUpgradeStatement({
-      database: this.databaseName,
-      upgrade: this.versionUpgrades,
-    });
-    // create and/or open the database
     this.db = await this.sqliteService.openDatabase(
       this.databaseName,
       false,
       'no-encryption',
       this.loadToVersion,
-      false,
+      false
     );
+
+    for (const version of this.versionUpgrades) {
+      await this.db.execute(version.statements);
+    }
+
     this.dbVerService.set(this.databaseName, this.loadToVersion);
   }
 
@@ -67,11 +67,16 @@ export class SeriesStorageService {
     this.isSeriesReady.next(true);
   }
 
-  async addSeries(name: string, collectionId: number) {
-    const sql = `INSERT INTO series (name, collectionId)
-                 VALUES (?);`;
-    await this.db.run(sql, [name, collectionId]);
-    await this.getSeries(collectionId);
+  async getSeriesById(id: number): Promise<Series[]> {
+    const sql = `SELECT * FROM series WHERE id = ${id}`;
+    return (await this.db.query(sql)).values as Series[];
+  }
+
+  async addSeries(body: Series) {
+    const sql = `INSERT INTO series (name, price, collectionId)
+                 VALUES (?, ?, ?);`;
+    await this.db.run(sql, [body.name, body.price, body.collectionId]);
+    await this.getSeries(body.collectionId);
   }
 
   async updateSeriesById(id: number, name: string, collectionId: number) {
@@ -91,7 +96,7 @@ export class SeriesStorageService {
   }
 
   async countSeriesRelatedToCollection(collectionId: number) {
-    const sql = `SELECT COUNT(name)
+    const sql = `SELECT COUNT(id)
                  FROM series
                  WHERE collectionId = ${collectionId}`;
     return await this.db.query(sql);

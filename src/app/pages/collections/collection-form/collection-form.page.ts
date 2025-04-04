@@ -77,6 +77,7 @@ export class CollectionFormPage implements OnInit {
           .subscribe((collection: Collection | boolean) => {
             if (collection) {
               if (!this.isCreation) {
+                this.collection = collection as Collection;
                 this.form.get('name')?.setValue(this.collection.name);
               }
               loading.dismiss();

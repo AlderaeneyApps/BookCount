@@ -33,18 +33,18 @@ export class CollectionStorageService {
   async initializeDatabase(dbName: string) {
     this.databaseName = dbName;
     // create upgrade statements
-    await this.sqliteService.addUpgradeStatement({
-      database: this.databaseName,
-      upgrade: this.versionUpgrades,
-    });
-    // create and/or open the database
     this.db = await this.sqliteService.openDatabase(
       this.databaseName,
       false,
       'no-encryption',
       this.loadToVersion,
-      false,
+      false
     );
+
+    for (const version of this.versionUpgrades) {
+      await this.db.execute(version.statements);
+    }
+
     this.dbVerService.set(this.databaseName, this.loadToVersion);
 
     await this.getCollections();

@@ -1,5 +1,6 @@
 export interface Series {
   id: number;
-  name: number;
+  name: string;
+  price: number;
   collectionId: number;
 }

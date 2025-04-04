@@ -48,22 +48,26 @@ export class SeriesHomePage implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
-    this.collectionId = this.route.snapshot.params['id'];
-    await this.seriesStorageService.getSeries(this.collectionId);
-    this.seriesStorageService
-      .seriesState()
-      .pipe(
-        takeUntil(this.destroy$),
-        switchMap((res) => {
-          if (res) {
-            return this.seriesStorageService.fetchSeries();
-          } else {
-            return of([]);
-          }
-        }),
-      )
-      .subscribe((series: Series[]) => {
-        this.series = series;
-      });
+    try {
+      this.collectionId = this.route.snapshot.params['id'];
+      await this.seriesStorageService.getSeries(this.collectionId);
+      this.seriesStorageService
+        .seriesState()
+        .pipe(
+          takeUntil(this.destroy$),
+          switchMap((res) => {
+            if (res) {
+              return this.seriesStorageService.fetchSeries();
+            } else {
+              return of([]);
+            }
+          }),
+        )
+        .subscribe((series: Series[]) => {
+          this.series = series;
+        });
+    } catch (e) {
+     this.series = [];
+    }
   }
 }

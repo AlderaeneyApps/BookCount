@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
+
+import { Capacitor } from '@capacitor/core';
 import {
   CapacitorSQLite,
-  CapacitorSQLitePlugin,
-  capSQLiteUpgradeOptions,
   SQLiteConnection,
   SQLiteDBConnection,
+  CapacitorSQLitePlugin,
+  capSQLiteUpgradeOptions,
+  capSQLiteResult,
+  capSQLiteValues,
 } from '@capacitor-community/sqlite';
-import { Capacitor } from '@capacitor/core';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class SQLiteService {
   sqliteConnection!: SQLiteConnection;
   isService: boolean = false;
@@ -38,7 +39,7 @@ export class SQLiteService {
       await this.sqliteConnection.initWebStore();
     } catch (err: any) {
       const msg = err.message ? err.message : err;
-      return Promise.reject(`initWebStore: ${msg}`);
+      return Promise.reject(`initWebStore: ${err}`);
     }
   }
 

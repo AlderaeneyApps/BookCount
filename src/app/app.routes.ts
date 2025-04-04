@@ -42,7 +42,7 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'series/create/:id',
+    path: 'series/create/:collectionId',
     loadComponent: () =>
       import('./pages/series/series-form/series-form.page').then(
         (m) => m.SeriesFormPage,
@@ -52,7 +52,7 @@ export const routes: Routes = [
     },
   },
   {
-    path: 'series/edit/:id',
+    path: 'series/edit/:seriesId/:collectionId',
     loadComponent: () =>
       import('./pages/series/series-form/series-form.page').then(
         (m) => m.SeriesFormPage,

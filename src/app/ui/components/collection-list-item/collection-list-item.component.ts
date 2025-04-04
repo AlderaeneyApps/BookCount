@@ -39,8 +39,9 @@ export class CollectionListItemComponent implements OnInit {
           this.collection.id!,
         );
       const { values: count } = values;
-      this.amountOfRelatedSeries = count?.[0] || 0;
+      this.amountOfRelatedSeries = count?.[0]?.['COUNT(id)'] || 0;
     } catch (e) {
+      console.error(e);
       this.amountOfRelatedSeries = 0;
     }
   }

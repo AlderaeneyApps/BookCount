@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CollectionStorageService } from '../../../sql-services/collection-storage/collection-storage.service';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from "@angular/router";
 import { Collection } from '../../../models';
 import { of, Subject, switchMap } from 'rxjs';
 import { CollectionListItemComponent } from '../../../ui/components/collection-list-item/collection-list-item.component';
@@ -22,6 +22,7 @@ import { IonicModule } from '@ionic/angular';
     TranslocoPipe,
     CollectionListItemComponent,
     PageComponent,
+    RouterLink,
   ],
 })
 export class CollectionsHomePage implements OnInit, OnDestroy {

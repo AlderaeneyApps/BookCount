@@ -6,6 +6,8 @@ import { SeriesStorageService } from "../../../sql-services/series-storage/serie
 import { RouterLink } from "@angular/router";
 import { VolumesStorageService } from "../../../sql-services/volumes-storage/volumes-storage.service";
 import { DBSQLiteValues } from "@capacitor-community/sqlite";
+import { addIcons } from "ionicons";
+import { trashSharp } from "ionicons/icons";
 
 @Component({
   selector: 'app-series-list-item',
@@ -21,7 +23,11 @@ export class SeriesListItemComponent implements OnInit {
   constructor(
     private seriesStorageService: SeriesStorageService,
     private volumeStorageService: VolumesStorageService,
-  ) {}
+  ) {
+    addIcons({
+      trashSharp
+    })
+  }
 
   async ngOnInit() {
     try {

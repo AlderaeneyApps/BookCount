@@ -10,7 +10,7 @@
       </ion-card-header>
 
       <ion-card-content>
-        <ion-button expand="block" href="/collections/create">{{ 'MENUS.ADD_NEW_COLLECTION' | transloco }}</ion-button>
+        <ion-button expand="block" [routerLink]="['/collections/create']">{{ 'MENUS.ADD_NEW_COLLECTION' | transloco }}</ion-button>
       </ion-card-content>
     </ion-card>
   }

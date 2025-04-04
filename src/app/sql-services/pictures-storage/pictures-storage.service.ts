@@ -5,24 +5,26 @@ import { SQLiteDBConnection } from '@capacitor-community/sqlite';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { VolumesUpgradeStatements } from '../../sql-upgrades/volumes.upgrade.statements';
 import { Volume } from '../../models/volume.model';
+import { PicturesUpgradeStatements } from "../../sql-upgrades/pictures.upgrade.statements";
+import { Picture } from "../../models";
 
 @Injectable()
-export class VolumesStorageService {
-  public volumeList: BehaviorSubject<Volume[]> = new BehaviorSubject<Volume[]>(
+export class PicturesStorageService {
+  public picturesList: BehaviorSubject<Picture[]> = new BehaviorSubject<Picture[]>(
     [],
   );
   private databaseName: string = '';
-  private vUpdStmts: VolumesUpgradeStatements = new VolumesUpgradeStatements();
+  private pUpdStmts: PicturesUpgradeStatements = new PicturesUpgradeStatements();
   private readonly versionUpgrades;
   private readonly loadToVersion;
-  private db!: SQLiteDBConnection;
-  private isVolumesReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  public db!: SQLiteDBConnection;
+  private isPicturesReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
     private sqliteService: SQLiteService,
     private dbVerService: DbnameVersionService,
   ) {
-    this.versionUpgrades = this.vUpdStmts.volumesUpgrades;
+    this.versionUpgrades = this.pUpdStmts.picturesUpgrades;
     this.loadToVersion =
       this.versionUpgrades[this.versionUpgrades.length - 1].toVersion;
   }
@@ -45,59 +47,58 @@ export class VolumesStorageService {
     this.dbVerService.set(this.databaseName, this.loadToVersion);
   }
 
-  volumeState() {
-    return this.isVolumesReady.asObservable();
+  picturesState() {
+    return this.isPicturesReady.asObservable();
   }
 
-  fetchVolumes(): Observable<Volume[]> {
-    return this.volumeList.asObservable();
+  fetchPictures(): Observable<Volume[]> {
+    return this.picturesList.asObservable();
   }
 
-  async loadVolumes(seriesId: number) {
+  async loadPictures(volumeId: number) {
     const volumes: any[] = (
       await this.db.query(`SELECT *
-                           FROM volumes
-                           WHERE seriesId = ${seriesId};`)
+                           FROM pictures
+                           WHERE volumeId = ${volumeId};`)
     ).values as any[];
-    this.volumeList.next(volumes);
+    this.picturesList.next(volumes);
   }
 
-  async getVolumes(seriesId: number) {
-    await this.loadVolumes(seriesId);
-    this.isVolumesReady.next(true);
+  async getPictures(volumeId: number) {
+    await this.loadPictures(volumeId);
+    this.isPicturesReady.next(true);
   }
 
-  async addVolume(body: Volume) {
-    const sql = `INSERT INTO volumes (volumeNumber, price, seriesId)
-                 VALUES (?);`;
-    await this.db.run(sql, [body.volumeNumber, body.price, body.seriesId]);
+  async addPicture(body: Picture) {
+    const sql = `INSERT INTO pictures (picture, volumeId) VALUES (?);`;
+    await this.db.run(sql, [body.picture, body.volumeId]);
   }
 
-  async updateVolumeById(id: number, body: Volume) {
-    const sql = `UPDATE volumes
-                 SET volumeNumber=${body.volumeNumber} & price = ${body.price}
+  async updatePictureById(id: number, body: Picture) {
+    const sql = `UPDATE pictures
+                 SET picture=${body.picture}
                  WHERE id = ${id}`;
     await this.db.run(sql);
   }
 
-  async deleteVolumeById(id: number) {
+  async deletePictureById(id: number) {
     const sql = `DELETE
-                 FROM volumes
+                 FROM pictures
                  WHERE id = ${id}`;
     await this.db.run(sql);
   }
 
-  async getVolumeById(id: number) {
+  async getPictureById(id: number) {
     const sql = `SELECT *
-                 FROM volumes
+                 FROM pictures
                  WHERE id = ${id}`;
-    return (await this.db.query(sql)).values as Volume;
+    return (await this.db.query(sql)).values as Picture;
   }
 
-  async countVolumesRelatedToSeries(seriesId: number) {
+  async countPicturesRelatedToVolume(volumeId: number) {
     const sql = `SELECT COUNT(id)
-                 FROM volumes
-                 WHERE seriesId = ${seriesId}`;
+                 FROM pictures
+                 WHERE volumeId = ${volumeId}`;
     return await this.db.query(sql);
   }
 }

@@ -15,6 +15,7 @@ import { addIcons } from 'ionicons';
 import { addOutline, addSharp, bookSharp } from 'ionicons/icons';
 import { SideMenuItem } from './models';
 import { IonicModule } from '@ionic/angular';
+import { InitializeAppService } from "./sql-services/initialize.app.service";
 
 @Component({
   selector: 'app-root',
@@ -46,7 +47,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.collectionStorage
       .fetchCollections()
       .pipe(

@@ -1,1 +1,27 @@
-<app-page [title]="title"></app-page>
+<app-page [title]="title">
+  <ion-card>
+    <ion-card-content>
+      <form (ngSubmit)="submit()" [formGroup]="form">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12">
+              <ion-item>
+                <ion-input [label]="'COLLECTIONS.FORM.FIELDS.NAME' | transloco" formControlName="name"
+                           labelPlacement="floating"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-input type="number" [label]="'COLLECTIONS.FORM.FIELDS.PRICE' | transloco" formControlName="price"
+                           labelPlacement="floating"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-button expand="block" type="submit">{{ 'GLOBAL.SUBMIT' | transloco }}</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</app-page>
