@@ -3,6 +3,11 @@
     @for (collection of collections; track collection.id) {
       <app-collection-list-item [collection]="collection"></app-collection-list-item>
     }
+    <ion-fab class="fixed-bottom">
+      <ion-fab-button [routerLink]="['/collections/create']">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
   } @else {
     <ion-card>
       <ion-card-header>

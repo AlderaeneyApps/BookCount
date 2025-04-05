@@ -1,2 +1,8 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
+
+.fixed-bottom {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}

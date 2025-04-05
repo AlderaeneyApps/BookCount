@@ -9,6 +9,8 @@ import { of, Subject, switchMap } from 'rxjs';
 import { CollectionListItemComponent } from '../../../ui/components/collection-list-item/collection-list-item.component';
 import { PageComponent } from '../../../ui/components/page/page.component';
 import { IonicModule } from '@ionic/angular';
+import { addIcons } from "ionicons";
+import { add } from "ionicons/icons";
 
 @Component({
   selector: 'app-collections-home',
@@ -35,7 +37,11 @@ export class CollectionsHomePage implements OnInit, OnDestroy {
     private translocoService: TranslocoService,
     private router: Router,
     private cdRef: ChangeDetectorRef,
-  ) {}
+  ) {
+    addIcons({
+      add
+    })
+  }
 
   ngOnDestroy(): void {
     this.destroy$.next();
