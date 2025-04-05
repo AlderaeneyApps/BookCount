@@ -38,7 +38,6 @@ export class SeriesFormPage implements OnInit {
   private series!: Series;
   public form: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
-    price: new FormControl(0, []),
   });
 
   constructor(

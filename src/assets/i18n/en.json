@@ -29,5 +29,22 @@
       "GO_TO_COLLECTION": "Go to collection",
       "DELETE_COLLECTION": "Are you sure you want to delete the collection?"
     }
+  },
+  "SERIES": {
+    "FORM": {
+      "TITLES": {
+        "CREATE": "Create series",
+        "EDIT": "Edit series",
+        "VIEW": "View series"
+      },
+      "FIELDS": {
+        "NAME": "Name"
+      }
+    },
+    "LIST": {
+      "TITLE": "Series",
+      "GO_TO_SERIES": "Go to series",
+      "VOLUME_AMOUNT": "Amount of volumes"
+    }
   }
 }

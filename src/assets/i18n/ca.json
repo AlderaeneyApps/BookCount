@@ -29,5 +29,22 @@
       "GO_TO_COLLECTION": "Anar a la col·lecció",
       "DELETE_COLLECTION": "Estás segur que vols esborrar la col·lecció?"
     }
+  },
+  "SERIES": {
+    "FORM": {
+      "TITLES": {
+        "CREATE": "Crear serie",
+        "EDIT": "Editar serie",
+        "VIEW": "Veure serie"
+      },
+      "FIELDS": {
+        "NAME": "Nom"
+      }
+    },
+    "LIST": {
+      "TITLE": "Serie",
+      "GO_TO_SERIES": "Anar a la serie",
+      "VOLUME_AMOUNT": "Quantitat de volums"
+    }
   }
 }
