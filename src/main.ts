@@ -34,7 +34,10 @@ import { SeriesStorageService } from './app/sql-services/series-storage/series-s
 import { DbnameVersionService } from './app/sql-services/dbname-version.service';
 import { IonicModule } from '@ionic/angular';
 import { VolumesStorageService } from './app/sql-services/volumes-storage/volumes-storage.service';
-import { PicturesStorageService } from "./app/sql-services/pictures-storage/pictures-storage.service";
+import { PicturesStorageService } from './app/sql-services/pictures-storage/pictures-storage.service';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormlyModule, provideFormlyCore } from '@ngx-formly/core';
+import { FormlyIonicModule } from '@ngx-formly/ionic';
 
 if (environment.production) {
   enableProdMode();
@@ -89,5 +92,8 @@ bootstrapApplication(AppComponent, {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000',
     }),
+    ReactiveFormsModule,
+    provideFormlyCore({}),
+    FormlyIonicModule,
   ],
 });
