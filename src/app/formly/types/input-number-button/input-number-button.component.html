@@ -1,0 +1,13 @@
+<ion-input
+  type="number"
+  [label]="props.label | transloco"
+  [placeholder]="props.placeholder | transloco"
+  labelPlacement="floating"
+  [disabled]="props.disabled">
+  <ion-button slot="start" aria-label="Add">
+    <ion-icon slot="icon-only" name="add" aria-hidden="true"></ion-icon>
+  </ion-button>
+  <ion-button fill="clear" slot="end" aria-label="Remove">
+    <ion-icon slot="icon-only" name="remove" aria-hidden="true"></ion-icon>
+  </ion-button>
+</ion-input>

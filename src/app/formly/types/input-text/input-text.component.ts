@@ -5,8 +5,8 @@ import { TranslocoPipe } from "@jsverse/transloco";
 
 @Component({
   selector: 'app-input-number',
-  templateUrl: './input-number.component.html',
-  styleUrls: ['./input-number.component.scss'],
+  templateUrl: './input-number-button.component.html',
+  styleUrls: ['./input-number-button.component.scss'],
   imports: [IonicModule, TranslocoPipe],
 })
 export class InputTextComponent extends FieldType<FieldTypeConfig> {
