@@ -7,6 +7,8 @@ export class SeriesUpgradeStatements {
            id           INTEGER PRIMARY KEY AUTOINCREMENT,
            name         TEXT    NOT NULL,
            collectionId INTEGER NOT NULL,
+           picture      BLOB,
+           price        FLOAT,
            FOREIGN KEY (collectionId) REFERENCES collection (id) ON DELETE CASCADE ON UPDATE CASCADE
          );`,
     },

@@ -9,7 +9,8 @@
     "SUBMIT": "Submit",
     "SURE_DELETE": "Delete?",
     "DELETE": "Delete",
-    "CANCEL": "Cancel"
+    "CANCEL": "Cancel",
+    "PICK_IMAGE": "Pick picture"
   },
   "COLLECTIONS": {
     "FORM": {

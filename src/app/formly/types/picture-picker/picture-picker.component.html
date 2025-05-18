@@ -1,0 +1,11 @@
+<ion-button expand="block" (click)="pickImage()">
+  @if (!formControl.value) {
+    <ion-icon slot="start" name="add"></ion-icon>
+    {{ 'GLOBAL.PICK_IMAGE' | transloco }}
+  } @else {
+    <ion-img [alt]="" [src]="`data:image/jpeg;base64, ${formControl.value}`"></ion-img>
+  }
+</ion-button>
+
+
+
