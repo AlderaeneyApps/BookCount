@@ -7,7 +7,7 @@
     <ion-grid>
       <ion-row class="ion-justify-content-between">
         <ion-col>
-          {{ 'COLLECTIONS.LIST.SERIES_AMOUNT' | transloco: {amount: amountOfRelatedSeries} }}
+          {{ 'COLLECTIONS.LIST.SERIES_AMOUNT' | transloco: { amount: amountOfRelatedSeries } }}
         </ion-col>
         <ion-col class="ion-justify-content-end" style="display: flex">
           <ion-button (click)="deleteCollection()" aria-label="Delete" color="danger">
@@ -15,8 +15,11 @@
           </ion-button>
         </ion-col>
         <ion-col size="12">
-          <ion-button [routerLink]="['/series', collection.id]" aria-label="GoToCollection"
-                      expand="block">{{ 'COLLECTIONS.LIST.GO_TO_COLLECTION' | transloco }}
+          <ion-button
+            [routerLink]="['/series', collection.id]"
+            aria-label="GoToCollection"
+            expand="block"
+            >{{ 'COLLECTIONS.LIST.GO_TO_COLLECTION' | transloco }}
           </ion-button>
         </ion-col>
       </ion-row>

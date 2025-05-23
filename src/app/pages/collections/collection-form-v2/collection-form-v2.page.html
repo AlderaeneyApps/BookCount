@@ -1,0 +1,10 @@
+<app-page [title]="title">
+  <app-formly
+    (submitEv)="submit()"
+    [fields]="fields$ | async"
+    [form]="form"
+    [model]="model$ | async"
+  >
+    <app-submit-button></app-submit-button>
+  </app-formly>
+</app-page>

@@ -3,21 +3,17 @@ import { SQLiteService } from '../sqlite.service';
 import { DbnameVersionService } from '../dbname-version.service';
 import { SQLiteDBConnection } from '@capacitor-community/sqlite';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { VolumesUpgradeStatements } from '../../sql-upgrades/volumes.upgrade.statements';
-import { Volume } from '../../models/volume.model';
-import { PicturesUpgradeStatements } from "../../sql-upgrades/pictures.upgrade.statements";
-import { Picture } from "../../models";
+import { Picture, Volume } from '../../models';
+import { PicturesUpgradeStatements } from '../../sql-upgrades/pictures.upgrade.statements';
 
 @Injectable()
 export class PicturesStorageService {
-  public picturesList: BehaviorSubject<Picture[]> = new BehaviorSubject<Picture[]>(
-    [],
-  );
+  public picturesList: BehaviorSubject<Picture[]> = new BehaviorSubject<Picture[]>([]);
+  public db!: SQLiteDBConnection;
   private databaseName: string = '';
   private pUpdStmts: PicturesUpgradeStatements = new PicturesUpgradeStatements();
   private readonly versionUpgrades;
   private readonly loadToVersion;
-  public db!: SQLiteDBConnection;
   private isPicturesReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
@@ -25,8 +21,7 @@ export class PicturesStorageService {
     private dbVerService: DbnameVersionService,
   ) {
     this.versionUpgrades = this.pUpdStmts.picturesUpgrades;
-    this.loadToVersion =
-      this.versionUpgrades[this.versionUpgrades.length - 1].toVersion;
+    this.loadToVersion = this.versionUpgrades[this.versionUpgrades.length - 1].toVersion;
   }
 
   async initializeDatabase(dbName: string) {
@@ -37,7 +32,7 @@ export class PicturesStorageService {
       false,
       'no-encryption',
       this.loadToVersion,
-      false
+      false,
     );
 
     for (const version of this.versionUpgrades) {
@@ -70,7 +65,8 @@ export class PicturesStorageService {
   }
 
   async addPicture(body: Picture) {
-    const sql = `INSERT INTO pictures (picture, volumeId) VALUES (?);`;
+    const sql = `INSERT INTO pictures (picture, volumeId)
+                 VALUES (?, ?);`;
     await this.db.run(sql, [body.picture, body.volumeId]);
   }
 

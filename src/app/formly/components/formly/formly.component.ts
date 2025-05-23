@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { FormGroup, ReactiveFormsModule } from "@angular/forms";
-import { FormlyFieldConfig, FormlyForm } from "@ngx-formly/core";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormlyFieldConfig, FormlyForm } from '@ngx-formly/core';
 
 @Component({
   selector: 'app-formly',

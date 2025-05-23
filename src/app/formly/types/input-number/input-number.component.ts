@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { IonicModule } from "@ionic/angular";
-import { FieldType, FieldTypeConfig } from "@ngx-formly/core";
-import { TranslocoPipe } from "@jsverse/transloco";
+import { Component } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
+import { FieldType, FieldTypeConfig } from '@ngx-formly/core';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-input-text',

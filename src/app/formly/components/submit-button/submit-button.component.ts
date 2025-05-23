@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { IonicModule } from "@ionic/angular";
-import { FormGroup } from "@angular/forms";
-import { TranslocoPipe } from "@jsverse/transloco";
+import { Component, Input } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
+import { FormGroup } from '@angular/forms';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-submit-button',

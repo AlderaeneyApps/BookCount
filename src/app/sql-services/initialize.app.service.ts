@@ -5,7 +5,7 @@ import { Toast } from '@capacitor/toast';
 import { SeriesStorageService } from './series-storage/series-storage.service';
 import { DB_BOOK_COUNTER } from '../constants';
 import { VolumesStorageService } from './volumes-storage/volumes-storage.service';
-import { PicturesStorageService } from "./pictures-storage/pictures-storage.service";
+import { PicturesStorageService } from './pictures-storage/pictures-storage.service';
 
 @Injectable()
 export class InitializeAppService {
@@ -21,7 +21,7 @@ export class InitializeAppService {
   ) {}
 
   async initializeApp() {
-    await this.sqliteService.initializePlugin().then(async (ret) => {
+    await this.sqliteService.initializePlugin().then(async () => {
       this.platform = this.sqliteService.platform;
       try {
         if (this.sqliteService.platform === 'web') {

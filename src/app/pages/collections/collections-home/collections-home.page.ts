@@ -1,16 +1,16 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CollectionStorageService } from '../../../sql-services/collection-storage/collection-storage.service';
-import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
-import { Router, RouterLink } from "@angular/router";
+import { TranslocoPipe } from '@jsverse/transloco';
+import { RouterLink } from '@angular/router';
 import { Collection } from '../../../models';
 import { of, Subject, switchMap } from 'rxjs';
 import { CollectionListItemComponent } from '../../../ui/components/collection-list-item/collection-list-item.component';
 import { PageComponent } from '../../../ui/components/page/page.component';
 import { IonicModule } from '@ionic/angular';
-import { addIcons } from "ionicons";
-import { add } from "ionicons/icons";
+import { addIcons } from 'ionicons';
+import { add } from 'ionicons/icons';
 
 @Component({
   selector: 'app-collections-home',
@@ -32,15 +32,10 @@ export class CollectionsHomePage implements OnInit, OnDestroy {
 
   private destroy$: Subject<void> = new Subject<void>();
 
-  constructor(
-    private collectionStorageService: CollectionStorageService,
-    private translocoService: TranslocoService,
-    private router: Router,
-    private cdRef: ChangeDetectorRef,
-  ) {
+  constructor(private collectionStorageService: CollectionStorageService) {
     addIcons({
-      add
-    })
+      add,
+    });
   }
 
   ngOnDestroy(): void {
@@ -53,7 +48,7 @@ export class CollectionsHomePage implements OnInit, OnDestroy {
       this.collectionStorageService
         .collectionState()
         .pipe(
-          switchMap((res) => {
+          switchMap(res => {
             if (res) {
               return this.collectionStorageService.fetchCollections();
             } else {

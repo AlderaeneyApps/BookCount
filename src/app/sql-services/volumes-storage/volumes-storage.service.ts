@@ -4,13 +4,11 @@ import { DbnameVersionService } from '../dbname-version.service';
 import { SQLiteDBConnection } from '@capacitor-community/sqlite';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { VolumesUpgradeStatements } from '../../sql-upgrades/volumes.upgrade.statements';
-import { Volume } from '../../models/volume.model';
+import { Volume } from '../../models';
 
 @Injectable()
 export class VolumesStorageService {
-  public volumeList: BehaviorSubject<Volume[]> = new BehaviorSubject<Volume[]>(
-    [],
-  );
+  public volumeList: BehaviorSubject<Volume[]> = new BehaviorSubject<Volume[]>([]);
   private databaseName: string = '';
   private vUpdStmts: VolumesUpgradeStatements = new VolumesUpgradeStatements();
   private readonly versionUpgrades;
@@ -23,8 +21,7 @@ export class VolumesStorageService {
     private dbVerService: DbnameVersionService,
   ) {
     this.versionUpgrades = this.vUpdStmts.volumesUpgrades;
-    this.loadToVersion =
-      this.versionUpgrades[this.versionUpgrades.length - 1].toVersion;
+    this.loadToVersion = this.versionUpgrades[this.versionUpgrades.length - 1].toVersion;
   }
 
   async initializeDatabase(dbName: string) {
@@ -35,7 +32,7 @@ export class VolumesStorageService {
       false,
       'no-encryption',
       this.loadToVersion,
-      false
+      false,
     );
 
     for (const version of this.versionUpgrades) {
@@ -69,7 +66,7 @@ export class VolumesStorageService {
 
   async addVolume(body: Volume) {
     const sql = `INSERT INTO volumes (volumeNumber, price, seriesId)
-                 VALUES (?);`;
+                 VALUES (?, ?, ?);`;
     await this.db.run(sql, [body.volumeNumber, body.price, body.seriesId]);
   }
 

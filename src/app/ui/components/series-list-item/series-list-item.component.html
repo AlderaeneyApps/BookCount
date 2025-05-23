@@ -8,7 +8,7 @@
     <ion-grid>
       <ion-row class="ion-justify-content-between">
         <ion-col>
-          {{ 'SERIES.LIST.VOLUME_AMOUNT' | transloco: {amount: volumesCount} }}
+          {{ 'SERIES.LIST.VOLUME_AMOUNT' | transloco: { amount: volumesCount } }}
         </ion-col>
         <ion-col class="ion-justify-content-end" style="display: flex">
           <ion-button (click)="deleteSeries()" aria-label="Delete" color="danger">
@@ -16,8 +16,8 @@
           </ion-button>
         </ion-col>
         <ion-col size="12">
-          <ion-button [routerLink]="['/series', series.id]" aria-label="GoToSeries"
-                      expand="block">{{ 'SERIES.LIST.GO_TO_SERIES' | transloco }}
+          <ion-button [routerLink]="['/series', series.id]" aria-label="GoToSeries" expand="block"
+            >{{ 'SERIES.LIST.GO_TO_SERIES' | transloco }}
           </ion-button>
         </ion-col>
       </ion-row>

@@ -9,8 +9,8 @@ describe('InputTextComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ InputTextareaComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [InputTextareaComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(InputTextareaComponent);

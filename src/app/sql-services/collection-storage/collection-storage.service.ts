@@ -4,30 +4,24 @@ import { DbnameVersionService } from '../dbname-version.service';
 import { SQLiteDBConnection } from '@capacitor-community/sqlite';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { CollectionUpgradeStatements } from '../../sql-upgrades/collection.upgrade.statements';
-import { Collection } from '../../models/collection.model';
+import { Collection } from '../../models';
 
 @Injectable()
 export class CollectionStorageService {
-  public collectionList: BehaviorSubject<Collection[]> = new BehaviorSubject<
-    Collection[]
-  >([]);
+  public collectionList: BehaviorSubject<Collection[]> = new BehaviorSubject<Collection[]>([]);
   private databaseName: string = '';
-  private cUpdStmts: CollectionUpgradeStatements =
-    new CollectionUpgradeStatements();
+  private cUpdStmts: CollectionUpgradeStatements = new CollectionUpgradeStatements();
   private readonly versionUpgrades;
   private readonly loadToVersion;
   private db!: SQLiteDBConnection;
-  private isCollectionsReady: BehaviorSubject<boolean> = new BehaviorSubject(
-    false,
-  );
+  private isCollectionsReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
     private sqliteService: SQLiteService,
     private dbVerService: DbnameVersionService,
   ) {
     this.versionUpgrades = this.cUpdStmts.collectionUpgrades;
-    this.loadToVersion =
-      this.versionUpgrades[this.versionUpgrades.length - 1].toVersion;
+    this.loadToVersion = this.versionUpgrades[this.versionUpgrades.length - 1].toVersion;
   }
 
   async initializeDatabase(dbName: string) {
@@ -38,7 +32,7 @@ export class CollectionStorageService {
       false,
       'no-encryption',
       this.loadToVersion,
-      false
+      false,
     );
 
     for (const version of this.versionUpgrades) {
@@ -59,9 +53,7 @@ export class CollectionStorageService {
   }
 
   async loadCollections() {
-    const collections: any[] = (
-      await this.db.query('SELECT * FROM collection;')
-    ).values as any[];
+    const collections: any[] = (await this.db.query('SELECT * FROM collection;')).values as any[];
     this.collectionList.next(collections);
   }
 

@@ -9,8 +9,8 @@ describe('SubmitButtonComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SubmitButtonComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [SubmitButtonComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(SubmitButtonComponent);

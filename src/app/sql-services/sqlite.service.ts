@@ -3,12 +3,10 @@ import { Injectable } from '@angular/core';
 import { Capacitor } from '@capacitor/core';
 import {
   CapacitorSQLite,
-  SQLiteConnection,
-  SQLiteDBConnection,
   CapacitorSQLitePlugin,
   capSQLiteUpgradeOptions,
-  capSQLiteResult,
-  capSQLiteValues,
+  SQLiteConnection,
+  SQLiteDBConnection,
 } from '@capacitor-community/sqlite';
 
 @Injectable()
@@ -26,8 +24,7 @@ export class SQLiteService {
    */
   async initializePlugin(): Promise<boolean> {
     this.platform = Capacitor.getPlatform();
-    if (this.platform === 'ios' || this.platform === 'android')
-      this.native = true;
+    if (this.platform === 'ios' || this.platform === 'android') this.native = true;
     this.sqlitePlugin = CapacitorSQLite;
     this.sqliteConnection = new SQLiteConnection(this.sqlitePlugin);
     this.isService = true;
@@ -39,7 +36,7 @@ export class SQLiteService {
       await this.sqliteConnection.initWebStore();
     } catch (err: any) {
       const msg = err.message ? err.message : err;
-      return Promise.reject(`initWebStore: ${err}`);
+      return Promise.reject(`initWebStore: ${msg}`);
     }
   }
 
@@ -51,29 +48,18 @@ export class SQLiteService {
     readonly: boolean,
   ): Promise<SQLiteDBConnection> {
     let db: SQLiteDBConnection;
-    const retCC = (await this.sqliteConnection.checkConnectionsConsistency())
-      .result;
-    let isConn = (await this.sqliteConnection.isConnection(dbName, readonly))
-      .result;
+    const retCC = (await this.sqliteConnection.checkConnectionsConsistency()).result;
+    let isConn = (await this.sqliteConnection.isConnection(dbName, readonly)).result;
     if (retCC && isConn) {
       db = await this.sqliteConnection.retrieveConnection(dbName, readonly);
     } else {
-      db = await this.sqliteConnection.createConnection(
-        dbName,
-        encrypted,
-        mode,
-        version,
-        readonly,
-      );
+      db = await this.sqliteConnection.createConnection(dbName, encrypted, mode, version, readonly);
     }
     await db.open();
     return db;
   }
 
-  async retrieveConnection(
-    dbName: string,
-    readonly: boolean,
-  ): Promise<SQLiteDBConnection> {
+  async retrieveConnection(dbName: string, readonly: boolean): Promise<SQLiteDBConnection> {
     return await this.sqliteConnection.retrieveConnection(dbName, readonly);
   }
 

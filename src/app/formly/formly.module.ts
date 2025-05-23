@@ -1,14 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormlyComponent } from './components/formly/formly.component';
+import { FormlyComponent } from './components';
 import { FormlyModule as RealFormlyModule } from '@ngx-formly/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormlyIonicModule } from '@ngx-formly/ionic';
 import { IonicModule } from '@ionic/angular';
-import { InputTextComponent } from './types/input-text/input-text.component';
-import { InputTextareaComponent } from './types/input-textarea/input-textarea.component';
-import { InputNumberComponent } from './types/input-number/input-number.component';
-import { InputNumberButtonComponent } from './types/input-number-button/input-number-button.component';
+import {
+  InputNumberButtonComponent,
+  InputNumberComponent,
+  InputTextareaComponent,
+  InputTextComponent,
+  PicturePickerComponent,
+} from './types';
+import { FormColumnComponent, FormGridComponent } from './wrappers';
 
 @NgModule({
   declarations: [],
@@ -32,6 +36,20 @@ import { InputNumberButtonComponent } from './types/input-number-button/input-nu
         {
           name: 'input-number-button',
           component: InputNumberButtonComponent,
+        },
+        {
+          name: 'picture-picker',
+          component: PicturePickerComponent,
+        },
+      ],
+      wrappers: [
+        {
+          name: 'form-grid',
+          component: FormGridComponent,
+        },
+        {
+          name: 'form-column',
+          component: FormColumnComponent,
         },
       ],
     }),

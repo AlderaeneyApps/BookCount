@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PageComponent } from '../../../ui/components/page/page.component';
@@ -6,10 +6,10 @@ import { IonicModule } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { add } from 'ionicons/icons';
 import { SeriesStorageService } from '../../../sql-services/series-storage/series-storage.service';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Series } from '../../../models';
 import { of, Subject, switchMap, takeUntil } from 'rxjs';
-import { SeriesListItemComponent } from "../../../ui/components/series-list-item/series-list-item.component";
+import { SeriesListItemComponent } from '../../../ui/components/series-list-item/series-list-item.component';
 
 @Component({
   selector: 'app-series-home',
@@ -34,8 +34,6 @@ export class SeriesHomePage implements OnInit, OnDestroy {
   constructor(
     private seriesStorageService: SeriesStorageService,
     private route: ActivatedRoute,
-    private router: Router,
-    private cdRef: ChangeDetectorRef,
   ) {
     addIcons({
       add,
@@ -55,7 +53,7 @@ export class SeriesHomePage implements OnInit, OnDestroy {
         .seriesState()
         .pipe(
           takeUntil(this.destroy$),
-          switchMap((res) => {
+          switchMap(res => {
             if (res) {
               return this.seriesStorageService.fetchSeries();
             } else {
@@ -67,7 +65,7 @@ export class SeriesHomePage implements OnInit, OnDestroy {
           this.series = series;
         });
     } catch (e) {
-     this.series = [];
+      this.series = [];
     }
   }
 }

@@ -22,9 +22,7 @@ export interface PicturePickerOptions {
   styleUrls: ['./picture-picker.component.scss'],
   imports: [IonicModule, TranslocoPipe],
 })
-export class PicturePickerComponent extends FieldType<
-  FieldTypeConfig<PicturePickerOptions>
-> {
+export class PicturePickerComponent extends FieldType<FieldTypeConfig<PicturePickerOptions>> {
   constructor(private translate: TranslocoService) {
     super();
   }
@@ -74,20 +72,15 @@ export class PicturePickerComponent extends FieldType<
     }
 
     if (permissions.length > 0) {
-      const grantedPermission: PermissionStatus =
-        await Camera.requestPermissions({
-          permissions,
-        });
+      const grantedPermission: PermissionStatus = await Camera.requestPermissions({
+        permissions,
+      });
 
-      const { photos: grantedPhotos, camera: grantedCamera } =
-        grantedPermission;
-      if (
+      const { photos: grantedPhotos, camera: grantedCamera } = grantedPermission;
+      return !(
         (grantedPhotos !== 'granted' && grantedPhotos !== 'limited') ||
         (grantedCamera !== 'limited' && grantedCamera !== 'granted')
-      ) {
-        return false;
-      }
-      return true;
+      );
     }
 
     return true;

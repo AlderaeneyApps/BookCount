@@ -11,7 +11,7 @@ import { PageComponent } from '../../../ui/components/page/page.component';
 import { IonicModule, LoadingController } from '@ionic/angular';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ACTION_TYPE, Collection, Series } from '../../../models';
+import { ACTION_TYPE, Series } from '../../../models';
 import { of, switchMap } from 'rxjs';
 import { SeriesStorageService } from '../../../sql-services/series-storage/series-storage.service';
 
@@ -31,14 +31,14 @@ import { SeriesStorageService } from '../../../sql-services/series-storage/serie
 })
 export class SeriesFormPage implements OnInit {
   public title!: string;
+  public form: FormGroup = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+  });
   private readonly mode!: ACTION_TYPE;
   private collectionId!: number;
   private seriesId!: number;
   private readonly isCreation: boolean = false;
   private series!: Series;
-  public form: FormGroup = new FormGroup({
-    name: new FormControl('', [Validators.required]),
-  });
 
   constructor(
     private seriesStorageService: SeriesStorageService,
@@ -65,7 +65,7 @@ export class SeriesFormPage implements OnInit {
         this.seriesStorageService
           .seriesState()
           .pipe(
-            switchMap((res) => {
+            switchMap(res => {
               if (res) {
                 this.seriesId = this.route.snapshot.params['seriesId'];
                 return this.seriesStorageService.getSeriesById(this.seriesId);
@@ -102,11 +102,7 @@ export class SeriesFormPage implements OnInit {
       await this.seriesStorageService.addSeries(body);
       await this.router.navigate(['/series', this.collectionId]);
     } else {
-      await this.seriesStorageService.updateSeriesById(
-        this.seriesId,
-        body.name,
-        this.collectionId,
-      );
+      await this.seriesStorageService.updateSeriesById(this.seriesId, body.name, this.collectionId);
       await this.router.navigate(['/series', this.collectionId]);
     }
   }

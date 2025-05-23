@@ -5,10 +5,7 @@ import {
   RouteReuseStrategy,
   withPreloading,
 } from '@angular/router';
-import {
-  IonicRouteStrategy,
-  provideIonicAngular,
-} from '@ionic/angular/standalone';
+import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
 
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
@@ -36,7 +33,7 @@ import { IonicModule } from '@ionic/angular';
 import { VolumesStorageService } from './app/sql-services/volumes-storage/volumes-storage.service';
 import { PicturesStorageService } from './app/sql-services/pictures-storage/pictures-storage.service';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FormlyModule, provideFormlyCore } from '@ngx-formly/core';
+import { provideFormlyCore } from '@ngx-formly/core';
 import { FormlyIonicModule } from '@ngx-formly/ionic';
 
 if (environment.production) {

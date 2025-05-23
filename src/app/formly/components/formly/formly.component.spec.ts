@@ -9,8 +9,8 @@ describe('FormlyComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ FormlyComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [FormlyComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(FormlyComponent);

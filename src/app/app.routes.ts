@@ -11,14 +11,14 @@ export const routes: Routes = [
     path: 'collections',
     loadComponent: () =>
       import('./pages/collections/collections-home/collections-home.page').then(
-        (m) => m.CollectionsHomePage,
+        m => m.CollectionsHomePage,
       ),
   },
   {
     path: 'collections/create',
     loadComponent: () =>
       import('./pages/collections/collection-form/collection-form.page').then(
-        (m) => m.CollectionFormPage,
+        m => m.CollectionFormPage,
       ),
     data: {
       mode: ACTION_TYPE.CREATE,
@@ -28,7 +28,7 @@ export const routes: Routes = [
     path: 'collections/edit/:id',
     loadComponent: () =>
       import('./pages/collections/collection-form/collection-form.page').then(
-        (m) => m.CollectionFormPage,
+        m => m.CollectionFormPage,
       ),
     data: {
       mode: ACTION_TYPE.EDIT,
@@ -37,16 +37,12 @@ export const routes: Routes = [
   {
     path: 'series/:id',
     loadComponent: () =>
-      import('./pages/series/series-home/series-home.page').then(
-        (m) => m.SeriesHomePage,
-      ),
+      import('./pages/series/series-home/series-home.page').then(m => m.SeriesHomePage),
   },
   {
     path: 'series/create/:collectionId',
     loadComponent: () =>
-      import('./pages/series/series-form/series-form.page').then(
-        (m) => m.SeriesFormPage,
-      ),
+      import('./pages/series/series-form/series-form.page').then(m => m.SeriesFormPage),
     data: {
       mode: ACTION_TYPE.CREATE,
     },
@@ -54,11 +50,16 @@ export const routes: Routes = [
   {
     path: 'series/edit/:seriesId/:collectionId',
     loadComponent: () =>
-      import('./pages/series/series-form/series-form.page').then(
-        (m) => m.SeriesFormPage,
-      ),
+      import('./pages/series/series-form/series-form.page').then(m => m.SeriesFormPage),
     data: {
       mode: ACTION_TYPE.EDIT,
     },
+  },
+  {
+    path: 'collection-form-v2',
+    loadComponent: () =>
+      import('./pages/collections/collection-form-v2/collection-form-v2.page').then(
+        m => m.CollectionFormV2Page,
+      ),
   },
 ];

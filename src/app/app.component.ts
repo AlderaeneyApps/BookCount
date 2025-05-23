@@ -8,14 +8,12 @@ import {
 } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CollectionStorageService } from './sql-services/collection-storage/collection-storage.service';
-import { Collection } from './models/collection.model';
+import { Collection, SideMenuItem } from './models';
 import { startWith, Subject, takeUntil, tap } from 'rxjs';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { addIcons } from 'ionicons';
 import { addOutline, addSharp, bookSharp } from 'ionicons/icons';
-import { SideMenuItem } from './models';
 import { IonicModule } from '@ionic/angular';
-import { InitializeAppService } from "./sql-services/initialize.app.service";
 
 @Component({
   selector: 'app-root',
@@ -52,16 +50,13 @@ export class AppComponent implements OnInit, OnDestroy {
       .fetchCollections()
       .pipe(
         takeUntil(this.destroy$),
-        tap((collections) => {
+        tap(collections => {
           this.collections = collections;
         }),
       )
       .subscribe();
     this.translocoService.langChanges$
-      .pipe(
-        takeUntil(this.destroy$),
-        startWith(this.translocoService.getActiveLang()),
-      )
+      .pipe(takeUntil(this.destroy$), startWith(this.translocoService.getActiveLang()))
       .subscribe(() => {
         this.setAppMenus();
       });

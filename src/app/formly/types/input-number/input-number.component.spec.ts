@@ -9,8 +9,8 @@ describe('InputTextComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ InputNumberComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [InputNumberComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(InputNumberComponent);

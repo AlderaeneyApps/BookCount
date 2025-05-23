@@ -4,13 +4,11 @@ import { DbnameVersionService } from '../dbname-version.service';
 import { SQLiteDBConnection } from '@capacitor-community/sqlite';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { SeriesUpgradeStatements } from '../../sql-upgrades/series.upgrade.statements';
-import { Collection, Series } from "../../models";
+import { Series } from '../../models';
 
 @Injectable()
 export class SeriesStorageService {
-  public seriesList: BehaviorSubject<Series[]> = new BehaviorSubject<Series[]>(
-    [],
-  );
+  public seriesList: BehaviorSubject<Series[]> = new BehaviorSubject<Series[]>([]);
   private databaseName: string = '';
   private sUpdStmts: SeriesUpgradeStatements = new SeriesUpgradeStatements();
   private readonly versionUpgrades;
@@ -23,8 +21,7 @@ export class SeriesStorageService {
     private dbVerService: DbnameVersionService,
   ) {
     this.versionUpgrades = this.sUpdStmts.seriesUpgrades;
-    this.loadToVersion =
-      this.versionUpgrades[this.versionUpgrades.length - 1].toVersion;
+    this.loadToVersion = this.versionUpgrades[this.versionUpgrades.length - 1].toVersion;
   }
 
   async initializeDatabase(dbName: string) {
@@ -35,7 +32,7 @@ export class SeriesStorageService {
       false,
       'no-encryption',
       this.loadToVersion,
-      false
+      false,
     );
 
     for (const version of this.versionUpgrades) {
@@ -68,7 +65,9 @@ export class SeriesStorageService {
   }
 
   async getSeriesById(id: number): Promise<Series[]> {
-    const sql = `SELECT * FROM series WHERE id = ${id}`;
+    const sql = `SELECT *
+                 FROM series
+                 WHERE id = ${id}`;
     return (await this.db.query(sql)).values as Series[];
   }
 

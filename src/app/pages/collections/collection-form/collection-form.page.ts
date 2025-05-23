@@ -63,12 +63,10 @@ export class CollectionFormPage implements OnInit {
         this.collectionStorageService
           .collectionState()
           .pipe(
-            switchMap((res) => {
+            switchMap(res => {
               if (res) {
                 this.collectionId = this.route.snapshot.params['id'];
-                return this.collectionStorageService.getCollectionById(
-                  this.collectionId,
-                );
+                return this.collectionStorageService.getCollectionById(this.collectionId);
               } else {
                 return of(false);
               }
@@ -105,11 +103,9 @@ export class CollectionFormPage implements OnInit {
         console.error(e);
       }
     } else {
-      this.collectionStorageService
-        .updateCollectionById(this.collectionId, data.name!)
-        .then(() => {
-          this.router.navigate(['/collections']);
-        });
+      this.collectionStorageService.updateCollectionById(this.collectionId, data.name!).then(() => {
+        this.router.navigate(['/collections']);
+      });
     }
   }
 }

@@ -1,13 +1,13 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { Series } from "../../../models";
-import { IonicModule } from "@ionic/angular";
-import { TranslocoPipe } from "@jsverse/transloco";
-import { SeriesStorageService } from "../../../sql-services/series-storage/series-storage.service";
-import { RouterLink } from "@angular/router";
-import { VolumesStorageService } from "../../../sql-services/volumes-storage/volumes-storage.service";
-import { DBSQLiteValues } from "@capacitor-community/sqlite";
-import { addIcons } from "ionicons";
-import { trashSharp } from "ionicons/icons";
+import { Component, Input, OnInit } from '@angular/core';
+import { Series } from '../../../models';
+import { IonicModule } from '@ionic/angular';
+import { TranslocoPipe } from '@jsverse/transloco';
+import { SeriesStorageService } from '../../../sql-services/series-storage/series-storage.service';
+import { RouterLink } from '@angular/router';
+import { VolumesStorageService } from '../../../sql-services/volumes-storage/volumes-storage.service';
+import { DBSQLiteValues } from '@capacitor-community/sqlite';
+import { addIcons } from 'ionicons';
+import { trashSharp } from 'ionicons/icons';
 
 @Component({
   selector: 'app-series-list-item',
@@ -25,14 +25,16 @@ export class SeriesListItemComponent implements OnInit {
     private volumeStorageService: VolumesStorageService,
   ) {
     addIcons({
-      trashSharp
-    })
+      trashSharp,
+    });
   }
 
   async ngOnInit() {
     try {
-      const values: DBSQLiteValues = await this.volumeStorageService.countVolumesRelatedToSeries(this.series.id);
-      const {values: count} = values;
+      const values: DBSQLiteValues = await this.volumeStorageService.countVolumesRelatedToSeries(
+        this.series.id,
+      );
+      const { values: count } = values;
       this.volumesCount = count?.[0] ?? 0;
     } catch (e) {
       console.error(e);
@@ -41,9 +43,6 @@ export class SeriesListItemComponent implements OnInit {
   }
 
   public async deleteSeries() {
-    await this.seriesStorageService.deleteSeriesById(
-      this.series.id,
-      this.series.collectionId,
-    );
+    await this.seriesStorageService.deleteSeriesById(this.series.id, this.series.collectionId);
   }
 }
