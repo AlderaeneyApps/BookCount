@@ -8,8 +8,9 @@ import {
   CameraResultType,
   PermissionStatus,
 } from '@capacitor/camera';
+import { FormColumnProps } from '../../models';
 
-export interface PicturePickerOptions {
+export interface PicturePickerOptions extends FormColumnProps {
   labelHeader: string;
   labelPhoto: string;
   labelCancel: string;

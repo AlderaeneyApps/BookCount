@@ -1,3 +1,6 @@
-<ion-button type="submit" [disabled]="form?.invalid" expand="block">{{
-  'GLOBAL.SUBMIT' | transloco
-}}</ion-button>
+@if (form) {
+  <ion-button [disabled]="form.invalid" expand="block" type="submit">{{
+      'GLOBAL.SUBMIT' | transloco
+    }}
+  </ion-button>
+}

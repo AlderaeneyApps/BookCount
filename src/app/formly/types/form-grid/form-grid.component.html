@@ -1,0 +1,11 @@
+<ion-grid>
+  <ion-row>
+    @for (f of field.fieldGroup; track f.key) {
+      <ion-col [size]="$any(f).props.size" [sizeXs]="$any(f).props.size_xs" [sizeSm]="$any(f).props.size_sm"
+               [sizeMd]="$any(f).props.size_md" [sizeLg]="$any(f).props.size_lg"
+               [sizeXl]="$any(f).props.size_xl">
+        <formly-field [field]="f"></formly-field>
+      </ion-col>
+    }
+  </ion-row>
+</ion-grid>

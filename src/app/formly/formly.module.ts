@@ -12,7 +12,7 @@ import {
   InputTextComponent,
   PicturePickerComponent,
 } from './types';
-import { FormColumnComponent, FormGridComponent } from './wrappers';
+import { FormGridComponent } from './types/form-grid/form-grid.component';
 
 @NgModule({
   declarations: [],
@@ -41,15 +41,9 @@ import { FormColumnComponent, FormGridComponent } from './wrappers';
           name: 'picture-picker',
           component: PicturePickerComponent,
         },
-      ],
-      wrappers: [
         {
-          name: 'form-grid',
+          name: 'grid',
           component: FormGridComponent,
-        },
-        {
-          name: 'form-column',
-          component: FormColumnComponent,
         },
       ],
     }),

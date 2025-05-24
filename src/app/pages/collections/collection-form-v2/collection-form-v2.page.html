@@ -1,10 +1,19 @@
 <app-page [title]="title">
-  <app-formly
-    (submitEv)="submit()"
-    [fields]="fields$ | async"
-    [form]="form"
-    [model]="model$ | async"
-  >
-    <app-submit-button></app-submit-button>
-  </app-formly>
+  @if (fields) {
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{ title | transloco }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <app-formly
+          (submitEv)="submit()"
+          [fields]="fields"
+          [form]="form"
+          [model]="model$ | async"
+        >
+          <app-submit-button [form]="form"></app-submit-button>
+        </app-formly>
+      </ion-card-content>
+    </ion-card>
+  }
 </app-page>

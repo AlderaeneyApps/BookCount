@@ -1,6 +1,7 @@
 <ion-input
+  [disabled]="props.disabled ?? false"
+  [formControl]="field.formControl"
   [label]="props.label | transloco"
   [placeholder]="props.placeholder | transloco"
   labelPlacement="floating"
-  [disabled]="props.disabled"
 ></ion-input>

@@ -17,8 +17,8 @@ export const routes: Routes = [
   {
     path: 'collections/create',
     loadComponent: () =>
-      import('./pages/collections/collection-form/collection-form.page').then(
-        m => m.CollectionFormPage,
+      import('./pages/collections/collection-form-v2/collection-form-v2.page').then(
+        m => m.CollectionFormV2Page,
       ),
     data: {
       mode: ACTION_TYPE.CREATE,
@@ -27,8 +27,8 @@ export const routes: Routes = [
   {
     path: 'collections/edit/:id',
     loadComponent: () =>
-      import('./pages/collections/collection-form/collection-form.page').then(
-        m => m.CollectionFormPage,
+      import('./pages/collections/collection-form-v2/collection-form-v2.page').then(
+        m => m.CollectionFormV2Page,
       ),
     data: {
       mode: ACTION_TYPE.EDIT,
@@ -54,12 +54,5 @@ export const routes: Routes = [
     data: {
       mode: ACTION_TYPE.EDIT,
     },
-  },
-  {
-    path: 'collection-form-v2',
-    loadComponent: () =>
-      import('./pages/collections/collection-form-v2/collection-form-v2.page').then(
-        m => m.CollectionFormV2Page,
-      ),
   },
 ];

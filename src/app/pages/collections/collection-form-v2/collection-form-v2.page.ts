@@ -1,13 +1,13 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormsModule } from '@angular/forms';
 import { PageComponent } from '../../../ui/components/page/page.component';
 import { ACTION_TYPE, Collection } from '../../../models';
 import { CollectionStorageService } from '../../../sql-services/collection-storage/collection-storage.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LoadingController } from '@ionic/angular';
-import { TranslocoService } from '@jsverse/transloco';
-import { Observable, of, switchMap } from 'rxjs';
+import { IonicModule, LoadingController } from '@ionic/angular';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
+import { Observable, of, Subject, switchMap, takeUntil } from 'rxjs';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { CollectionFormService } from '../../../services';
 import { FormlyModule, SubmitButtonComponent } from '../../../formly';
@@ -17,17 +17,26 @@ import { FormlyModule, SubmitButtonComponent } from '../../../formly';
   templateUrl: './collection-form-v2.page.html',
   styleUrls: ['./collection-form-v2.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, PageComponent, FormlyModule, SubmitButtonComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    PageComponent,
+    FormlyModule,
+    SubmitButtonComponent,
+    IonicModule,
+    TranslocoPipe,
+  ],
 })
-export class CollectionFormV2Page implements OnInit {
+export class CollectionFormV2Page implements OnInit, OnDestroy {
   public mode: ACTION_TYPE = ACTION_TYPE.CREATE;
   public isCreation: boolean = true;
   public title: string;
   public form: FormGroup = new FormGroup({});
-  public fields$!: Observable<FormlyFieldConfig[]>;
   public model$!: Observable<Collection>;
+  public fields!: FormlyFieldConfig[];
   private collectionId!: number;
   private collection!: Collection;
+  private ngDestroy$ = new Subject<void>();
 
   constructor(
     private formService: CollectionFormService,
@@ -42,8 +51,15 @@ export class CollectionFormV2Page implements OnInit {
     this.isCreation = this.mode === ACTION_TYPE.CREATE;
     this.title = `COLLECTIONS.FORM.TITLES.${this.mode.toUpperCase()}`;
 
-    this.fields$ = formService.fields$;
+    formService.fields$.pipe(takeUntil(this.ngDestroy$)).subscribe(fields => {
+      this.fields = fields;
+    });
     this.model$ = formService.model$;
+  }
+
+  ngOnDestroy(): void {
+    this.ngDestroy$.next();
+    this.ngDestroy$.complete();
   }
 
   async ngOnInit() {
@@ -77,6 +93,8 @@ export class CollectionFormV2Page implements OnInit {
               this.cdRef.markForCheck();
             }
           });
+      } else {
+        this.formService.buildFields();
       }
     } catch (e) {
       console.error(e);

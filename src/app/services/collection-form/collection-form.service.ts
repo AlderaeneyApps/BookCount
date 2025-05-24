@@ -17,22 +17,15 @@ export class CollectionFormService {
   public buildFields() {
     const fields: FormlyFieldConfig[] = [
       {
-        wrappers: ['form-grid'],
+        type: 'grid',
         fieldGroup: [
           {
-            wrappers: ['form-column'],
+            key: 'name',
+            type: 'input-text',
             props: {
-              size: 12,
+              label: 'COLLECTIONS.FORM.FIELDS.NAME',
+              required: true,
             },
-            fieldGroup: [
-              {
-                key: 'name',
-                type: 'input-text',
-                props: {
-                  label: 'COLLECTIONS.FORM.FIELDS.NAME',
-                },
-              },
-            ],
           },
         ],
       },
