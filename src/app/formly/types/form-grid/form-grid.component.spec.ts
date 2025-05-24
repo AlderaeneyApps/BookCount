@@ -9,8 +9,8 @@ describe('FormGridComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ FormGridComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [FormGridComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(FormGridComponent);
