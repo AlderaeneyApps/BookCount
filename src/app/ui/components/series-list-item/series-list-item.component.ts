@@ -8,12 +8,13 @@ import { VolumesStorageService } from '../../../sql-services/volumes-storage/vol
 import { DBSQLiteValues } from '@capacitor-community/sqlite';
 import { addIcons } from 'ionicons';
 import { trashSharp } from 'ionicons/icons';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-series-list-item',
   templateUrl: './series-list-item.component.html',
   styleUrls: ['./series-list-item.component.scss'],
-  imports: [IonicModule, TranslocoPipe, RouterLink],
+  imports: [IonicModule, TranslocoPipe, RouterLink, NgOptimizedImage],
 })
 export class SeriesListItemComponent implements OnInit {
   @Input() series!: Series;

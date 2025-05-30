@@ -60,7 +60,7 @@ export class SeriesFormPage implements OnInit {
         const loading = await this.loadingCtrl.create({
           message: this.translocoService.translate('GLOBAL.LOADING'),
         });
-        loading.present();
+        await loading.present();
         this.cdRef.markForCheck();
         this.seriesStorageService
           .seriesState()
@@ -74,13 +74,13 @@ export class SeriesFormPage implements OnInit {
               }
             }),
           )
-          .subscribe((series: Series[] | boolean) => {
+          .subscribe(async (series: Series[] | boolean) => {
             if (typeof series === 'object') {
               if (!this.isCreation) {
                 this.series = (series?.[0] as Series) ?? undefined;
                 this.form.get('name')?.setValue(this.series.name);
               }
-              loading.dismiss();
+              await loading.dismiss();
               this.cdRef.markForCheck();
             }
           });

@@ -58,7 +58,7 @@ export class CollectionFormPage implements OnInit {
         const loading = await this.loadingCtrl.create({
           message: this.translocoService.translate('GLOBAL.LOADING'),
         });
-        loading.present();
+        await loading.present();
         this.cdRef.markForCheck();
         this.collectionStorageService
           .collectionState()
@@ -72,13 +72,13 @@ export class CollectionFormPage implements OnInit {
               }
             }),
           )
-          .subscribe((collection: Collection | boolean) => {
+          .subscribe(async (collection: Collection | boolean) => {
             if (collection) {
               if (!this.isCreation) {
                 this.collection = collection as Collection;
                 this.form.get('name')?.setValue(this.collection.name);
               }
-              loading.dismiss();
+              await loading.dismiss();
               this.cdRef.markForCheck();
             }
           });
@@ -98,7 +98,7 @@ export class CollectionFormPage implements OnInit {
     if (this.isCreation) {
       try {
         await this.collectionStorageService.addCollection(data.name!);
-        this.router.navigateByUrl('/collections');
+        await this.router.navigateByUrl('/collections');
       } catch (e) {
         console.error(e);
       }

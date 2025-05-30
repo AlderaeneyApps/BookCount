@@ -1,11 +1,4 @@
-import {
-  Component,
-  CUSTOM_ELEMENTS_SCHEMA,
-  EnvironmentInjector,
-  inject,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnDestroy, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CollectionStorageService } from './sql-services/collection-storage/collection-storage.service';
 import { Collection, SideMenuItem } from './models';
@@ -23,7 +16,6 @@ import { IonicModule } from '@ionic/angular';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppComponent implements OnInit, OnDestroy {
-  public environmentInjector = inject(EnvironmentInjector);
   public appPages: SideMenuItem[] = [];
   public collections: Collection[] = [];
 

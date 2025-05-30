@@ -68,7 +68,7 @@ export class CollectionFormV2Page implements OnInit, OnDestroy {
         const loading = await this.loadingCtrl.create({
           message: this.translocoService.translate('GLOBAL.LOADING'),
         });
-        loading.present();
+        await loading.present();
         this.cdRef.markForCheck();
         this.collectionStorageService
           .collectionState()
@@ -82,14 +82,14 @@ export class CollectionFormV2Page implements OnInit, OnDestroy {
               }
             }),
           )
-          .subscribe((collection: Collection | boolean) => {
+          .subscribe(async (collection: Collection | boolean) => {
             if (collection) {
               if (!this.isCreation) {
                 this.collection = collection as Collection;
                 this.formService.setModel(collection as Collection);
               }
               this.formService.buildFields();
-              loading.dismiss();
+              await loading.dismiss();
               this.cdRef.markForCheck();
             }
           });
