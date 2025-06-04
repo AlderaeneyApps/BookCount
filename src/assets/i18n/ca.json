@@ -39,7 +39,8 @@
         "VIEW": "Veure serie"
       },
       "FIELDS": {
-        "NAME": "Nom"
+        "NAME": "Nom",
+        "PICTURE": "Imatge"
       }
     },
     "LIST": {

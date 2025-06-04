@@ -72,7 +72,8 @@ export class VolumesStorageService {
 
   async updateVolumeById(id: number, body: Volume) {
     const sql = `UPDATE volumes
-                 SET volumeNumber=${body.volumeNumber} & price = ${body.price}
+                 SET volumeNumber=${body.volumeNumber},
+                     price       = ${body.price}
                  WHERE id = ${id}`;
     await this.db.run(sql);
   }

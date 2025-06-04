@@ -102,7 +102,7 @@ export class SeriesFormPage implements OnInit {
       await this.seriesStorageService.addSeries(body);
       await this.router.navigate(['/series', this.collectionId]);
     } else {
-      await this.seriesStorageService.updateSeriesById(this.seriesId, body.name, this.collectionId);
+      await this.seriesStorageService.updateSeriesById(this.seriesId, body, this.collectionId);
       await this.router.navigate(['/series', this.collectionId]);
     }
   }

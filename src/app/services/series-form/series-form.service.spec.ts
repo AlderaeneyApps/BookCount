@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SQLiteService } from './sqlite.service';
+import { SeriesFormService } from './series-form.service';
 
-describe('SqliteService', () => {
-  let service: SQLiteService;
+describe('SeriesFormService', () => {
+  let service: SeriesFormService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(SQLiteService);
+    service = TestBed.inject(SeriesFormService);
   });
 
   it('should be created', () => {

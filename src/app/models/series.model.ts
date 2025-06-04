@@ -1,7 +1,7 @@
 export interface Series {
-  id: number;
-  name: string;
+  id?: number;
+  name?: string;
   price?: number;
   picture?: string;
-  collectionId: number;
+  collectionId?: number;
 }

@@ -72,15 +72,17 @@ export class SeriesStorageService {
   }
 
   async addSeries(body: Series) {
-    const sql = `INSERT INTO series (name, collectionId)
-                 VALUES (?, ?);`;
+    const sql = `INSERT INTO series (name, picture, collectionId)
+                 VALUES (?, ?, ?);`;
     await this.db.run(sql, [body.name, body.collectionId]);
-    await this.getSeries(body.collectionId);
+    await this.getSeries(body.collectionId!);
   }
 
-  async updateSeriesById(id: number, name: string, collectionId: number) {
+  async updateSeriesById(id: number, body: Series, collectionId: number) {
     const sql = `UPDATE series
-                 SET name=${name}
+                 SET name=${body.name},
+                     picture=${body.picture},
+                     price=${body.price}
                  WHERE id = ${id}`;
     await this.db.run(sql);
     await this.getSeries(collectionId);

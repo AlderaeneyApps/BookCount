@@ -33,7 +33,7 @@ export class SeriesListItemComponent implements OnInit {
   async ngOnInit() {
     try {
       const values: DBSQLiteValues = await this.volumeStorageService.countVolumesRelatedToSeries(
-        this.series.id,
+        this.series.id!,
       );
       const { values: count } = values;
       this.volumesCount = count?.[0] ?? 0;
@@ -44,6 +44,6 @@ export class SeriesListItemComponent implements OnInit {
   }
 
   public async deleteSeries() {
-    await this.seriesStorageService.deleteSeriesById(this.series.id, this.series.collectionId);
+    await this.seriesStorageService.deleteSeriesById(this.series.id!, this.series.collectionId!);
   }
 }
