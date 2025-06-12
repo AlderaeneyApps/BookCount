@@ -18,7 +18,8 @@
     "ionic:android": "npm run remove:sql:wasm && ionic capacitor build android",
     "electron:install": "cd electron && npm install && cd ..",
     "electron:prepare": "npm run remove:sql:wasm && ng build && npx cap sync @capacitor-community/electron && npx cap copy @capacitor-community/electron",
-    "electron:start": "npm run electron:prepare && cd electron && npm run electron:start"
+    "electron:start": "npm run electron:prepare && cd electron && npm run electron:start",
+    "fix-xcode": "sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer"
   },
   "private": true,
   "dependencies": {

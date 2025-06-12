@@ -15,7 +15,7 @@
     <ion-grid>
       <ion-row class="ion-justify-content-between">
         <ion-col>
-          {{ 'SERIES.LIST.VOLUME_AMOUNT' | transloco: { amount: volumesCount } }}
+          {{ 'SERIES.LIST.VOLUME_AMOUNT' | transloco: { amount: volumesCount ?? 0 } }}
         </ion-col>
         <ion-col class="ion-justify-content-end" style="display: flex">
           <ion-button (click)="deleteSeries()" aria-label="Delete" color="danger">
