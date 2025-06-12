@@ -1,11 +1,13 @@
 <ion-card>
   <ion-card-header>
-    <img
-      [alt]="series.name"
-      [ngSrc]="`data:image/jpeg;base64, ${series.picture}`"
-      height="500px"
-      width="500px"
-    />
+    @if (series.picture) {
+      <img
+        [alt]="series.name"
+        [ngSrc]="`data:image/jpeg;base64, ${series.picture}`"
+        height="500px"
+        width="500px"
+      />
+    }
     <ion-card-title>{{ series.name }}</ion-card-title>
     <ion-card-subtitle>{{ 'SERIES.LIST.TITLE' | transloco }}</ion-card-subtitle>
   </ion-card-header>
@@ -21,7 +23,7 @@
           </ion-button>
         </ion-col>
         <ion-col size="12">
-          <ion-button [routerLink]="['/series', series.id]" aria-label="GoToSeries" expand="block"
+          <ion-button [routerLink]="['/volumes', series.id]" aria-label="GoToSeries" expand="block"
             >{{ 'SERIES.LIST.GO_TO_SERIES' | transloco }}
           </ion-button>
         </ion-col>

@@ -74,7 +74,7 @@ export class SeriesStorageService {
   async addSeries(body: Series) {
     const sql = `INSERT INTO series (name, picture, collectionId)
                  VALUES (?, ?, ?);`;
-    await this.db.run(sql, [body.name, body.collectionId]);
+    await this.db.run(sql, [body.name, body.picture, body.collectionId]);
     await this.getSeries(body.collectionId!);
   }
 

@@ -51,6 +51,7 @@ export class SeriesFormV2Page implements OnInit, OnDestroy {
     this.mode = this.route.snapshot.data['mode'];
     this.isCreation = this.mode === ACTION_TYPE.CREATE;
     this.title = `SERIES.FORM.TITLES.${this.mode.toUpperCase()}`;
+    this.collectionId = this.route.snapshot.params['collectionId'];
 
     formService.fields$.pipe(takeUntil(this.ngDestroy$)).subscribe(fields => {
       this.fields = fields;
@@ -76,7 +77,6 @@ export class SeriesFormV2Page implements OnInit, OnDestroy {
           .pipe(
             switchMap(res => {
               if (res) {
-                this.collectionId = this.route.snapshot.params['collectionId'];
                 this.seriesId = this.route.snapshot.params['seriesId'];
                 return this.seriesStorageService.getSeriesById(this.seriesId);
               } else {
@@ -109,11 +109,15 @@ export class SeriesFormV2Page implements OnInit, OnDestroy {
       return;
     }
 
-    const data = this.form.getRawValue() as Series;
+    let data = this.form.getRawValue() as Series;
     if (this.isCreation) {
       try {
+        data = {
+          ...data,
+          collectionId: this.collectionId,
+        };
         await this.seriesStorageService.addSeries(data!);
-        await this.router.navigateByUrl(`/collections/${this.collectionId}`);
+        await this.router.navigate([`/series`, this.collectionId]);
       } catch (e) {
         console.error(e);
       }

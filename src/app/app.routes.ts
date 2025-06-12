@@ -42,7 +42,7 @@ export const routes: Routes = [
   {
     path: 'series/create/:collectionId',
     loadComponent: () =>
-      import('./pages/series/series-form/series-form.page').then(m => m.SeriesFormPage),
+      import('./pages/series/series-form-v2/series-form-v2.page').then(m => m.SeriesFormV2Page),
     data: {
       mode: ACTION_TYPE.CREATE,
     },
@@ -50,7 +50,7 @@ export const routes: Routes = [
   {
     path: 'series/edit/:seriesId/:collectionId',
     loadComponent: () =>
-      import('./pages/series/series-form/series-form.page').then(m => m.SeriesFormPage),
+      import('./pages/series/series-form-v2/series-form-v2.page').then(m => m.SeriesFormV2Page),
     data: {
       mode: ACTION_TYPE.EDIT,
     },
