@@ -9,8 +9,8 @@ describe('VolumeListItemComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ VolumeListItemComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [VolumeListItemComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(VolumeListItemComponent);

@@ -29,5 +29,7 @@ export class VolumeListItemComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    return;
+  }
 }

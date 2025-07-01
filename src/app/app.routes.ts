@@ -57,6 +57,7 @@ export const routes: Routes = [
   },
   {
     path: 'volumes-home',
-    loadComponent: () => import('./pages/volumes/volumes-home/volumes-home.page').then( m => m.VolumesHomePage)
+    loadComponent: () =>
+      import('./pages/volumes/volumes-home/volumes-home.page').then(m => m.VolumesHomePage),
   },
 ];

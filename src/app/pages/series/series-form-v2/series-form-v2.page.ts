@@ -26,7 +26,7 @@ import { SeriesStorageService } from '../../../sql-services/series-storage/serie
     SubmitButtonComponent,
     TranslocoPipe,
   ],
-  providers: [SeriesFormService]
+  providers: [SeriesFormService],
 })
 export class SeriesFormV2Page implements OnInit, OnDestroy {
   public mode: ACTION_TYPE = ACTION_TYPE.CREATE;

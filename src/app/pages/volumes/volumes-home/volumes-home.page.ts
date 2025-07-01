@@ -8,13 +8,12 @@ import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/stan
   templateUrl: './volumes-home.page.html',
   styleUrls: ['./volumes-home.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule],
 })
 export class VolumesHomePage implements OnInit {
-
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
+    return;
   }
-
 }
