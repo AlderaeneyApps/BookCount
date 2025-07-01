@@ -89,7 +89,7 @@ export class VolumesStorageService {
     const sql = `SELECT *
                  FROM volumes
                  WHERE id = ${id}`;
-    return (await this.db.query(sql)).values as Volume;
+    return (await this.db.query(sql)).values as Volume[];
   }
 
   async countVolumesRelatedToSeries(seriesId: number) {

@@ -9,6 +9,7 @@ import {
   PermissionStatus,
 } from '@capacitor/camera';
 import { FormColumnProps } from '../../models';
+import { ReactiveFormsModule } from '@angular/forms';
 
 export interface PicturePickerOptions extends FormColumnProps {
   labelHeader: string;
@@ -21,7 +22,7 @@ export interface PicturePickerOptions extends FormColumnProps {
   selector: 'app-picture-picker',
   templateUrl: './picture-picker.component.html',
   styleUrls: ['./picture-picker.component.scss'],
-  imports: [IonicModule, TranslocoPipe],
+  imports: [IonicModule, TranslocoPipe, ReactiveFormsModule],
 })
 export class PicturePickerComponent extends FieldType<FieldTypeConfig<PicturePickerOptions>> {
   constructor(private translate: TranslocoService) {

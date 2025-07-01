@@ -55,4 +55,8 @@ export const routes: Routes = [
       mode: ACTION_TYPE.EDIT,
     },
   },
+  {
+    path: 'volumes-home',
+    loadComponent: () => import('./pages/volumes/volumes-home/volumes-home.page').then( m => m.VolumesHomePage)
+  },
 ];

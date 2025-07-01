@@ -1,0 +1,33 @@
+<ion-card>
+  <ion-card-header>
+    @if (series.picture) {
+      <img
+        [alt]="series.name"
+        [ngSrc]="`data:image/jpeg;base64, ${series.picture}`"
+        height="500px"
+        width="500px"
+      />
+    }
+    <ion-card-title>{{ series.name }}</ion-card-title>
+    <ion-card-subtitle>{{ 'SERIES.LIST.TITLE' | transloco }}</ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-grid>
+      <ion-row class="ion-justify-content-between">
+        <ion-col>
+          {{ 'SERIES.LIST.VOLUME_AMOUNT' | transloco: { amount: volumesCount ?? 0 } }}
+        </ion-col>
+        <ion-col class="ion-justify-content-end" style="display: flex">
+          <ion-button (click)="deleteSeries()" aria-label="Delete" color="danger">
+            <ion-icon name="trash-sharp"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col size="12">
+          <ion-button [routerLink]="['/volumes', series.id]" aria-label="GoToSeries" expand="block"
+          >{{ 'SERIES.LIST.GO_TO_SERIES' | transloco }}
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>

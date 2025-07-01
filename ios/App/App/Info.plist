@@ -2,10 +2,16 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This is used to pick pictures from the user&apos;s gallery to be displayed in the book&apos;s list of volumes and series, these pictures are never sent to any server as the application runs entirely locally</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>This is used to pick pictures from the user&apos;s gallery to be displayed in the book&apos;s list of volumes, these pictures are never sent to any server because the app runs entirely locally</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This is used to take photos of your books to be displayed inside the book&apos;s list of volumes, these pictures are never sent to any server since the app works completely in local</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-        <string>BookCounter</string>
+	<string>BookCounter</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>

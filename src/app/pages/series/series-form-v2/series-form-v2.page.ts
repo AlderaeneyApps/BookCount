@@ -8,7 +8,7 @@ import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { ACTION_TYPE, Collection, Series } from '../../../models';
 import { Observable, of, Subject, switchMap, takeUntil } from 'rxjs';
 import { FormlyFieldConfig } from '@ngx-formly/core';
-import { CollectionFormService } from '../../../services';
+import { CollectionFormService, SeriesFormService } from '../../../services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SeriesStorageService } from '../../../sql-services/series-storage/series-storage.service';
 
@@ -26,6 +26,7 @@ import { SeriesStorageService } from '../../../sql-services/series-storage/serie
     SubmitButtonComponent,
     TranslocoPipe,
   ],
+  providers: [SeriesFormService]
 })
 export class SeriesFormV2Page implements OnInit, OnDestroy {
   public mode: ACTION_TYPE = ACTION_TYPE.CREATE;
@@ -40,7 +41,7 @@ export class SeriesFormV2Page implements OnInit, OnDestroy {
   private ngDestroy$ = new Subject<void>();
 
   constructor(
-    private formService: CollectionFormService,
+    private formService: SeriesFormService,
     private seriesStorageService: SeriesStorageService,
     private route: ActivatedRoute,
     private router: Router,
