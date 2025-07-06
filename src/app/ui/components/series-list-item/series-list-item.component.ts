@@ -35,8 +35,9 @@ export class SeriesListItemComponent implements OnInit {
       const values: DBSQLiteValues = await this.volumeStorageService.countVolumesRelatedToSeries(
         this.series.id!,
       );
-      const { values: count } = values;
-      this.volumesCount = count?.[0] ?? 0;
+      const { values: count } = values as any;
+      this.volumesCount = count?.['COUNT(id)'] ?? 0;
+      console.log(this.volumesCount);
     } catch (e) {
       console.error(e);
       this.volumesCount = 0;

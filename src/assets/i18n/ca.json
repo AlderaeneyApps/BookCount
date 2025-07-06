@@ -25,7 +25,7 @@
     },
     "LIST": {
       "TITLE": "Col·lecció",
-      "SERIES_AMOUNT": "Quantitat de series: {{amount}}",
+      "SERIES_AMOUNT": "Series: {{amount}}",
       "NO_COLLECTIONS": "No hi ha col·leccións, afegix una nova",
       "GO_TO_COLLECTION": "Anar a la col·lecció",
       "DELETE_COLLECTION": "Estás segur que vols esborrar la col·lecció?"
@@ -46,7 +46,7 @@
     "LIST": {
       "TITLE": "Serie",
       "GO_TO_SERIES": "Anar a la serie",
-      "VOLUME_AMOUNT": "Quantitat de volums"
+      "VOLUME_AMOUNT": "Volums: {{amount}}"
     }
   }
 }

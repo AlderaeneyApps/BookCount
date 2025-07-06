@@ -89,5 +89,5 @@
     "typescript": "~5.6.3",
     "vm-browserify": "^1.1.2"
   },
-  "description": "An Ionic project"
+  "description": "Mobile application for keeping track of owned books or other types of collections"
 }

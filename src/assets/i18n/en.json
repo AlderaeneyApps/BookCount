@@ -25,7 +25,7 @@
     },
     "LIST": {
       "TITLE": "Collection",
-      "SERIES_AMOUNT": "Series amount: {{amount}}",
+      "SERIES_AMOUNT": "Series: {{amount}}",
       "NO_COLLECTIONS": "There's no collections, add a new one",
       "GO_TO_COLLECTION": "Go to collection",
       "DELETE_COLLECTION": "Are you sure you want to delete the collection?"
@@ -46,7 +46,7 @@
     "LIST": {
       "TITLE": "Series",
       "GO_TO_SERIES": "Go to series",
-      "VOLUME_AMOUNT": "Amount of volumes"
+      "VOLUME_AMOUNT": "Volumes: {{amount}}"
     }
   }
 }
