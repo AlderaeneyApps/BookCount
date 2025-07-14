@@ -5,10 +5,10 @@ import { CollectionStorageService } from '../../../sql-services/collection-stora
 import { TranslocoPipe } from '@jsverse/transloco';
 import { RouterLink } from '@angular/router';
 import { Collection } from '../../../models';
-import { of, Subject, switchMap } from 'rxjs';
+import { Subject } from 'rxjs';
 import { CollectionListItemComponent } from '../../../ui/components/collection-list-item/collection-list-item.component';
 import { PageComponent } from '../../../ui/components/page/page.component';
-import { IonicModule } from '@ionic/angular';
+import { InfiniteScrollCustomEvent, IonicModule } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { add } from 'ionicons/icons';
 
@@ -45,22 +45,26 @@ export class CollectionsHomePage implements OnInit, OnDestroy {
 
   async ngOnInit() {
     try {
-      this.collectionStorageService
-        .collectionState()
-        .pipe(
-          switchMap(res => {
-            if (res) {
-              return this.collectionStorageService.fetchCollections();
-            } else {
-              return of([]);
-            }
-          }),
-        )
-        .subscribe((collections: Collection[]) => {
-          this.collections = collections;
-        });
+      this.collections = await this.getPaginatedCollections(50, 0);
     } catch (err) {
       throw new Error(`Error: ${err}`);
     }
+  }
+
+  async onIonInfinite(event: InfiniteScrollCustomEvent) {
+    try {
+      const gotCollections: Collection[] = await this.getPaginatedCollections(
+        50,
+        Number(this.collections?.length) + 1,
+      );
+      this.collections?.push(...gotCollections);
+      await event.target.complete();
+    } catch (err) {
+      throw new Error(`Error: ${err}`);
+    }
+  }
+
+  private async getPaginatedCollections(limit: number, start: number): Promise<Collection[]> {
+    return await this.collectionStorageService.getCollectionsPaginated(limit, start);
   }
 }

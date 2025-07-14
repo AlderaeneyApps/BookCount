@@ -10,19 +10,18 @@
           {{ 'COLLECTIONS.LIST.SERIES_AMOUNT' | transloco: { amount: amountOfRelatedSeries } }}
         </ion-col>
         <ion-col class="ion-justify-content-end" style="display: flex">
-          <ion-button (click)="deleteCollection()" aria-label="Delete" color="danger">
-            <ion-icon name="trash-sharp"></ion-icon>
-          </ion-button>
-        </ion-col>
-        <ion-col size="12">
-          <ion-button
-            [routerLink]="['/series', collection.id]"
-            aria-label="GoToCollection"
-            expand="block"
-            >{{ 'COLLECTIONS.LIST.GO_TO_COLLECTION' | transloco }}
+          <ion-button aria-label="Actions" id="open-action-sheet">
+            <ion-icon name="cog-sharp"></ion-icon>
           </ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>
   </ion-card-content>
 </ion-card>
+
+<ion-action-sheet
+  trigger="open-action-sheet"
+  [header]="'GLOBAL.ACTIONS' | transloco"
+  [buttons]="actionSheetButtons"
+  (didDismiss)="onActionClicked($event)"
+></ion-action-sheet>

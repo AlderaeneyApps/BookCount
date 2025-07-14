@@ -10,7 +10,10 @@
     "SURE_DELETE": "¿Borrar?",
     "DELETE": "Borrar",
     "CANCEL": "Cancelar",
-    "PICK_IMAGE": "Seleccionar imagen"
+    "PICK_IMAGE": "Seleccionar imagen",
+    "EDIT": "Editar",
+    "ACTIONS": "Acciones",
+    "VIEW": "Ver"
   },
   "COLLECTIONS": {
     "FORM": {
@@ -46,7 +49,8 @@
     "LIST": {
       "TITLE": "Serie",
       "GO_TO_SERIES": "Ir a la serie",
-      "VOLUME_AMOUNT": "Tomos: {{amount}}"
+      "VOLUME_AMOUNT": "Tomos: {{amount}}",
+      "DELETE_SERIES": "¿Estás seguro que quieres borrar la serie?"
     }
   }
 }

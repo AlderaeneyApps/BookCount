@@ -1,32 +1,37 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Series } from '../../../models';
-import { IonicModule } from '@ionic/angular';
-import { TranslocoPipe } from '@jsverse/transloco';
+import { ACTION_TYPE, ActionSheetOptions, Series } from '../../../models';
+import { AlertController, IonicModule } from '@ionic/angular';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { SeriesStorageService } from '../../../sql-services/series-storage/series-storage.service';
-import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { VolumesStorageService } from '../../../sql-services/volumes-storage/volumes-storage.service';
 import { DBSQLiteValues } from '@capacitor-community/sqlite';
 import { addIcons } from 'ionicons';
-import { trashSharp } from 'ionicons/icons';
+import { cogSharp } from 'ionicons/icons';
 import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-series-list-item',
   templateUrl: './series-list-item.component.html',
   styleUrls: ['./series-list-item.component.scss'],
-  imports: [IonicModule, TranslocoPipe, RouterLink, NgOptimizedImage],
+  imports: [IonicModule, TranslocoPipe, NgOptimizedImage],
 })
 export class SeriesListItemComponent implements OnInit {
   @Input() series!: Series;
 
   public volumesCount!: number;
 
+  public actionSheetButtons!: ActionSheetOptions[];
+
   constructor(
     private seriesStorageService: SeriesStorageService,
     private volumeStorageService: VolumesStorageService,
+    private alertController: AlertController,
+    private transloco: TranslocoService,
+    private router: Router,
   ) {
     addIcons({
-      trashSharp,
+      cogSharp,
     });
   }
 
@@ -42,9 +47,86 @@ export class SeriesListItemComponent implements OnInit {
       console.error(e);
       this.volumesCount = 0;
     }
+
+    this.actionSheetButtons = [
+      {
+        text: this.transloco.translate('GLOBAL.VIEW'),
+        data: {
+          action: ACTION_TYPE.VIEW,
+        },
+      },
+      {
+        text: this.transloco.translate('GLOBAL.EDIT'),
+        data: {
+          action: ACTION_TYPE.EDIT,
+        },
+      },
+      {
+        text: this.transloco.translate('GLOBAL.DELETE'),
+        role: 'destructive',
+        data: {
+          action: 'delete',
+        },
+      },
+      {
+        text: this.transloco.translate('GLOBAL.CANCEL'),
+        role: 'cancel',
+        data: {
+          action: 'cancel',
+        },
+      },
+    ];
+  }
+
+  private goToEdit(): void {
+    this.router.navigate(['/series/edit', this.series!.id, this.series!.collectionId]);
+  }
+
+  private goToView(): void {
+    this.router.navigate(['/volumes', this.series!.id]);
   }
 
   public async deleteSeries() {
-    await this.seriesStorageService.deleteSeriesById(this.series.id!, this.series.collectionId!);
+    const alert = await this.alertController.create({
+      header: this.transloco.translate('GLOBAL.SURE_DELETE'),
+      message: this.transloco.translate('SERIES.LIST.DELETE_SERIES'),
+      buttons: [
+        {
+          handler: async () => {
+            await this.seriesStorageService.deleteSeriesById(
+              this.series.id!,
+              this.series.collectionId!,
+            );
+            await alert.dismiss();
+          },
+          text: this.transloco.translate('GLOBAL.DELETE'),
+        },
+        {
+          text: this.transloco.translate('GLOBAL.CANCEL'),
+          handler: async () => {
+            await alert.dismiss();
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+
+  public onActionClicked(event: any) {
+    switch (event?.detail?.data?.action) {
+      case 'delete':
+        this.deleteSeries();
+        break;
+      case 'edit':
+        this.goToEdit();
+        break;
+      case 'view':
+        this.goToView();
+        break;
+
+      default:
+        return;
+    }
   }
 }

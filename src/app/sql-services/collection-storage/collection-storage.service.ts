@@ -91,4 +91,12 @@ export class CollectionStorageService {
                  WHERE id = ${id}`;
     return (await this.db.query(sql)).values as Collection;
   }
+
+  async getCollectionsPaginated(limit: number, start: number) {
+    const sql = `SELECT *
+                 FROM collection LIMIT ${limit}
+                 OFFSET ${start};`;
+
+    return (await this.db.query(sql)).values as Collection[];
+  }
 }
