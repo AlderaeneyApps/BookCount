@@ -56,8 +56,24 @@ export const routes: Routes = [
     },
   },
   {
-    path: 'volumes-home',
+    path: 'volumes',
     loadComponent: () =>
       import('./pages/volumes/volumes-home/volumes-home.page').then(m => m.VolumesHomePage),
+  },
+  {
+    path: 'volumes/create/:seriesId',
+    loadComponent: () =>
+      import('./pages/volumes/volumes-form/volumes-form.page').then(m => m.VolumesFormPage),
+    data: {
+      mode: ACTION_TYPE.CREATE,
+    },
+  },
+  {
+    path: 'volumes/edit/:volumeId/:seriesId',
+    loadComponent: () =>
+      import('./pages/volumes/volumes-form/volumes-form.page').then(m => m.VolumesFormPage),
+    data: {
+      mode: ACTION_TYPE.EDIT,
+    },
   },
 ];

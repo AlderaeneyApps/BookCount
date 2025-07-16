@@ -5,7 +5,6 @@ import { Toast } from '@capacitor/toast';
 import { SeriesStorageService } from './series-storage/series-storage.service';
 import { DB_BOOK_COUNTER } from '../constants';
 import { VolumesStorageService } from './volumes-storage/volumes-storage.service';
-import { PicturesStorageService } from './pictures-storage/pictures-storage.service';
 
 @Injectable()
 export class InitializeAppService {
@@ -17,7 +16,6 @@ export class InitializeAppService {
     private collectionStorageService: CollectionStorageService,
     private seriesStorageService: SeriesStorageService,
     private volumeStorageService: VolumesStorageService,
-    private picturesStorageService: PicturesStorageService,
   ) {}
 
   async initializeApp() {
@@ -31,7 +29,6 @@ export class InitializeAppService {
         await this.collectionStorageService.initializeDatabase(DB_BOOK_COUNTER);
         await this.seriesStorageService.initializeDatabase(DB_BOOK_COUNTER);
         await this.volumeStorageService.initializeDatabase(DB_BOOK_COUNTER);
-        await this.picturesStorageService.initializeDatabase(DB_BOOK_COUNTER);
         // Here Initialize MOCK_DATA if required
 
         // Initialize whatever database and/or MOCK_DATA you like

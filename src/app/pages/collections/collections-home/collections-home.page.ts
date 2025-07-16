@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CollectionStorageService } from '../../../sql-services/collection-storage/collection-storage.service';
@@ -32,7 +32,10 @@ export class CollectionsHomePage implements OnInit, OnDestroy {
 
   private destroy$: Subject<void> = new Subject<void>();
 
-  constructor(private collectionStorageService: CollectionStorageService) {
+  constructor(
+    private collectionStorageService: CollectionStorageService,
+    private cdRef: ChangeDetectorRef,
+  ) {
     addIcons({
       add,
     });
@@ -46,12 +49,13 @@ export class CollectionsHomePage implements OnInit, OnDestroy {
   async ngOnInit() {
     try {
       this.collections = await this.getPaginatedCollections(50, 0);
+      this.cdRef.markForCheck();
     } catch (err) {
       throw new Error(`Error: ${err}`);
     }
   }
 
-  async onIonInfinite(event: InfiniteScrollCustomEvent) {
+  public async onIonInfinite(event: InfiniteScrollCustomEvent) {
     try {
       const gotCollections: Collection[] = await this.getPaginatedCollections(
         50,
@@ -62,6 +66,11 @@ export class CollectionsHomePage implements OnInit, OnDestroy {
     } catch (err) {
       throw new Error(`Error: ${err}`);
     }
+  }
+
+  public async reloadCollections() {
+    this.collections = await this.getPaginatedCollections(50, 0);
+    this.cdRef.markForCheck();
   }
 
   private async getPaginatedCollections(limit: number, start: number): Promise<Collection[]> {

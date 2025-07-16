@@ -102,4 +102,13 @@ export class SeriesStorageService {
                  WHERE collectionId = ${collectionId}`;
     return await this.db.query(sql);
   }
+
+  async getSeriesPaginated(limit: number, start: number, collectionId: number) {
+    const sql = `SELECT *
+                 FROM series LIMIT ${limit}
+                 OFFSET ${start}
+                 WHERE collectionId = ${collectionId};`;
+
+    return (await this.db.query(sql)).values as Series[];
+  }
 }

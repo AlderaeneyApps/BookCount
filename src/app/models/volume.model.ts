@@ -3,4 +3,5 @@ export interface Volume {
   volumeNumber?: number;
   price?: number;
   seriesId?: number;
+  picture?: string;
 }

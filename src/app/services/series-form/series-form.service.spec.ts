@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { SeriesFormService } from './series-form.service';
 
-describe('SeriesFormService', () => {
+describe('VolumesFormService', () => {
   let service: SeriesFormService;
 
   beforeEach(() => {

@@ -1,29 +1,22 @@
 <ion-card>
   <ion-card-header>
-    @if (pictures) {
-      @for (picture of pictures; track picture.id) {
-        <img
-          [alt]="series.name"
-          [ngSrc]="`data:image/jpeg;base64, ${series.picture}`"
-          height="500px"
-          width="500px"
-        />
-      }
+    @if (volume.picture) {
+      <img
+        [alt]="volume.volumeNumber"
+        [ngSrc]="`data:image/jpeg;base64, ${volume.picture}`"
+        height="500px"
+        width="500px"
+      />
     }
-    <ion-card-title>{{ series.name }}</ion-card-title>
-    <ion-card-subtitle>{{ 'SERIES.LIST.TITLE' | transloco }}</ion-card-subtitle>
+    <ion-card-title>{{ volume.volumeNumber }}</ion-card-title>
+    <ion-card-subtitle>{{ 'VOLUMES.LIST.TITLE' | transloco }}</ion-card-subtitle>
   </ion-card-header>
   <ion-card-content>
     <ion-grid>
       <ion-row class="ion-justify-content-between">
         <ion-col class="ion-justify-content-end" style="display: flex">
-          <ion-button (click)="deleteSeries()" aria-label="Delete" color="danger">
-            <ion-icon name="trash-sharp"></ion-icon>
-          </ion-button>
-        </ion-col>
-        <ion-col size="12">
-          <ion-button [routerLink]="['/volumes', series.id]" aria-label="GoToSeries" expand="block"
-            >{{ 'SERIES.LIST.GO_TO_SERIES' | transloco }}
+          <ion-button aria-label="Actions" id="open-action-sheet">
+            <ion-icon name="cog-sharp"></ion-icon>
           </ion-button>
         </ion-col>
       </ion-row>

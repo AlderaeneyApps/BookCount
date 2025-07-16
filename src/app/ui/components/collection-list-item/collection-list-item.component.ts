@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ACTION_TYPE, ActionSheetOptions, Collection } from '../../../models';
 import { SeriesStorageService } from '../../../sql-services/series-storage/series-storage.service';
 import { DBSQLiteValues } from '@capacitor-community/sqlite';
@@ -17,6 +17,9 @@ import { AlertController, IonicModule } from '@ionic/angular';
 })
 export class CollectionListItemComponent implements OnInit {
   @Input() collection!: Collection;
+
+  @Output() reloadCollections = new EventEmitter<void>();
+
   public amountOfRelatedSeries!: number;
 
   public actionSheetButtons!: ActionSheetOptions[];
@@ -91,6 +94,7 @@ export class CollectionListItemComponent implements OnInit {
         {
           handler: async () => {
             await this.collectionStorageService.deleteCollectionById(this.collection.id!);
+            this.reloadCollections.emit();
             await alert.dismiss();
           },
           text: this.transloco.translate('GLOBAL.DELETE'),

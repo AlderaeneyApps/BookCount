@@ -1,10 +1,15 @@
 <app-page title="MENUS.SERIES">
   @for (serie of series; track serie.id) {
-  <app-series-list-item [series]="serie"></app-series-list-item>
+    <app-series-list-item [series]="serie" (reloadSeries)="reloadSeries()"></app-series-list-item>
   }
+
   <ion-fab class="fixed-bottom">
     <ion-fab-button [routerLink]="['/series/create', collectionId]">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+
+  <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </app-page>

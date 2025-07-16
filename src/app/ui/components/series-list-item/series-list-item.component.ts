@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ACTION_TYPE, ActionSheetOptions, Series } from '../../../models';
 import { AlertController, IonicModule } from '@ionic/angular';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
@@ -19,7 +19,9 @@ import { NgOptimizedImage } from '@angular/common';
 export class SeriesListItemComponent implements OnInit {
   @Input() series!: Series;
 
-  public volumesCount!: number;
+  @Output() reloadSeries: EventEmitter<void> = new EventEmitter<void>();
+
+  public volumesCount: number | undefined;
 
   public actionSheetButtons!: ActionSheetOptions[];
 
@@ -78,14 +80,6 @@ export class SeriesListItemComponent implements OnInit {
     ];
   }
 
-  private goToEdit(): void {
-    this.router.navigate(['/series/edit', this.series!.id, this.series!.collectionId]);
-  }
-
-  private goToView(): void {
-    this.router.navigate(['/volumes', this.series!.id]);
-  }
-
   public async deleteSeries() {
     const alert = await this.alertController.create({
       header: this.transloco.translate('GLOBAL.SURE_DELETE'),
@@ -97,6 +91,7 @@ export class SeriesListItemComponent implements OnInit {
               this.series.id!,
               this.series.collectionId!,
             );
+            this.reloadSeries.emit();
             await alert.dismiss();
           },
           text: this.transloco.translate('GLOBAL.DELETE'),
@@ -128,5 +123,13 @@ export class SeriesListItemComponent implements OnInit {
       default:
         return;
     }
+  }
+
+  private goToEdit(): void {
+    this.router.navigate(['/series/edit', this.series!.id, this.series!.collectionId]);
+  }
+
+  private goToView(): void {
+    this.router.navigate(['/volumes', this.series!.id]);
   }
 }

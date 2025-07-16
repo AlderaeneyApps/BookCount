@@ -1,48 +1,47 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormsModule } from '@angular/forms';
+import { FormlyComponent, SubmitButtonComponent } from '../../../formly';
 import { IonicModule, LoadingController } from '@ionic/angular';
-import { FormlyModule, SubmitButtonComponent } from '../../../formly';
 import { PageComponent } from '../../../ui/components/page/page.component';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
-import { ACTION_TYPE, Collection, Series } from '../../../models';
-import { Observable, of, Subject, switchMap, takeUntil } from 'rxjs';
+import { ACTION_TYPE, Volume } from '../../../models';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { FormlyFieldConfig } from '@ngx-formly/core';
-import { SeriesFormService } from '../../../services';
+import { VolumesFormService } from '../../../services';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SeriesStorageService } from '../../../sql-services/series-storage/series-storage.service';
+import { VolumesStorageService } from '../../../sql-services/volumes-storage/volumes-storage.service';
 
 @Component({
-  selector: 'app-series-form-v2',
-  templateUrl: './series-form-v2.page.html',
-  styleUrls: ['./series-form-v2.page.scss'],
+  selector: 'app-volumes-form',
+  templateUrl: './volumes-form.page.html',
+  styleUrls: ['./volumes-form.page.scss'],
   standalone: true,
   imports: [
-    IonicModule,
     CommonModule,
     FormsModule,
-    FormlyModule,
+    FormlyComponent,
+    IonicModule,
     PageComponent,
     SubmitButtonComponent,
     TranslocoPipe,
   ],
-  providers: [SeriesFormService],
 })
-export class SeriesFormV2Page implements OnInit, OnDestroy {
+export class VolumesFormPage implements OnInit, OnDestroy {
   public mode: ACTION_TYPE = ACTION_TYPE.CREATE;
   public isCreation: boolean = true;
   public title: string;
   public form: FormGroup = new FormGroup({});
-  public model$!: Observable<Collection>;
+  public model$!: Observable<Volume>;
   public fields!: FormlyFieldConfig[];
-  private collectionId!: number;
   private seriesId!: number;
-  private series!: Series;
+  private volumeId!: number;
+  private volume!: Volume;
   private ngDestroy$ = new Subject<void>();
 
   constructor(
-    private formService: SeriesFormService,
-    private seriesStorageService: SeriesStorageService,
+    private formService: VolumesFormService,
+    private volumeStorageService: VolumesStorageService,
     private route: ActivatedRoute,
     private router: Router,
     private loadingCtrl: LoadingController,
@@ -51,8 +50,8 @@ export class SeriesFormV2Page implements OnInit, OnDestroy {
   ) {
     this.mode = this.route.snapshot.data['mode'];
     this.isCreation = this.mode === ACTION_TYPE.CREATE;
-    this.title = `SERIES.FORM.TITLES.${this.mode.toUpperCase()}`;
-    this.collectionId = this.route.snapshot.params['collectionId'];
+    this.title = `VOLUMES.FORM.TITLES.${this.mode.toUpperCase()}`;
+    this.seriesId = this.route.snapshot.params['seriesId'];
 
     formService.fields$.pipe(takeUntil(this.ngDestroy$)).subscribe(fields => {
       this.fields = fields;
@@ -73,29 +72,16 @@ export class SeriesFormV2Page implements OnInit, OnDestroy {
         });
         await loading.present();
         this.cdRef.markForCheck();
-        this.seriesStorageService
-          .seriesState()
-          .pipe(
-            switchMap(res => {
-              if (res) {
-                this.seriesId = this.route.snapshot.params['seriesId'];
-                return this.seriesStorageService.getSeriesById(this.seriesId);
-              } else {
-                return of(false);
-              }
-            }),
-          )
-          .subscribe(async (series: Series[] | boolean) => {
-            if (series) {
-              if (!this.isCreation) {
-                this.series = (series as Series[])[0];
-                this.formService.setModel(this.series);
-              }
-              this.formService.buildFields();
-              await loading.dismiss();
-              this.cdRef.markForCheck();
-            }
-          });
+        this.volumeId = this.route.snapshot.params['volumeId'];
+        const tmpVolume = await this.volumeStorageService.getVolumeById(this.volumeId);
+        if (tmpVolume) {
+          this.volume = (tmpVolume as Volume[])[0];
+          this.formService.setModel(this.volume);
+        }
+
+        this.formService.buildFields();
+        await loading.dismiss();
+        this.cdRef.markForCheck();
       } else {
         this.formService.buildFields();
       }
@@ -110,24 +96,22 @@ export class SeriesFormV2Page implements OnInit, OnDestroy {
       return;
     }
 
-    let data = this.form.getRawValue() as Series;
+    let data: Volume = this.form.getRawValue() as Volume;
     if (this.isCreation) {
       try {
         data = {
           ...data,
-          collectionId: this.collectionId,
+          seriesId: this.seriesId,
         };
-        await this.seriesStorageService.addSeries(data!);
-        await this.router.navigate([`/series`, this.collectionId]);
+        await this.volumeStorageService.addVolume(data!);
+        await this.router.navigate([`/volumes`, this.seriesId]);
       } catch (e) {
         console.error(e);
       }
     } else {
-      this.seriesStorageService
-        .updateSeriesById(this.seriesId, data, this.collectionId)
-        .then(() => {
-          this.router.navigate(['/series', this.collectionId]);
-        });
+      this.volumeStorageService.updateVolumeById(this.volumeId, data).then(() => {
+        this.router.navigate([`/volumes/${this.seriesId}`]);
+      });
     }
   }
 }

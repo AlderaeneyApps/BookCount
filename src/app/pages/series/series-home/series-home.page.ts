@@ -1,14 +1,14 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PageComponent } from '../../../ui/components/page/page.component';
-import { IonicModule } from '@ionic/angular';
+import { InfiniteScrollCustomEvent, IonicModule } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { add } from 'ionicons/icons';
 import { SeriesStorageService } from '../../../sql-services/series-storage/series-storage.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { Series } from '../../../models';
-import { of, Subject, switchMap, takeUntil } from 'rxjs';
+import { Collection, Series } from '../../../models';
+import { Subject } from 'rxjs';
 import { SeriesListItemComponent } from '../../../ui/components/series-list-item/series-list-item.component';
 
 @Component({
@@ -34,6 +34,7 @@ export class SeriesHomePage implements OnInit, OnDestroy {
   constructor(
     private seriesStorageService: SeriesStorageService,
     private route: ActivatedRoute,
+    private cdRef: ChangeDetectorRef,
   ) {
     addIcons({
       add,
@@ -48,24 +49,32 @@ export class SeriesHomePage implements OnInit, OnDestroy {
   async ngOnInit() {
     try {
       this.collectionId = this.route.snapshot.params['id'];
-      await this.seriesStorageService.getSeries(this.collectionId);
-      this.seriesStorageService
-        .seriesState()
-        .pipe(
-          takeUntil(this.destroy$),
-          switchMap(res => {
-            if (res) {
-              return this.seriesStorageService.fetchSeries();
-            } else {
-              return of([]);
-            }
-          }),
-        )
-        .subscribe((series: Series[]) => {
-          this.series = series;
-        });
+      this.series = await this.getPaginatedSeries(50, 0);
+      this.cdRef.markForCheck();
     } catch (e) {
       this.series = [];
     }
+  }
+
+  public async reloadSeries() {
+    this.series = await this.getPaginatedSeries(50, 0);
+    this.cdRef.markForCheck();
+  }
+
+  public async onIonInfinite(event: InfiniteScrollCustomEvent) {
+    try {
+      const gotSeries: Series[] = await this.getPaginatedSeries(
+        50,
+        Number(this.series?.length) + 1,
+      );
+      this.series?.push(...gotSeries);
+      await event.target.complete();
+    } catch (err) {
+      throw new Error(`Error: ${err}`);
+    }
+  }
+
+  private async getPaginatedSeries(limit: number, start: number): Promise<Collection[]> {
+    return await this.seriesStorageService.getSeriesPaginated(limit, start, this.collectionId);
   }
 }
