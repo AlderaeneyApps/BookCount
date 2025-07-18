@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CollectionStorageService } from '../../../sql-services/collection-storage/collection-storage.service';
@@ -8,7 +8,7 @@ import { Collection } from '../../../models';
 import { Subject } from 'rxjs';
 import { CollectionListItemComponent } from '../../../ui/components/collection-list-item/collection-list-item.component';
 import { PageComponent } from '../../../ui/components/page/page.component';
-import { InfiniteScrollCustomEvent, IonicModule } from '@ionic/angular';
+import { InfiniteScrollCustomEvent, IonicModule, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { add } from 'ionicons/icons';
 
@@ -27,7 +27,7 @@ import { add } from 'ionicons/icons';
     RouterLink,
   ],
 })
-export class CollectionsHomePage implements OnInit, OnDestroy {
+export class CollectionsHomePage implements ViewDidLeave, ViewDidEnter {
   public collections: Collection[] | undefined = undefined;
 
   private destroy$: Subject<void> = new Subject<void>();
@@ -41,15 +41,15 @@ export class CollectionsHomePage implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
+  ionViewDidLeave(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
 
-  async ngOnInit() {
+  async ionViewDidEnter() {
     try {
       this.collections = await this.getPaginatedCollections(50, 0);
-      this.cdRef.markForCheck();
+      this.cdRef.detectChanges();
     } catch (err) {
       throw new Error(`Error: ${err}`);
     }

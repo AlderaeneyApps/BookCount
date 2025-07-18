@@ -98,4 +98,13 @@ export class VolumesStorageService {
                  WHERE seriesId = ${seriesId}`;
     return await this.db.query(sql);
   }
+
+  async getVolumesPaginated(limit: number, start: number, seriesId: number) {
+    const sql = `SELECT *
+                 FROM volumes
+                 WHERE seriesId = ${seriesId}
+                 LIMIT ${limit} OFFSET ${start};`;
+
+    return (await this.db.query(sql)).values as Volume[];
+  }
 }

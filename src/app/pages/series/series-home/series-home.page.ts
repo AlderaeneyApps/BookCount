@@ -1,8 +1,8 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PageComponent } from '../../../ui/components/page/page.component';
-import { InfiniteScrollCustomEvent, IonicModule } from '@ionic/angular';
+import { InfiniteScrollCustomEvent, IonicModule, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { add } from 'ionicons/icons';
 import { SeriesStorageService } from '../../../sql-services/series-storage/series-storage.service';
@@ -25,7 +25,7 @@ import { SeriesListItemComponent } from '../../../ui/components/series-list-item
     SeriesListItemComponent,
   ],
 })
-export class SeriesHomePage implements OnInit, OnDestroy {
+export class SeriesHomePage implements ViewDidEnter, ViewDidLeave {
   public collectionId!: number;
   public series!: Series[];
 
@@ -41,16 +41,16 @@ export class SeriesHomePage implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
+  ionViewDidLeave(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
 
-  async ngOnInit() {
+  async ionViewDidEnter() {
     try {
       this.collectionId = this.route.snapshot.params['id'];
       this.series = await this.getPaginatedSeries(50, 0);
-      this.cdRef.markForCheck();
+      this.cdRef.detectChanges();
     } catch (e) {
       this.series = [];
     }

@@ -44,7 +44,6 @@ export class SeriesListItemComponent implements OnInit {
       );
       const { values: count } = values as any;
       this.volumesCount = count?.['COUNT(id)'] ?? 0;
-      console.log(this.volumesCount);
     } catch (e) {
       console.error(e);
       this.volumesCount = 0;

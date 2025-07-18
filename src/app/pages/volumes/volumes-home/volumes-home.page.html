@@ -1,13 +1,15 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>volumes-home</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-page title="MENUS.VOLUMES">
+  @for (volume of volumes; track volume.id) {
+  <app-volume-list-item [volume]="volume" (reloadVolumes)="reloadVolumes()"></app-volume-list-item>
+  }
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">volumes-home</ion-title>
-    </ion-toolbar>
-  </ion-header>
-</ion-content>
+  <ion-fab class="fixed-bottom">
+    <ion-fab-button [routerLink]="['/volumes/create', seriesId]">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</app-page>

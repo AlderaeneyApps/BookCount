@@ -105,9 +105,9 @@ export class SeriesStorageService {
 
   async getSeriesPaginated(limit: number, start: number, collectionId: number) {
     const sql = `SELECT *
-                 FROM series LIMIT ${limit}
-                 OFFSET ${start}
-                 WHERE collectionId = ${collectionId};`;
+                 FROM series
+                 WHERE collectionId = ${collectionId}
+                 LIMIT ${limit} OFFSET ${start};`;
 
     return (await this.db.query(sql)).values as Series[];
   }

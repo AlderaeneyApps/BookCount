@@ -56,7 +56,7 @@ export const routes: Routes = [
     },
   },
   {
-    path: 'volumes',
+    path: 'volumes/:seriesId',
     loadComponent: () =>
       import('./pages/volumes/volumes-home/volumes-home.page').then(m => m.VolumesHomePage),
   },

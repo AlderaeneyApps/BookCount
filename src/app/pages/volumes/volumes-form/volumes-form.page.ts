@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormsModule } from '@angular/forms';
-import { FormlyComponent, SubmitButtonComponent } from '../../../formly';
+import { FormlyModule, SubmitButtonComponent } from '../../../formly';
 import { IonicModule, LoadingController } from '@ionic/angular';
 import { PageComponent } from '../../../ui/components/page/page.component';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
@@ -20,12 +20,13 @@ import { VolumesStorageService } from '../../../sql-services/volumes-storage/vol
   imports: [
     CommonModule,
     FormsModule,
-    FormlyComponent,
+    FormlyModule,
     IonicModule,
     PageComponent,
     SubmitButtonComponent,
     TranslocoPipe,
   ],
+  providers: [VolumesFormService],
 })
 export class VolumesFormPage implements OnInit, OnDestroy {
   public mode: ACTION_TYPE = ACTION_TYPE.CREATE;
