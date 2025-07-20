@@ -7,7 +7,7 @@ import { CollectionStorageService } from '../../../sql-services/collection-stora
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonicModule, LoadingController } from '@ionic/angular';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
-import { Observable, of, Subject, switchMap, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { CollectionFormService } from '../../../services';
 import { FormlyModule, SubmitButtonComponent } from '../../../formly';
@@ -70,29 +70,14 @@ export class CollectionFormV2Page implements OnInit, OnDestroy {
         });
         await loading.present();
         this.cdRef.markForCheck();
-        this.collectionStorageService
-          .collectionState()
-          .pipe(
-            switchMap(res => {
-              if (res) {
-                this.collectionId = this.route.snapshot.params['id'];
-                return this.collectionStorageService.getCollectionById(this.collectionId);
-              } else {
-                return of(false);
-              }
-            }),
-          )
-          .subscribe(async (collection: Collection | boolean) => {
-            if (collection) {
-              if (!this.isCreation) {
-                this.collection = collection as Collection;
-                this.formService.setModel(collection as Collection);
-              }
-              this.formService.buildFields();
-              await loading.dismiss();
-              this.cdRef.markForCheck();
-            }
-          });
+        this.collectionId = this.route.snapshot.params['id'];
+        this.collection = (
+          (await this.collectionStorageService.getCollectionById(this.collectionId)) as Collection[]
+        )[0];
+        this.formService.setModel(this.collection);
+        this.formService.buildFields();
+        await loading.dismiss();
+        this.cdRef.markForCheck();
       } else {
         this.formService.buildFields();
       }

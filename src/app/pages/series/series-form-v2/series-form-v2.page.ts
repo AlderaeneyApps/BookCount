@@ -6,7 +6,7 @@ import { FormlyModule, SubmitButtonComponent } from '../../../formly';
 import { PageComponent } from '../../../ui/components/page/page.component';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { ACTION_TYPE, Collection, Series } from '../../../models';
-import { Observable, of, Subject, switchMap, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { SeriesFormService } from '../../../services';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -73,29 +73,14 @@ export class SeriesFormV2Page implements OnInit, OnDestroy {
         });
         await loading.present();
         this.cdRef.markForCheck();
-        this.seriesStorageService
-          .seriesState()
-          .pipe(
-            switchMap(res => {
-              if (res) {
-                this.seriesId = this.route.snapshot.params['seriesId'];
-                return this.seriesStorageService.getSeriesById(this.seriesId);
-              } else {
-                return of(false);
-              }
-            }),
-          )
-          .subscribe(async (series: Series[] | boolean) => {
-            if (series) {
-              if (!this.isCreation) {
-                this.series = (series as Series[])[0];
-                this.formService.setModel(this.series);
-              }
-              this.formService.buildFields();
-              await loading.dismiss();
-              this.cdRef.markForCheck();
-            }
-          });
+        this.seriesId = this.route.snapshot.params['seriesId'];
+        this.series = (
+          (await this.seriesStorageService.getSeriesById(this.seriesId)) as Series[]
+        )[0];
+        this.formService.setModel(this.series);
+        this.formService.buildFields();
+        await loading.dismiss();
+        this.cdRef.markForCheck();
       } else {
         this.formService.buildFields();
       }
