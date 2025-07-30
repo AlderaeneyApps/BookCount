@@ -2,15 +2,16 @@ import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormsModule } from '@angular/forms';
 import { PageComponent } from '../../../ui/components/page/page.component';
-import { ACTION_TYPE, Collection } from '../../../models';
+import { ACTION_TYPE, Collection, CollectionZod } from '../../../models';
 import { CollectionStorageService } from '../../../sql-services/collection-storage/collection-storage.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IonicModule, LoadingController } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { CollectionFormService } from '../../../services';
 import { FormlyModule, SubmitButtonComponent } from '../../../formly';
+import { LoadingController, ToastController } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-collection-form-v2',
@@ -44,6 +45,7 @@ export class CollectionFormV2Page implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private loadingCtrl: LoadingController,
+    private toastController: ToastController,
     private translocoService: TranslocoService,
     private cdRef: ChangeDetectorRef,
   ) {
@@ -92,18 +94,35 @@ export class CollectionFormV2Page implements OnInit, OnDestroy {
       return;
     }
 
-    const data = this.form.getRawValue() as Collection;
+    const tmpData = this.form.getRawValue() as Collection;
+    const data = CollectionZod.safeParse(tmpData);
+
+    if (data.error?.issues && data.error.issues.length > 0) {
+      for (const error of data.error.issues) {
+        await (
+          await this.toastController.create({
+            message: error.message,
+            duration: 5000,
+            position: 'bottom',
+          })
+        ).present();
+      }
+      return;
+    }
+
     if (this.isCreation) {
       try {
-        await this.collectionStorageService.addCollection(data.name!);
+        await this.collectionStorageService.addCollection(data?.data?.name!);
         await this.router.navigateByUrl('/collections');
       } catch (e) {
         console.error(e);
       }
     } else {
-      this.collectionStorageService.updateCollectionById(this.collectionId, data.name!).then(() => {
-        this.router.navigate(['/collections']);
-      });
+      this.collectionStorageService
+        .updateCollectionById(this.collectionId, data?.data?.name!)
+        .then(() => {
+          this.router.navigate(['/collections']);
+        });
     }
   }
 }
