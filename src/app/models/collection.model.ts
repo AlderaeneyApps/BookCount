@@ -6,6 +6,6 @@ export interface Collection {
 }
 
 export const CollectionZod = z.object({
-  id: z.number(),
+  id: z.number().nullable(),
   name: z.string(),
 });

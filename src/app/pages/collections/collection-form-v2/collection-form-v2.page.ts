@@ -94,8 +94,10 @@ export class CollectionFormV2Page implements OnInit, OnDestroy {
       return;
     }
 
-    const tmpData = this.form.getRawValue() as Collection;
+    const tmpData = { ...this.form.getRawValue(), id: null } as Collection;
     const data = CollectionZod.safeParse(tmpData);
+
+    console.log(data);
 
     if (data.error?.issues && data.error.issues.length > 0) {
       for (const error of data.error.issues) {

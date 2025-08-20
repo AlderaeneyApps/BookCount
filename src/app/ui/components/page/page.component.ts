@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {
   IonBackButton,
   IonButtons,
@@ -9,6 +9,7 @@ import {
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { TranslocoPipe } from '@jsverse/transloco';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-page',
@@ -25,6 +26,14 @@ import { TranslocoPipe } from '@jsverse/transloco';
     IonMenuButton,
   ],
 })
-export class PageComponent {
+export class PageComponent implements OnInit {
   @Input() title!: string;
+
+  public showBackButton = false;
+
+  constructor(private readonly router: Router) {}
+
+  ngOnInit(): void {
+    this.showBackButton = this.router.navigated;
+  }
 }

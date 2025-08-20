@@ -1,25 +1,27 @@
 PODS:
-  - Capacitor (7.1.0):
+  - Capacitor (7.4.1):
     - CapacitorCordova
   - CapacitorApp (7.0.0):
     - Capacitor
-  - CapacitorCamera (7.0.0):
+  - CapacitorCamera (7.0.1):
     - Capacitor
-  - CapacitorCommunitySqlite (7.0.0):
+  - CapacitorCommunitySqlite (7.0.1):
     - Capacitor
     - SQLCipher
     - ZIPFoundation
-  - CapacitorCordova (7.1.0)
-  - CapacitorFilesystem (7.0.0):
+  - CapacitorCordova (7.4.1)
+  - CapacitorFilesystem (7.1.2):
     - Capacitor
+    - IONFilesystemLib (~> 1.0)
   - CapacitorHaptics (7.0.0):
     - Capacitor
   - CapacitorKeyboard (7.0.0):
     - Capacitor
   - CapacitorStatusBar (7.0.0):
     - Capacitor
-  - CapacitorToast (7.0.0):
+  - CapacitorToast (7.0.1):
     - Capacitor
+  - IONFilesystemLib (1.0.1)
   - SQLCipher (4.9.0):
     - SQLCipher/standard (= 4.9.0)
   - SQLCipher/common (4.9.0)
@@ -41,6 +43,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - IONFilesystemLib
     - SQLCipher
     - ZIPFoundation
 
@@ -67,16 +70,17 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/toast"
 
 SPEC CHECKSUMS:
-  Capacitor: bceb785fb78f5e81e4a9e37843bc1c24bd9c7194
+  Capacitor: 78ad32d4b0d9dfa25402eb8b0ac46c2b8a4696b8
   CapacitorApp: 9cb31064a6c6bb2b1438583733a7bf45557fc1da
-  CapacitorCamera: 20a37684b81c69c0c33fb5a7216919f135371a6f
-  CapacitorCommunitySqlite: b11e556cf5d149f9e0b6fbbb47959a6cd718c3d0
-  CapacitorCordova: 866217f32c1d25b326c568a10ea3ed0c36b13e29
-  CapacitorFilesystem: 59a2b7b56a897c6a3de4d04c5718e1d80de9d2f5
+  CapacitorCamera: 6e73f1fc6c629a672658705a02409b60854bc0f1
+  CapacitorCommunitySqlite: 8b2c6bab33e3519280811d481f8bd0fa90343e1b
+  CapacitorCordova: 34618fa1b14b6b091fd60a7658f7654044ae8d8a
+  CapacitorFilesystem: 337eeaf16a9fa5a44d2329df411523fa3a9a6ee9
   CapacitorHaptics: 7be406a91e4eb87287f321c6c68e1709d6837b3a
   CapacitorKeyboard: 4db71e694e7afb5d7c0be09b05495c19f7d6c914
   CapacitorStatusBar: a8c4c83ed2e973bdafb979e80e4b00d027832cb7
-  CapacitorToast: 788a8adeba7d0b39a4201af004997578932b453b
+  CapacitorToast: ddfc4b36080dbe3634c9faf510b20f6ddcff9330
+  IONFilesystemLib: 89258b8e3e85465da93127d25d7ce37f977e8a6f
   SQLCipher: 31878d8ebd27e5c96db0b7cb695c96e9f8ad77da
   ZIPFoundation: b8c29ea7ae353b309bc810586181fd073cb3312c
 
