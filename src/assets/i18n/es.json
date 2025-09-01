@@ -2,7 +2,8 @@
   "MENUS": {
     "ADD_NEW_COLLECTION": "Añadir nueva colección",
     "COLLECTIONS": "Colecciones",
-    "SERIES": "Serie"
+    "SERIES": "Serie",
+    "VOLUMES": "Tomos"
   },
   "GLOBAL": {
     "LOADING": "Cargando",
@@ -43,7 +44,7 @@
       },
       "FIELDS": {
         "NAME": "Nombre",
-        "PICTURE": "Imágen"
+        "PICTURE": "Imagen"
       }
     },
     "LIST": {
@@ -51,6 +52,28 @@
       "GO_TO_SERIES": "Ir a la serie",
       "VOLUME_AMOUNT": "Tomos: {{amount}}",
       "DELETE_SERIES": "¿Estás seguro que quieres borrar la serie?"
+    }
+  },
+  "VOLUMES": {
+    "FORM": {
+      "TITLES": {
+        "CREATE": "Crear tomo",
+        "EDIT": "Editar tomo"
+      },
+      "FIELDS": {
+        "VOLUME_NUMBER": "Numero",
+        "PRICE": "Precio",
+        "PICTURE": "Imagen",
+        "NAME": "Nombre"
+      }
+    },
+    "LIST": {
+      "TITLE": "Tomo",
+      "FIELDS": {
+        "NAME": "Nombre",
+        "VOLUME_NUMBER": "Numero",
+        "PRICE": "Precio"
+      }
     }
   }
 }

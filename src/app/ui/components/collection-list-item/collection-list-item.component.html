@@ -13,6 +13,9 @@
           <ion-button aria-label="Actions" id="open-action-sheet">
             <ion-icon name="cog-sharp"></ion-icon>
           </ion-button>
+          <ion-button [routerLink]="['/series', collection!.id]" aria-label="Go to view">
+            <ion-icon name="arrow-forward"></ion-icon>
+          </ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -20,8 +23,8 @@
 </ion-card>
 
 <ion-action-sheet
-  trigger="open-action-sheet"
-  [header]="'GLOBAL.ACTIONS' | transloco"
-  [buttons]="actionSheetButtons"
   (didDismiss)="onActionClicked($event)"
+  [buttons]="actionSheetButtons"
+  [header]="'GLOBAL.ACTIONS' | transloco"
+  trigger="open-action-sheet"
 ></ion-action-sheet>

@@ -5,15 +5,15 @@ import { DBSQLiteValues } from '@capacitor-community/sqlite';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { CollectionStorageService } from '../../../sql-services/collection-storage/collection-storage.service';
 import { addIcons } from 'ionicons';
-import { cogSharp } from 'ionicons/icons';
-import { Router } from '@angular/router';
+import { arrowForward, cogSharp } from 'ionicons/icons';
+import { Router, RouterLink } from '@angular/router';
 import { AlertController, IonicModule } from '@ionic/angular';
 
 @Component({
   selector: 'app-collection-list-item',
   templateUrl: './collection-list-item.component.html',
   styleUrls: ['./collection-list-item.component.scss'],
-  imports: [IonicModule, TranslocoPipe],
+  imports: [IonicModule, TranslocoPipe, RouterLink],
 })
 export class CollectionListItemComponent implements OnInit {
   @Input() collection!: Collection;
@@ -33,6 +33,7 @@ export class CollectionListItemComponent implements OnInit {
   ) {
     addIcons({
       cogSharp,
+      arrowForward,
     });
   }
 
@@ -49,12 +50,6 @@ export class CollectionListItemComponent implements OnInit {
     }
 
     this.actionSheetButtons = [
-      {
-        text: this.transloco.translate('GLOBAL.VIEW'),
-        data: {
-          action: ACTION_TYPE.VIEW,
-        },
-      },
       {
         text: this.transloco.translate('GLOBAL.EDIT'),
         data: {
@@ -80,10 +75,6 @@ export class CollectionListItemComponent implements OnInit {
 
   public goToEdit(): void {
     this.router.navigate(['/collections/edit', this.collection.id]);
-  }
-
-  public goToView(): void {
-    this.router.navigate(['/series', this.collection!.id]);
   }
 
   public async deleteCollection() {
@@ -118,9 +109,6 @@ export class CollectionListItemComponent implements OnInit {
         break;
       case 'edit':
         this.goToEdit();
-        break;
-      case 'view':
-        this.goToView();
         break;
 
       default:

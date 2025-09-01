@@ -29,6 +29,17 @@ export class VolumesFormService {
             },
           },
           {
+            key: 'name',
+            type: 'input-text',
+            props: {
+              label: 'VOLUMES.FORM.FIELDS.NAME',
+              required: true,
+              size: 12,
+              size_md: 6,
+              size_xl: 4,
+            },
+          },
+          {
             key: 'price',
             type: 'input-number',
             props: {

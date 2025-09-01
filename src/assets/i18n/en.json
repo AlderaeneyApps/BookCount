@@ -2,7 +2,8 @@
   "MENUS": {
     "ADD_NEW_COLLECTION": "Add new collection",
     "COLLECTIONS": "Collections",
-    "SERIES": "Series"
+    "SERIES": "Series",
+    "VOLUMES": "Volumes"
   },
   "GLOBAL": {
     "LOADING": "Loading",
@@ -51,6 +52,28 @@
       "GO_TO_SERIES": "Go to series",
       "VOLUME_AMOUNT": "Volumes: {{amount}}",
       "DELETE_SERIES": "Are you sure you want to delete de series?"
+    }
+  },
+  "VOLUMES": {
+    "FORM": {
+      "TITLES": {
+        "CREATE": "Create volume",
+        "EDIT": "Edit volume"
+      },
+      "FIELDS": {
+        "VOLUME_NUMBER": "Number",
+        "PRICE": "Price",
+        "PICTURE": "Picture",
+        "NAME": "Name"
+      }
+    },
+    "LIST": {
+      "TITLE": "Volume",
+      "FIELDS": {
+        "NAME": "Name",
+        "VOLUME_NUMBER": "Number",
+        "PRICE": "Price"
+      }
     }
   }
 }

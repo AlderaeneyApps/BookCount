@@ -3,18 +3,18 @@ import { ACTION_TYPE, ActionSheetOptions, Series } from '../../../models';
 import { AlertController, IonicModule } from '@ionic/angular';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { SeriesStorageService } from '../../../sql-services/series-storage/series-storage.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { VolumesStorageService } from '../../../sql-services/volumes-storage/volumes-storage.service';
 import { DBSQLiteValues } from '@capacitor-community/sqlite';
 import { addIcons } from 'ionicons';
-import { cogSharp } from 'ionicons/icons';
+import { arrowForward, cogSharp } from 'ionicons/icons';
 import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-series-list-item',
   templateUrl: './series-list-item.component.html',
   styleUrls: ['./series-list-item.component.scss'],
-  imports: [IonicModule, TranslocoPipe, NgOptimizedImage],
+  imports: [IonicModule, TranslocoPipe, NgOptimizedImage, RouterLink],
 })
 export class SeriesListItemComponent implements OnInit {
   @Input() series!: Series;
@@ -34,6 +34,7 @@ export class SeriesListItemComponent implements OnInit {
   ) {
     addIcons({
       cogSharp,
+      arrowForward,
     });
   }
 
@@ -43,19 +44,13 @@ export class SeriesListItemComponent implements OnInit {
         this.series.id!,
       );
       const { values: count } = values as any;
-      this.volumesCount = count?.['COUNT(id)'] ?? 0;
+      this.volumesCount = count?.[0]?.['COUNT(id)'] ?? 0;
     } catch (e) {
       console.error(e);
       this.volumesCount = 0;
     }
 
     this.actionSheetButtons = [
-      {
-        text: this.transloco.translate('GLOBAL.VIEW'),
-        data: {
-          action: ACTION_TYPE.VIEW,
-        },
-      },
       {
         text: this.transloco.translate('GLOBAL.EDIT'),
         data: {
@@ -115,9 +110,6 @@ export class SeriesListItemComponent implements OnInit {
       case 'edit':
         this.goToEdit();
         break;
-      case 'view':
-        this.goToView();
-        break;
 
       default:
         return;
@@ -126,9 +118,5 @@ export class SeriesListItemComponent implements OnInit {
 
   private goToEdit(): void {
     this.router.navigate(['/series/edit', this.series!.id, this.series!.collectionId]);
-  }
-
-  private goToView(): void {
-    this.router.navigate(['/volumes', this.series!.id]);
   }
 }

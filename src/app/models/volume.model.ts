@@ -4,4 +4,5 @@ export interface Volume {
   price?: number;
   seriesId?: number;
   picture?: string;
+  name?: string;
 }

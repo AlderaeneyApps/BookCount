@@ -65,9 +65,9 @@ export class VolumesStorageService {
   }
 
   async addVolume(body: Volume) {
-    const sql = `INSERT INTO volumes (volumeNumber, price, seriesId)
-                 VALUES (?, ?, ?);`;
-    await this.db.run(sql, [body.volumeNumber, body.price, body.seriesId]);
+    const sql = `INSERT INTO volumes (volumeNumber, price, seriesId, name)
+                 VALUES (?, ?, ?, ?);`;
+    await this.db.run(sql, [body.volumeNumber, body.price, body.seriesId, body.name]);
   }
 
   async updateVolumeById(id: number, body: Volume) {

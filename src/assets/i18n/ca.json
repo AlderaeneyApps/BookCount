@@ -2,7 +2,8 @@
   "MENUS": {
     "ADD_NEW_COLLECTION": "Afegir nova col·lecció",
     "COLLECTIONS": "Col·leccións",
-    "SERIES": "Serie"
+    "SERIES": "Serie",
+    "VOLUMES": "Volums"
   },
   "GLOBAL": {
     "LOADING": "Carregant",
@@ -51,6 +52,28 @@
       "GO_TO_SERIES": "Anar a la serie",
       "VOLUME_AMOUNT": "Volums: {{amount}}",
       "DELETE_SERIES": "Estás segur que vols esborrar la serie?"
+    }
+  },
+  "VOLUMES": {
+    "FORM": {
+      "TITLES": {
+        "CREATE": "Crear volum",
+        "EDIT": "Editar volum"
+      },
+      "FIELDS": {
+        "VOLUME_NUMBER": "Numero",
+        "PRICE": "Preu",
+        "PICTURE": "Imatge",
+        "NAME": "Nom"
+      }
+    },
+    "LIST": {
+      "TITLE": "Volum",
+      "FIELDS": {
+        "NAME": "Nom",
+        "VOLUME_NUMBER": "Numero",
+        "PRICE": "Preu"
+      }
     }
   }
 }

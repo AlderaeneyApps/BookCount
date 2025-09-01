@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { FormlyFieldConfig } from '@ngx-formly/core';
-import { ACTION_TYPE, Series, Volume } from '../../models';
+import { ACTION_TYPE, Volume } from '../../models';
 
 @Injectable()
 export class VolumeListItemFormService {
@@ -58,7 +58,7 @@ export class VolumeListItemFormService {
     this._fields.next(fields);
   }
 
-  public setModel(model: Series) {
+  public setModel(model: Volume) {
     if (!model) return;
 
     this._model.next(model);

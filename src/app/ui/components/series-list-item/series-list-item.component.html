@@ -18,8 +18,11 @@
           {{ 'SERIES.LIST.VOLUME_AMOUNT' | transloco: { amount: volumesCount ?? 0 } }}
         </ion-col>
         <ion-col class="ion-justify-content-end" style="display: flex">
-          <ion-button aria-label="Actions" id="open-action-sheet">
+          <ion-button aria-label="Actions" id="open-actions-series">
             <ion-icon name="cog-sharp"></ion-icon>
+          </ion-button>
+          <ion-button [routerLink]="['/volumes', series!.id]" aria-label="Go to view">
+            <ion-icon name="arrow-forward"></ion-icon>
           </ion-button>
         </ion-col>
       </ion-row>
@@ -28,8 +31,8 @@
 </ion-card>
 
 <ion-action-sheet
-  trigger="open-action-sheet"
-  [header]="'GLOBAL.ACTIONS' | transloco"
-  [buttons]="actionSheetButtons"
   (didDismiss)="onActionClicked($event)"
+  [buttons]="actionSheetButtons"
+  [header]="'GLOBAL.ACTIONS' | transloco"
+  trigger="open-actions-series"
 ></ion-action-sheet>

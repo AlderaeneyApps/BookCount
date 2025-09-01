@@ -8,6 +8,7 @@ export class VolumesUpgradeStatements {
                      volumeNumber INTEGER NOT NULL,
                      price        REAL,
                      picture      BLOB,
+                     name         TEXT,
                      seriesId     INTEGER NOT NULL,
                      FOREIGN KEY (seriesId) REFERENCES series (id) ON DELETE CASCADE ON UPDATE CASCADE
                    );`,

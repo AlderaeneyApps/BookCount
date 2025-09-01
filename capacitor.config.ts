@@ -23,6 +23,9 @@ const config: CapacitorConfig = {
         biometricSubTitle: 'Log in using your biometric',
       },
     },
+    EdgeToEdge: {
+      backgroundColor: '#2f2f2f',
+    },
   },
 };
 

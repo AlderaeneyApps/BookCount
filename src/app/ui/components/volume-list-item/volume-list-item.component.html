@@ -13,9 +13,13 @@
   </ion-card-header>
   <ion-card-content>
     <ion-grid>
+      <ion-row>
+        <app-formly [fields]="fields" [form]="form" [model]="model$ | async">
+        </app-formly>
+      </ion-row>
       <ion-row class="ion-justify-content-between">
         <ion-col class="ion-justify-content-end" style="display: flex">
-          <ion-button aria-label="Actions" id="open-action-sheet">
+          <ion-button aria-label="Actions" id="open-actions-volumes">
             <ion-icon name="cog-sharp"></ion-icon>
           </ion-button>
         </ion-col>
@@ -23,3 +27,10 @@
     </ion-grid>
   </ion-card-content>
 </ion-card>
+
+<ion-action-sheet
+  (didDismiss)="onActionClicked($event)"
+  [buttons]="actionSheetButtons"
+  [header]="'GLOBAL.ACTIONS' | transloco"
+  trigger="open-actions-volumes"
+></ion-action-sheet>
