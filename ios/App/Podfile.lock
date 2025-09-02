@@ -1,25 +1,25 @@
 PODS:
-  - Capacitor (7.4.1):
+  - Capacitor (7.4.3):
     - CapacitorCordova
-  - CapacitorApp (7.0.0):
+  - CapacitorApp (7.0.2):
     - Capacitor
-  - CapacitorCamera (7.0.1):
+  - CapacitorCamera (7.0.2):
     - Capacitor
   - CapacitorCommunitySqlite (7.0.1):
     - Capacitor
     - SQLCipher
     - ZIPFoundation
-  - CapacitorCordova (7.4.1)
-  - CapacitorFilesystem (7.1.2):
+  - CapacitorCordova (7.4.3)
+  - CapacitorFilesystem (7.1.4):
     - Capacitor
-    - IONFilesystemLib (~> 1.0)
-  - CapacitorHaptics (7.0.0):
+    - IONFilesystemLib (~> 1.0.1)
+  - CapacitorHaptics (7.0.2):
     - Capacitor
-  - CapacitorKeyboard (7.0.0):
+  - CapacitorKeyboard (7.0.2):
     - Capacitor
-  - CapacitorStatusBar (7.0.0):
+  - CapacitorStatusBar (7.0.2):
     - Capacitor
-  - CapacitorToast (7.0.1):
+  - CapacitorToast (7.0.2):
     - Capacitor
   - IONFilesystemLib (1.0.1)
   - SQLCipher (4.9.0):
@@ -70,16 +70,16 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/toast"
 
 SPEC CHECKSUMS:
-  Capacitor: 78ad32d4b0d9dfa25402eb8b0ac46c2b8a4696b8
-  CapacitorApp: 9cb31064a6c6bb2b1438583733a7bf45557fc1da
-  CapacitorCamera: 6e73f1fc6c629a672658705a02409b60854bc0f1
+  Capacitor: 28d6c01026a9a3f7156529498ec1f389a2a28dbc
+  CapacitorApp: 1f6922c9c5c8b1c538d7fbe92ebe44a81b34bed3
+  CapacitorCamera: f9e54db0a18bb218a8dc360907d63aaefe9209ff
   CapacitorCommunitySqlite: 8b2c6bab33e3519280811d481f8bd0fa90343e1b
-  CapacitorCordova: 34618fa1b14b6b091fd60a7658f7654044ae8d8a
-  CapacitorFilesystem: 337eeaf16a9fa5a44d2329df411523fa3a9a6ee9
-  CapacitorHaptics: 7be406a91e4eb87287f321c6c68e1709d6837b3a
-  CapacitorKeyboard: 4db71e694e7afb5d7c0be09b05495c19f7d6c914
-  CapacitorStatusBar: a8c4c83ed2e973bdafb979e80e4b00d027832cb7
-  CapacitorToast: ddfc4b36080dbe3634c9faf510b20f6ddcff9330
+  CapacitorCordova: 435121e81a2df4d0034f0fb11fcefab5104cfdb5
+  CapacitorFilesystem: f9bd850c41e048180e5dc0cbb90f2033ede9d2cc
+  CapacitorHaptics: b3fb2869e72c4466e18ce9ccbeb60a3d8723b3d4
+  CapacitorKeyboard: a86aa9e4741b6444a802df26440a92ae041b34a6
+  CapacitorStatusBar: e04d05e121d5a5979c29eb4249186a4e4a84cacb
+  CapacitorToast: 166611aea815418fc08894b77a915773e3d059d5
   IONFilesystemLib: 89258b8e3e85465da93127d25d7ce37f977e8a6f
   SQLCipher: 31878d8ebd27e5c96db0b7cb695c96e9f8ad77da
   ZIPFoundation: b8c29ea7ae353b309bc810586181fd073cb3312c
