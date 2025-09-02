@@ -75,7 +75,7 @@ export class VolumesStorageService {
                  SET volumeNumber=${body.volumeNumber},
                      price       = ${body.price},
                      name        = ${body.name},
-                     picture     = ${body.picture}
+                     picture     = '${body.picture}'
                  WHERE id = ${id}`;
     await this.db.run(sql);
   }

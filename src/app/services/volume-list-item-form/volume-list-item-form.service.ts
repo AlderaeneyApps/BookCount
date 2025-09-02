@@ -29,18 +29,6 @@ export class VolumeListItemFormService {
             },
           },
           {
-            key: 'volumeNumber',
-            type: disabled ? 'input-number' : 'input-number-button',
-            props: {
-              label: 'VOLUMES.LIST.FIELDS.VOLUME_NUMBER',
-              required: true,
-              disabled,
-              size_lg: 6,
-              size_md: 6,
-              size: 12,
-            },
-          },
-          {
             key: 'price',
             type: 'input-text',
             props: {
@@ -48,6 +36,7 @@ export class VolumeListItemFormService {
               disabled,
               size_lg: 6,
               size_md: 6,
+              size_sm: 6,
               size: 12,
             },
           },

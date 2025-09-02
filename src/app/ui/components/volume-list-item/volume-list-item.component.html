@@ -9,12 +9,11 @@
       />
     }
     <ion-card-title>{{ volume.volumeNumber }}</ion-card-title>
-    <ion-card-subtitle>{{ 'VOLUMES.LIST.TITLE' | transloco }}</ion-card-subtitle>
   </ion-card-header>
   <ion-card-content>
     <ion-grid>
       <ion-row>
-        <app-formly [fields]="fields" [form]="form" [model]="model$ | async"> </app-formly>
+        <app-formly [fields]="fields" [form]="form" [model]="model$ | async"></app-formly>
       </ion-row>
       <ion-row class="ion-justify-content-between">
         <ion-col class="ion-justify-content-end" style="display: flex">

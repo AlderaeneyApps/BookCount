@@ -81,7 +81,7 @@ export class SeriesStorageService {
   async updateSeriesById(id: number, body: Series, collectionId: number) {
     const sql = `UPDATE series
                  SET name=${body.name},
-                     picture=${body.picture},
+                     picture='${body.picture}',
                      price=${body.price}
                  WHERE id = ${id}`;
     await this.db.run(sql);
