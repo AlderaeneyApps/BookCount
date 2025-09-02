@@ -1,12 +1,11 @@
 <ion-card>
   <ion-card-header>
     @if (volume.picture) {
-      <img
-        [alt]="volume.volumeNumber"
-        [ngSrc]="`data:image/jpeg;base64, ${volume.picture}`"
-        height="500px"
-        width="500px"
-      />
+      <ion-img
+        [alt]="`${volume.volumeNumber} - ${volume.name ? volume.name : ''}}`"
+        [src]="`data:image/jpeg;base64, ${volume.picture}`"
+        style="height: 300px; object-fit: cover"
+      ></ion-img>
     }
     <ion-card-title>{{ volume.volumeNumber }}</ion-card-title>
   </ion-card-header>

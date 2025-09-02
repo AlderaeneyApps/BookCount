@@ -1,12 +1,11 @@
 <ion-card>
   <ion-card-header>
     @if (series.picture) {
-      <img
+      <ion-img
         [alt]="series.name"
-        [ngSrc]="`data:image/jpeg;base64, ${series.picture}`"
-        height="500px"
-        width="500px"
-      />
+        [src]="`data:image/jpeg;base64, ${series.picture}`"
+        style="height: 300px; object-fit: cover"
+      ></ion-img>
     }
     <ion-card-title>{{ series.name }}</ion-card-title>
   </ion-card-header>
