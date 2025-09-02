@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { PageComponent } from '../../../ui/components/page/page.component';
 import { InfiniteScrollCustomEvent, IonicModule, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
@@ -17,13 +17,12 @@ import { SeriesListItemComponent } from '../../../ui/components/series-list-item
   styleUrls: ['./series-home.page.scss'],
   standalone: true,
   imports: [
-    CommonModule,
     IonicModule,
     FormsModule,
     PageComponent,
     RouterLink,
-    SeriesListItemComponent,
-  ],
+    SeriesListItemComponent
+],
 })
 export class SeriesHomePage implements ViewDidEnter, ViewDidLeave {
   public collectionId!: number;

@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { CollectionStorageService } from '../../../sql-services/collection-storage/collection-storage.service';
 import { TranslocoPipe } from '@jsverse/transloco';
@@ -18,14 +18,13 @@ import { add } from 'ionicons/icons';
   styleUrls: ['./collections-home.page.scss'],
   standalone: true,
   imports: [
-    CommonModule,
     IonicModule,
     FormsModule,
     TranslocoPipe,
     CollectionListItemComponent,
     PageComponent,
-    RouterLink,
-  ],
+    RouterLink
+],
 })
 export class CollectionsHomePage implements ViewDidLeave, ViewDidEnter {
   public collections: Collection[] | undefined = undefined;

@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import {
   FormControl,
   FormGroup,
@@ -21,13 +21,12 @@ import { SeriesStorageService } from '../../../sql-services/series-storage/serie
   styleUrls: ['./series-form.page.scss'],
   standalone: true,
   imports: [
-    CommonModule,
     IonicModule,
     FormsModule,
     PageComponent,
     ReactiveFormsModule,
-    TranslocoPipe,
-  ],
+    TranslocoPipe
+],
 })
 export class SeriesFormPage implements OnInit {
   public title!: string;

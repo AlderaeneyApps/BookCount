@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import {
   FormControl,
   FormGroup,
@@ -21,13 +21,12 @@ import { PageComponent } from '../../../ui/components/page/page.component';
   styleUrls: ['./collection-form.page.scss'],
   standalone: true,
   imports: [
-    CommonModule,
     IonicModule,
     FormsModule,
     TranslocoPipe,
     ReactiveFormsModule,
-    PageComponent,
-  ],
+    PageComponent
+],
 })
 export class CollectionFormPage implements OnInit {
   public mode: ACTION_TYPE = ACTION_TYPE.CREATE;

@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { InfiniteScrollCustomEvent, IonicModule, ViewDidEnter } from '@ionic/angular';
 import { PageComponent } from '../../../ui/components/page/page.component';
@@ -16,13 +16,12 @@ import { add } from 'ionicons/icons';
   styleUrls: ['./volumes-home.page.scss'],
   standalone: true,
   imports: [
-    CommonModule,
     FormsModule,
     IonicModule,
     PageComponent,
     RouterModule,
-    VolumeListItemComponent,
-  ],
+    VolumeListItemComponent
+],
 })
 export class VolumesHomePage implements ViewDidEnter {
   public volumes!: Volume[];
