@@ -16,13 +16,7 @@ import { SeriesListItemComponent } from '../../../ui/components/series-list-item
   templateUrl: './series-home.page.html',
   styleUrls: ['./series-home.page.scss'],
   standalone: true,
-  imports: [
-    IonicModule,
-    FormsModule,
-    PageComponent,
-    RouterLink,
-    SeriesListItemComponent
-],
+  imports: [IonicModule, FormsModule, PageComponent, RouterLink, SeriesListItemComponent],
 })
 export class SeriesHomePage implements ViewDidEnter, ViewDidLeave {
   public collectionId!: number;

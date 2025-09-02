@@ -15,13 +15,7 @@ import { add } from 'ionicons/icons';
   templateUrl: './volumes-home.page.html',
   styleUrls: ['./volumes-home.page.scss'],
   standalone: true,
-  imports: [
-    FormsModule,
-    IonicModule,
-    PageComponent,
-    RouterModule,
-    VolumeListItemComponent
-],
+  imports: [FormsModule, IonicModule, PageComponent, RouterModule, VolumeListItemComponent],
 })
 export class VolumesHomePage implements ViewDidEnter {
   public volumes!: Volume[];

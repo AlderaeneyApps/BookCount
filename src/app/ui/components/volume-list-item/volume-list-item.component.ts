@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { AlertController, IonicModule } from '@ionic/angular';
 import { AsyncPipe, NgOptimizedImage } from '@angular/common';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
@@ -29,7 +37,7 @@ export class VolumeListItemComponent implements OnInit, OnDestroy {
   public fields!: FormlyFieldConfig[];
   public model$!: Observable<Volume>;
 
-  public actionSheetButtons!: ActionSheetOptions[];
+  public actionSheetButtons: ActionSheetOptions[] = [];
 
   private destroy$: Subject<void> = new Subject<void>();
 
@@ -39,6 +47,7 @@ export class VolumeListItemComponent implements OnInit, OnDestroy {
     private alertController: AlertController,
     private transloco: TranslocoService,
     private router: Router,
+    private cdRef: ChangeDetectorRef,
   ) {
     addIcons({
       cogSharp,
@@ -80,6 +89,8 @@ export class VolumeListItemComponent implements OnInit, OnDestroy {
         },
       },
     ];
+
+    this.cdRef.markForCheck();
   }
 
   public async onActionClicked(event: any) {

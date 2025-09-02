@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ACTION_TYPE, ActionSheetOptions, Series } from '../../../models';
 import { AlertController, IonicModule } from '@ionic/angular';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
@@ -23,7 +23,7 @@ export class SeriesListItemComponent implements OnInit {
 
   public volumesCount: number | undefined;
 
-  public actionSheetButtons!: ActionSheetOptions[];
+  public actionSheetButtons: ActionSheetOptions[] = [];
 
   constructor(
     private seriesStorageService: SeriesStorageService,
@@ -31,6 +31,7 @@ export class SeriesListItemComponent implements OnInit {
     private alertController: AlertController,
     private transloco: TranslocoService,
     private router: Router,
+    private cdRef: ChangeDetectorRef,
   ) {
     addIcons({
       cogSharp,
@@ -72,6 +73,8 @@ export class SeriesListItemComponent implements OnInit {
         },
       },
     ];
+
+    this.cdRef.markForCheck();
   }
 
   public async deleteSeries() {

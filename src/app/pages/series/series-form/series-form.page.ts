@@ -20,13 +20,7 @@ import { SeriesStorageService } from '../../../sql-services/series-storage/serie
   templateUrl: './series-form.page.html',
   styleUrls: ['./series-form.page.scss'],
   standalone: true,
-  imports: [
-    IonicModule,
-    FormsModule,
-    PageComponent,
-    ReactiveFormsModule,
-    TranslocoPipe
-],
+  imports: [IonicModule, FormsModule, PageComponent, ReactiveFormsModule, TranslocoPipe],
 })
 export class SeriesFormPage implements OnInit {
   public title!: string;

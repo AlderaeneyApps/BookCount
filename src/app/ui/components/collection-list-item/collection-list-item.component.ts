@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ACTION_TYPE, ActionSheetOptions, Collection } from '../../../models';
 import { SeriesStorageService } from '../../../sql-services/series-storage/series-storage.service';
 import { DBSQLiteValues } from '@capacitor-community/sqlite';
@@ -22,7 +22,7 @@ export class CollectionListItemComponent implements OnInit {
 
   public amountOfRelatedSeries!: number;
 
-  public actionSheetButtons!: ActionSheetOptions[];
+  public actionSheetButtons: ActionSheetOptions[] = [];
 
   constructor(
     private collectionStorageService: CollectionStorageService,
@@ -30,6 +30,7 @@ export class CollectionListItemComponent implements OnInit {
     private alertController: AlertController,
     private transloco: TranslocoService,
     private router: Router,
+    private cdRef: ChangeDetectorRef,
   ) {
     addIcons({
       cogSharp,
@@ -71,6 +72,8 @@ export class CollectionListItemComponent implements OnInit {
         },
       },
     ];
+
+    this.cdRef.markForCheck();
   }
 
   public goToEdit(): void {

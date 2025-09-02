@@ -23,8 +23,8 @@ import { add } from 'ionicons/icons';
     TranslocoPipe,
     CollectionListItemComponent,
     PageComponent,
-    RouterLink
-],
+    RouterLink,
+  ],
 })
 export class CollectionsHomePage implements ViewDidLeave, ViewDidEnter {
   public collections: Collection[] | undefined = undefined;

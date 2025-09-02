@@ -1,11 +1,17 @@
 <app-page title="MENUS.COLLECTIONS">
-  @if (!!collections && collections.length > 0) { @for (collection of collections; track
-  collection.id) {
-  <app-collection-list-item
-    [collection]="collection"
-    (reloadCollections)="reloadCollections()"
-  ></app-collection-list-item>
-  }
+  @if (!!collections && collections.length > 0) {
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      @for (collection of collections; track collection.id) {
+      <ion-col size="12" size-sm="10" size-md="8" size-lg="6">
+        <app-collection-list-item
+          [collection]="collection"
+          (reloadCollections)="reloadCollections()"
+        ></app-collection-list-item>
+      </ion-col>
+      }
+    </ion-row>
+  </ion-grid>
   <ion-fab class="fixed-bottom">
     <ion-fab-button [routerLink]="['/collections/create']">
       <ion-icon name="add"></ion-icon>

@@ -20,13 +20,7 @@ import { PageComponent } from '../../../ui/components/page/page.component';
   templateUrl: './collection-form.page.html',
   styleUrls: ['./collection-form.page.scss'],
   standalone: true,
-  imports: [
-    IonicModule,
-    FormsModule,
-    TranslocoPipe,
-    ReactiveFormsModule,
-    PageComponent
-],
+  imports: [IonicModule, FormsModule, TranslocoPipe, ReactiveFormsModule, PageComponent],
 })
 export class CollectionFormPage implements OnInit {
   public mode: ACTION_TYPE = ACTION_TYPE.CREATE;
