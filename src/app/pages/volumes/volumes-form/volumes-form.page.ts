@@ -5,12 +5,14 @@ import { FormlyModule, SubmitButtonComponent } from '../../../formly';
 import { IonicModule, LoadingController } from '@ionic/angular';
 import { PageComponent } from '../../../ui/components/page/page.component';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
-import { ACTION_TYPE, Volume } from '../../../models';
+import { ACTION_TYPE, Volume, VolumeZod } from '../../../models';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { VolumesFormService } from '../../../services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { VolumesStorageService } from '../../../sql-services/volumes-storage/volumes-storage.service';
+import { ToastController } from '@ionic/angular/standalone';
+import { nullifyValues } from '../../../functions';
 
 @Component({
   selector: 'app-volumes-form',
@@ -46,6 +48,7 @@ export class VolumesFormPage implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private loadingCtrl: LoadingController,
+    private toastController: ToastController,
     private translocoService: TranslocoService,
     private cdRef: ChangeDetectorRef,
   ) {
@@ -97,20 +100,35 @@ export class VolumesFormPage implements OnInit, OnDestroy {
       return;
     }
 
-    let data: Volume = this.form.getRawValue() as Volume;
+    let tmpData: Volume = {
+      ...nullifyValues(this.form.getRawValue()),
+      id: null,
+      seriesId: this.isCreation ? Number(this.seriesId) : null,
+    } as Volume;
+    const data = VolumeZod.safeParse(tmpData);
+
+    if (data.error?.issues && data.error.issues.length > 0) {
+      for (const error of data.error.issues) {
+        await (
+          await this.toastController.create({
+            message: error.message,
+            duration: 5000,
+            position: 'bottom',
+          })
+        ).present();
+      }
+      return;
+    }
+
     if (this.isCreation) {
       try {
-        data = {
-          ...data,
-          seriesId: this.seriesId,
-        };
-        await this.volumeStorageService.addVolume(data!);
+        await this.volumeStorageService.addVolume(data!.data);
         await this.router.navigate([`/volumes`, this.seriesId]);
       } catch (e) {
         console.error(e);
       }
     } else {
-      this.volumeStorageService.updateVolumeById(this.volumeId, data).then(() => {
+      this.volumeStorageService.updateVolumeById(this.volumeId, data.data).then(() => {
         this.router.navigate([`/volumes/${this.seriesId}`]);
       });
     }

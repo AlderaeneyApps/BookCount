@@ -44,13 +44,15 @@ export class VolumesHomePage implements ViewDidEnter {
   }
 
   public async onIonInfinite(event: InfiniteScrollCustomEvent) {
-    try {
-      const gotVolumes = await this.getPaginatedVolumes(this.volumes.length + 1, 50);
-      this.volumes.push(...gotVolumes);
-      this.cdRef.markForCheck();
-      await event.target.complete();
-    } catch (err) {
-      throw new Error(`Error: ${err}`);
+    if (this.volumes && this.volumes.length > 0) {
+      try {
+        const gotVolumes = await this.getPaginatedVolumes(this.volumes.length + 1, 50);
+        this.volumes.push(...gotVolumes);
+        this.cdRef.markForCheck();
+        await event.target.complete();
+      } catch (err) {
+        throw new Error(`Error: ${err}`);
+      }
     }
   }
 

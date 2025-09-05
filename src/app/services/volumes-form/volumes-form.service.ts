@@ -33,7 +33,6 @@ export class VolumesFormService {
             type: 'input-text',
             props: {
               label: 'VOLUMES.FORM.FIELDS.NAME',
-              required: true,
               size: 12,
               size_md: 6,
               size_xl: 4,
@@ -44,6 +43,16 @@ export class VolumesFormService {
             type: 'input-number',
             props: {
               label: 'VOLUMES.FORM.FIELDS.PRICE',
+              size: 12,
+              size_md: 6,
+              size_xl: 4,
+            },
+          },
+          {
+            key: 'quantity',
+            type: 'input-number',
+            props: {
+              label: 'VOLUMES.FORM.FIELDS.QUANTITY',
               size: 12,
               size_md: 6,
               size_xl: 4,

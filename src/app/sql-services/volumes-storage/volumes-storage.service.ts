@@ -64,20 +64,33 @@ export class VolumesStorageService {
     this.isVolumesReady.next(true);
   }
 
-  async addVolume(body: Volume) {
-    const sql = `INSERT INTO volumes (volumeNumber, price, seriesId, name, picture)
-                 VALUES (?, ?, ?, ?, ?);`;
-    await this.db.run(sql, [body.volumeNumber, body.price, body.seriesId, body.name, body.picture]);
+  async addVolume(body: Volume | undefined) {
+    if (body) {
+      const sql = `INSERT INTO volumes (volumeNumber, price, seriesId, name, picture, quantity)
+                 VALUES (?, ?, ?, ?, ?, ?);`;
+      await this.db.run(sql, [
+        body.volumeNumber,
+        body.price,
+        body.seriesId,
+        body.name,
+        body.picture,
+        body.quantity,
+      ]);
+    }
   }
 
-  async updateVolumeById(id: number, body: Volume) {
-    const sql = `UPDATE volumes
-                 SET volumeNumber=${body.volumeNumber},
-                     price       = ${body.price},
-                     name        = ${body.name},
-                     picture     = '${body.picture}'
+  async updateVolumeById(id: number, body: Volume | undefined) {
+    if (body) {
+      const sql = `UPDATE volumes
+                 SET volumeNumber = ${body.volumeNumber},
+                     ${body.price ? `price = ${body.price},` : ''}
+                     ${body.name ? `name = '${body.name}',` : ''}
+                     ${body.picture ? `picture = '${body.picture}',` : ''}
+                     ${body.quantity ? `quantity = ${body.quantity}` : ''}
                  WHERE id = ${id}`;
-    await this.db.run(sql);
+      console.log(sql);
+      await this.db.run(sql);
+    }
   }
 
   async deleteVolumeById(id: number) {

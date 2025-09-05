@@ -64,7 +64,8 @@
         "VOLUME_NUMBER": "Numero",
         "PRICE": "Precio",
         "PICTURE": "Imagen",
-        "NAME": "Nombre"
+        "NAME": "Nombre",
+        "QUANTITY": "Cantidad"
       }
     },
     "LIST": {
@@ -72,7 +73,8 @@
       "FIELDS": {
         "NAME": "Nombre",
         "VOLUME_NUMBER": "Numero",
-        "PRICE": "Precio"
+        "PRICE": "Precio",
+        "QUANTITY": "Cantidad"
       }
     }
   }

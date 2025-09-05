@@ -28,11 +28,28 @@ export class VolumeListItemFormService {
               size: 12,
             },
           },
+        ],
+      },
+      {
+        type: 'grid',
+        fieldGroup: [
           {
             key: 'price',
             type: 'input-text',
             props: {
               label: 'VOLUMES.LIST.FIELDS.PRICE',
+              disabled,
+              size_lg: 6,
+              size_md: 6,
+              size_sm: 6,
+              size: 12,
+            },
+          },
+          {
+            key: 'quantity',
+            type: 'input-text',
+            props: {
+              label: 'VOLUMES.LIST.FIELDS.QUANTITY',
               disabled,
               size_lg: 6,
               size_md: 6,
