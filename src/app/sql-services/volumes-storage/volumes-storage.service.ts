@@ -88,7 +88,6 @@ export class VolumesStorageService {
                      ${body.picture ? `picture = '${body.picture}',` : ''}
                      ${body.quantity ? `quantity = ${body.quantity}` : ''}
                  WHERE id = ${id}`;
-      console.log(sql);
       await this.db.run(sql);
     }
   }

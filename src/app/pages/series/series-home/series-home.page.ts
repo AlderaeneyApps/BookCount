@@ -7,7 +7,7 @@ import { addIcons } from 'ionicons';
 import { add } from 'ionicons/icons';
 import { SeriesStorageService } from '../../../sql-services/series-storage/series-storage.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { Collection, Series } from '../../../models';
+import { Series } from '../../../models';
 import { Subject } from 'rxjs';
 import { SeriesListItemComponent } from '../../../ui/components/series-list-item/series-list-item.component';
 
@@ -67,7 +67,7 @@ export class SeriesHomePage implements ViewDidEnter, ViewDidLeave {
     }
   }
 
-  private async getPaginatedSeries(limit: number, start: number): Promise<Collection[]> {
+  private async getPaginatedSeries(limit: number, start: number): Promise<Series[]> {
     return await this.seriesStorageService.getSeriesPaginated(limit, start, this.collectionId);
   }
 }

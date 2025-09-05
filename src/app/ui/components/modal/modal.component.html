@@ -1,0 +1,16 @@
+<ion-modal>
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button (click)="cancel()">Cancel</ion-button>
+        </ion-buttons>
+        <ion-title>{{ title | transloco }}</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <!-- Body -->
+      <ng-content></ng-content>
+    </ion-content>
+  </ng-template>
+</ion-modal>

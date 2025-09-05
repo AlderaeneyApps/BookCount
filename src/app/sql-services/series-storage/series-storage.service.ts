@@ -71,21 +71,25 @@ export class SeriesStorageService {
     return (await this.db.query(sql)).values as Series[];
   }
 
-  async addSeries(body: Series) {
-    const sql = `INSERT INTO series (name, picture, collectionId)
+  async addSeries(body: Series | undefined) {
+    if (body) {
+      const sql = `INSERT INTO series (name, picture, collectionId)
                  VALUES (?, ?, ?);`;
-    await this.db.run(sql, [body.name, body.picture, body.collectionId]);
-    await this.getSeries(body.collectionId!);
+      await this.db.run(sql, [body.name, body.picture, body.collectionId]);
+      await this.getSeries(body.collectionId!);
+    }
   }
 
-  async updateSeriesById(id: number, body: Series, collectionId: number) {
-    const sql = `UPDATE series
-                 SET name=${body.name},
-                     picture='${body.picture}',
-                     price=${body.price}
+  async updateSeriesById(id: number, body: Series | undefined, collectionId: number) {
+    if (body) {
+      const sql = `UPDATE series
+                 SET ${body.name ? `name='${body.name}',` : ''}
+                   ${body.picture ? `picture='${body.picture}',` : ''}
+                   ${body.price ? `price=${body.price},` : ''}
                  WHERE id = ${id}`;
-    await this.db.run(sql);
-    await this.getSeries(collectionId);
+      await this.db.run(sql);
+      await this.getSeries(collectionId);
+    }
   }
 
   async deleteSeriesById(id: number, collectionId: number) {

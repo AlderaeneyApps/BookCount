@@ -71,7 +71,7 @@ export class CollectionStorageService {
 
   async updateCollectionById(id: number, name: string) {
     const sql = `UPDATE collection
-                 SET name=${name}
+                 SET name='${name}'
                  WHERE id = ${id}`;
     await this.db.run(sql);
     await this.getCollections();

@@ -6,7 +6,7 @@ import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { CollectionStorageService } from '../../../sql-services/collection-storage/collection-storage.service';
 import { addIcons } from 'ionicons';
 import { arrowForward, cogSharp } from 'ionicons/icons';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { AlertController, IonicModule } from '@ionic/angular';
 
 @Component({
@@ -19,6 +19,7 @@ export class CollectionListItemComponent implements OnInit {
   @Input() collection!: Collection;
 
   @Output() reloadCollections = new EventEmitter<void>();
+  @Output() openEditCollection = new EventEmitter<number>();
 
   public amountOfRelatedSeries!: number;
 
@@ -29,7 +30,6 @@ export class CollectionListItemComponent implements OnInit {
     private seriesStorageService: SeriesStorageService,
     private alertController: AlertController,
     private transloco: TranslocoService,
-    private router: Router,
     private cdRef: ChangeDetectorRef,
   ) {
     addIcons({
@@ -77,7 +77,7 @@ export class CollectionListItemComponent implements OnInit {
   }
 
   public goToEdit(): void {
-    this.router.navigate(['/collections/edit', this.collection.id]);
+    this.openEditCollection.emit(this.collection.id!);
   }
 
   public async deleteCollection() {
@@ -105,10 +105,10 @@ export class CollectionListItemComponent implements OnInit {
     await alert.present();
   }
 
-  public onActionClicked(event: any) {
+  public async onActionClicked(event: any) {
     switch (event?.detail?.data?.action) {
       case 'delete':
-        this.deleteCollection();
+        await this.deleteCollection();
         break;
       case 'edit':
         this.goToEdit();

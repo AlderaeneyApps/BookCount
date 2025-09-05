@@ -5,12 +5,14 @@ import { IonicModule, LoadingController } from '@ionic/angular';
 import { FormlyModule, SubmitButtonComponent } from '../../../formly';
 import { PageComponent } from '../../../ui/components/page/page.component';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
-import { ACTION_TYPE, Collection, Series } from '../../../models';
+import { ACTION_TYPE, Series, SeriesZod } from '../../../models';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { SeriesFormService } from '../../../services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SeriesStorageService } from '../../../sql-services/series-storage/series-storage.service';
+import { nullifyValues } from '../../../functions';
+import { ToastController } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-series-form-v2',
@@ -33,7 +35,7 @@ export class SeriesFormV2Page implements OnInit, OnDestroy {
   public isCreation: boolean = true;
   public title: string;
   public form: FormGroup = new FormGroup({});
-  public model$!: Observable<Collection>;
+  public model$!: Observable<Series>;
   public fields!: FormlyFieldConfig[];
   private collectionId!: number;
   private seriesId!: number;
@@ -46,6 +48,7 @@ export class SeriesFormV2Page implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private loadingCtrl: LoadingController,
+    private toastController: ToastController,
     private translocoService: TranslocoService,
     private cdRef: ChangeDetectorRef,
   ) {
@@ -95,24 +98,36 @@ export class SeriesFormV2Page implements OnInit, OnDestroy {
       return;
     }
 
-    let data = this.form.getRawValue() as Series;
+    let tmpData = {
+      ...nullifyValues(this.form.getRawValue()),
+      id: null,
+      collectionId: this.isCreation ? Number(this.collectionId) : null,
+    } as Series;
+    const data = SeriesZod.safeParse(tmpData);
+
+    if (data.error?.issues && data.error.issues.length > 0) {
+      for (const error of data.error.issues) {
+        await (
+          await this.toastController.create({
+            message: error.message,
+            duration: 5000,
+            position: 'bottom',
+          })
+        ).present();
+      }
+      return;
+    }
+
     if (this.isCreation) {
       try {
-        data = {
-          ...data,
-          collectionId: this.collectionId,
-        };
-        await this.seriesStorageService.addSeries(data!);
+        await this.seriesStorageService.addSeries(data.data);
         await this.router.navigate([`/series`, this.collectionId]);
       } catch (e) {
         console.error(e);
       }
     } else {
-      this.seriesStorageService
-        .updateSeriesById(this.seriesId, data, this.collectionId)
-        .then(() => {
-          this.router.navigate(['/series', this.collectionId]);
-        });
+      await this.seriesStorageService.updateSeriesById(this.seriesId, data.data, this.collectionId);
+      await this.router.navigate(['/series', this.collectionId]);
     }
   }
 }

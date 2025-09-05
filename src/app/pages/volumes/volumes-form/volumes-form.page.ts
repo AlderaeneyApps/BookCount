@@ -128,9 +128,8 @@ export class VolumesFormPage implements OnInit, OnDestroy {
         console.error(e);
       }
     } else {
-      this.volumeStorageService.updateVolumeById(this.volumeId, data.data).then(() => {
-        this.router.navigate([`/volumes/${this.seriesId}`]);
-      });
+      await this.volumeStorageService.updateVolumeById(this.volumeId, data.data);
+      await this.router.navigate([`/volumes/${this.seriesId}`]);
     }
   }
 }

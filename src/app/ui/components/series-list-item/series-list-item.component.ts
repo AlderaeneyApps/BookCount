@@ -1,6 +1,6 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
 import { ACTION_TYPE, ActionSheetOptions, Series } from '../../../models';
-import { AlertController, IonicModule } from '@ionic/angular';
+import { AlertController, IonicModule, ViewDidEnter } from '@ionic/angular';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { SeriesStorageService } from '../../../sql-services/series-storage/series-storage.service';
 import { Router, RouterLink } from '@angular/router';
@@ -8,15 +8,14 @@ import { VolumesStorageService } from '../../../sql-services/volumes-storage/vol
 import { DBSQLiteValues } from '@capacitor-community/sqlite';
 import { addIcons } from 'ionicons';
 import { arrowForward, cogSharp } from 'ionicons/icons';
-import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-series-list-item',
   templateUrl: './series-list-item.component.html',
   styleUrls: ['./series-list-item.component.scss'],
-  imports: [IonicModule, TranslocoPipe, NgOptimizedImage, RouterLink],
+  imports: [IonicModule, TranslocoPipe, RouterLink],
 })
-export class SeriesListItemComponent implements OnInit {
+export class SeriesListItemComponent implements ViewDidEnter {
   @Input() series!: Series;
 
   @Output() reloadSeries: EventEmitter<void> = new EventEmitter<void>();
@@ -39,7 +38,7 @@ export class SeriesListItemComponent implements OnInit {
     });
   }
 
-  async ngOnInit() {
+  async ionViewDidEnter() {
     try {
       const values: DBSQLiteValues = await this.volumeStorageService.countVolumesRelatedToSeries(
         this.series.id!,

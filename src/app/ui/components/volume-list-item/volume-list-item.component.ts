@@ -8,7 +8,7 @@ import {
   Output,
 } from '@angular/core';
 import { AlertController, IonicModule } from '@ionic/angular';
-import { AsyncPipe, NgOptimizedImage } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { ACTION_TYPE, ActionSheetOptions, Volume } from '../../../models';
@@ -25,7 +25,7 @@ import { VolumeListItemFormService } from '../../../services';
   selector: 'app-volume-list-item',
   templateUrl: './volume-list-item.component.html',
   styleUrls: ['./volume-list-item.component.scss'],
-  imports: [IonicModule, NgOptimizedImage, TranslocoPipe, AsyncPipe, FormlyModule],
+  imports: [IonicModule, TranslocoPipe, AsyncPipe, FormlyModule],
   providers: [VolumeListItemFormService],
 })
 export class VolumeListItemComponent implements OnInit, OnDestroy {
