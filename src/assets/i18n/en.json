@@ -14,7 +14,8 @@
     "PICK_IMAGE": "Pick picture",
     "EDIT": "Edit",
     "ACTIONS": "Actions",
-    "VIEW": "View"
+    "VIEW": "View",
+    "PICTURES": "Pictures"
   },
   "COLLECTIONS": {
     "FORM": {
@@ -70,6 +71,7 @@
     },
     "LIST": {
       "TITLE": "Volume",
+      "DELETE_VOLUME": "Delete volume",
       "FIELDS": {
         "NAME": "Name",
         "VOLUME_NUMBER": "Number",

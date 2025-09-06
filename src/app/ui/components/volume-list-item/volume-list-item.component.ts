@@ -15,23 +15,24 @@ import { ACTION_TYPE, ActionSheetOptions, Volume } from '../../../models';
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { VolumesStorageService } from '../../../sql-services/volumes-storage/volumes-storage.service';
-import { Router } from '@angular/router';
 import { addIcons } from 'ionicons';
 import { cogSharp } from 'ionicons/icons';
 import { FormlyModule } from '../../../formly';
 import { VolumeListItemFormService } from '../../../services';
+import { ImageModalComponent } from '../image-modal/image-modal.component';
 
 @Component({
   selector: 'app-volume-list-item',
   templateUrl: './volume-list-item.component.html',
   styleUrls: ['./volume-list-item.component.scss'],
-  imports: [IonicModule, TranslocoPipe, AsyncPipe, FormlyModule],
+  imports: [IonicModule, TranslocoPipe, AsyncPipe, FormlyModule, ImageModalComponent],
   providers: [VolumeListItemFormService],
 })
 export class VolumeListItemComponent implements OnInit, OnDestroy {
   @Input() public volume!: Volume;
 
   @Output() reloadVolumes: EventEmitter<void> = new EventEmitter();
+  @Output() openEditForm: EventEmitter<number> = new EventEmitter();
 
   public form: FormGroup = new FormGroup({});
   public fields!: FormlyFieldConfig[];
@@ -46,7 +47,6 @@ export class VolumeListItemComponent implements OnInit, OnDestroy {
     private volumeStorageService: VolumesStorageService,
     private alertController: AlertController,
     private transloco: TranslocoService,
-    private router: Router,
     private cdRef: ChangeDetectorRef,
   ) {
     addIcons({
@@ -99,7 +99,7 @@ export class VolumeListItemComponent implements OnInit, OnDestroy {
         await this.deleteVolume();
         break;
       case 'edit':
-        await this.goToEdit();
+        this.goToEdit();
         break;
 
       default:
@@ -132,7 +132,7 @@ export class VolumeListItemComponent implements OnInit, OnDestroy {
     await alert.present();
   }
 
-  private async goToEdit() {
-    await this.router.navigate(['/volumes/edit', this.volume!.id, this.volume!.seriesId]);
+  private goToEdit() {
+    this.openEditForm.emit(this.volume.id!);
   }
 }

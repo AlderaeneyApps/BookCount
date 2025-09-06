@@ -41,6 +41,7 @@
     "@capacitor/haptics": "^7.0.0",
     "@capacitor/ios": "^7.0.0",
     "@capacitor/keyboard": "^7.0.0",
+    "@capacitor/preferences": "^7.0.2",
     "@capacitor/status-bar": "^7.0.0",
     "@capacitor/toast": "^7.0.0",
     "@capawesome/capacitor-android-edge-to-edge-support": "^7.2.3",
@@ -91,5 +92,13 @@
     "typescript": "5.8.3",
     "vm-browserify": "^1.1.2"
   },
-  "description": "Mobile application for keeping track of owned books or other types of collections"
+  "description": "Mobile application for keeping track of owned books or other types of collections",
+  "browserslist": [
+    "Chrome >=107",
+    "ChromeAndroid >=107",
+    "Firefox >=104",
+    "Edge >=107",
+    "Safari >=16",
+    "iOS >=16"
+  ]
 }

@@ -1,84 +1,100 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-
 import {
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormGroup, FormsModule } from '@angular/forms';
+import { ACTION_TYPE, Collection, CollectionZod } from '../../../models';
 import { CollectionStorageService } from '../../../sql-services/collection-storage/collection-storage.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ACTION_TYPE, Collection } from '../../../models';
-import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
-import { IonicModule, LoadingController } from '@ionic/angular';
-import { of, switchMap } from 'rxjs';
-import { PageComponent } from '../../../ui/components/page/page.component';
+import { IonicModule } from '@ionic/angular';
+import { TranslocoService } from '@jsverse/transloco';
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { FormlyFieldConfig } from '@ngx-formly/core';
+import { CollectionFormService } from '../../../services';
+import { FormlyModule, SubmitButtonComponent } from '../../../formly';
+import { LoadingController, ToastController } from '@ionic/angular/standalone';
+import { ModalFormInfo } from '../../../models/modal-form-info.model';
 
 @Component({
   selector: 'app-collection-form',
   templateUrl: './collection-form.page.html',
   styleUrls: ['./collection-form.page.scss'],
   standalone: true,
-  imports: [IonicModule, FormsModule, TranslocoPipe, ReactiveFormsModule, PageComponent],
+  imports: [CommonModule, FormsModule, FormlyModule, SubmitButtonComponent, IonicModule],
 })
-export class CollectionFormPage implements OnInit {
-  public mode: ACTION_TYPE = ACTION_TYPE.CREATE;
+export class CollectionFormPage implements OnInit, OnDestroy {
+  @Input() modalInfo!: Subject<ModalFormInfo>;
   public isCreation: boolean = true;
-  public form: FormGroup = new FormGroup({
-    name: new FormControl('', [Validators.required]),
-  });
-  public title: string;
+  public form: FormGroup = new FormGroup({});
+  public model$!: Observable<Collection>;
+  public fields!: FormlyFieldConfig[];
+  @Output() reloadList = new EventEmitter<void>();
+  private mode!: ACTION_TYPE;
   private collectionId!: number;
   private collection!: Collection;
+  private ngDestroy$ = new Subject<void>();
 
   constructor(
+    private formService: CollectionFormService,
     private collectionStorageService: CollectionStorageService,
-    private route: ActivatedRoute,
-    private router: Router,
     private loadingCtrl: LoadingController,
+    private toastController: ToastController,
     private translocoService: TranslocoService,
     private cdRef: ChangeDetectorRef,
-  ) {
-    this.mode = this.route.snapshot.data['mode'];
-    this.isCreation = this.mode === ACTION_TYPE.CREATE;
-    this.title = `COLLECTIONS.FORM.TITLES.${this.mode.toUpperCase()}`;
+  ) {}
+
+  ngOnDestroy(): void {
+    this.ngDestroy$.next();
+    this.ngDestroy$.complete();
   }
 
   async ngOnInit() {
-    try {
-      if (!this.isCreation) {
-        const loading = await this.loadingCtrl.create({
-          message: this.translocoService.translate('GLOBAL.LOADING'),
-        });
-        await loading.present();
-        this.cdRef.markForCheck();
-        this.collectionStorageService
-          .collectionState()
-          .pipe(
-            switchMap(res => {
-              if (res) {
-                this.collectionId = this.route.snapshot.params['id'];
-                return this.collectionStorageService.getCollectionById(this.collectionId);
-              } else {
-                return of(false);
-              }
-            }),
-          )
-          .subscribe(async (collection: Collection | boolean) => {
-            if (collection) {
-              if (!this.isCreation) {
-                this.collection = collection as Collection;
-                this.form.get('name')?.setValue(this.collection.name);
-              }
-              await loading.dismiss();
-              this.cdRef.markForCheck();
-            }
-          });
-      }
-    } catch (e) {
-      console.error(e);
-    }
+    this.formService.fields$.pipe(takeUntil(this.ngDestroy$)).subscribe(fields => {
+      this.fields = fields;
+    });
+    this.model$ = this.formService.model$;
+
+    this.modalInfo
+      .asObservable()
+      .pipe(takeUntil(this.ngDestroy$))
+      .subscribe(async (data: ModalFormInfo) => {
+        try {
+          const { mode = ACTION_TYPE.CREATE, elementId = 0 } = data;
+          this.mode = mode;
+          this.collectionId = elementId;
+
+          this.formService.setModel({});
+          this.form.reset();
+
+          this.isCreation = this.mode === ACTION_TYPE.CREATE;
+
+          if (!this.isCreation) {
+            const loading = await this.loadingCtrl.create({
+              message: this.translocoService.translate('GLOBAL.LOADING'),
+            });
+            await loading.present();
+            this.cdRef.markForCheck();
+            this.collection = (
+              (await this.collectionStorageService.getCollectionById(
+                this.collectionId,
+              )) as Collection[]
+            )[0];
+            this.formService.setModel(this.collection);
+            this.formService.buildFields();
+            await loading.dismiss();
+            this.cdRef.markForCheck();
+          } else {
+            this.formService.buildFields();
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      });
   }
 
   public async submit() {
@@ -87,18 +103,35 @@ export class CollectionFormPage implements OnInit {
       return;
     }
 
-    const data = this.form.getRawValue() as Collection;
-    if (this.isCreation) {
-      try {
-        await this.collectionStorageService.addCollection(data.name!);
-        await this.router.navigateByUrl('/collections');
-      } catch (e) {
-        console.error(e);
+    const tmpData = { ...this.form.getRawValue(), id: null } as Collection;
+    const data = CollectionZod.safeParse(tmpData);
+
+    if (data.error?.issues && data.error.issues.length > 0) {
+      for (const error of data.error.issues) {
+        await (
+          await this.toastController.create({
+            message: error.message,
+            duration: 5000,
+            position: 'bottom',
+          })
+        ).present();
       }
-    } else {
-      this.collectionStorageService.updateCollectionById(this.collectionId, data.name!).then(() => {
-        this.router.navigate(['/collections']);
-      });
+      return;
+    }
+
+    try {
+      if (this.isCreation) {
+        await this.collectionStorageService.addCollection(data?.data?.name!);
+        this.reloadList.emit();
+      } else {
+        await this.collectionStorageService.updateCollectionById(
+          this.collectionId,
+          data?.data?.name!,
+        );
+        this.reloadList.emit();
+      }
+    } catch (e) {
+      console.error(e);
     }
   }
 }

@@ -86,7 +86,7 @@ export class VolumesStorageService {
                      ${body.price ? `price = ${body.price},` : ''}
                      ${body.name ? `name = '${body.name}',` : ''}
                      ${body.picture ? `picture = '${body.picture}',` : ''}
-                     ${body.quantity ? `quantity = ${body.quantity}` : ''}
+                     ${body.quantity ? `quantity = ${body.quantity},` : ''}
                  WHERE id = ${id}`;
       await this.db.run(sql);
     }

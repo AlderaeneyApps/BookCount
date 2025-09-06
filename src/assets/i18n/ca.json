@@ -14,7 +14,8 @@
     "PICK_IMAGE": "Seleccionar imatge",
     "EDIT": "Editar",
     "ACTIONS": "Accións",
-    "VIEW": "Veure"
+    "VIEW": "Veure",
+    "PICTURES": "Imatges"
   },
   "COLLECTIONS": {
     "FORM": {
@@ -70,6 +71,7 @@
     },
     "LIST": {
       "TITLE": "Volum",
+      "DELETE_VOLUME": "Esborrar volum",
       "FIELDS": {
         "NAME": "Nom",
         "VOLUME_NUMBER": "Numero",

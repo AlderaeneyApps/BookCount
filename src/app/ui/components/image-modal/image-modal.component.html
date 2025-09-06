@@ -1,0 +1,15 @@
+@if (picture) {
+  <ion-img
+    [alt]="alt"
+    [src]="`data:image/jpeg;base64, ${picture}`"
+    style="height: 300px; object-fit: cover"
+    (click)="openModal()"
+  ></ion-img>
+
+  <app-modal [showModal]="showModal" [title]="'GLOBAL.PICTURES'">
+    <ion-img
+      [alt]="alt"
+      [src]="`data:image/jpeg;base64, ${picture}`"
+    ></ion-img>
+  </app-modal>
+}

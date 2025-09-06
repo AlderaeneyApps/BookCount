@@ -1,102 +1,145 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-
 import {
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { PageComponent } from '../../../ui/components/page/page.component';
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormGroup, FormsModule } from '@angular/forms';
 import { IonicModule, LoadingController } from '@ionic/angular';
-import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ACTION_TYPE, Series } from '../../../models';
-import { of, switchMap } from 'rxjs';
+import { FormlyModule, SubmitButtonComponent } from '../../../formly';
+import { TranslocoService } from '@jsverse/transloco';
+import { ACTION_TYPE, Series, SeriesZod } from '../../../models';
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { FormlyFieldConfig } from '@ngx-formly/core';
+import { SeriesFormService } from '../../../services';
 import { SeriesStorageService } from '../../../sql-services/series-storage/series-storage.service';
+import { nullifyValues } from '../../../functions';
+import { ToastController } from '@ionic/angular/standalone';
+import { ModalFormInfo } from '../../../models/modal-form-info.model';
 
 @Component({
   selector: 'app-series-form',
   templateUrl: './series-form.page.html',
   styleUrls: ['./series-form.page.scss'],
   standalone: true,
-  imports: [IonicModule, FormsModule, PageComponent, ReactiveFormsModule, TranslocoPipe],
+  imports: [IonicModule, CommonModule, FormsModule, FormlyModule, SubmitButtonComponent],
+  providers: [SeriesFormService],
 })
-export class SeriesFormPage implements OnInit {
-  public title!: string;
-  public form: FormGroup = new FormGroup({
-    name: new FormControl('', [Validators.required]),
-  });
-  private readonly mode!: ACTION_TYPE;
-  private collectionId!: number;
-  private seriesId!: number;
-  private readonly isCreation: boolean = false;
+export class SeriesFormPage implements OnInit, OnDestroy {
+  @Input() modalInfo!: Subject<ModalFormInfo>;
+
+  public mode: ACTION_TYPE = ACTION_TYPE.CREATE;
+  public isCreation: boolean = true;
+  public form: FormGroup = new FormGroup({});
+  public model$!: Observable<Series>;
+  public fields!: FormlyFieldConfig[];
+  @Output() reloadList = new EventEmitter<void>();
+  private collectionId!: number | undefined;
+  private seriesId!: number | undefined;
   private series!: Series;
+  private ngDestroy$ = new Subject<void>();
 
   constructor(
+    private formService: SeriesFormService,
     private seriesStorageService: SeriesStorageService,
-    private route: ActivatedRoute,
-    private router: Router,
     private loadingCtrl: LoadingController,
+    private toastController: ToastController,
     private translocoService: TranslocoService,
     private cdRef: ChangeDetectorRef,
   ) {
-    this.mode = this.route.snapshot.data['mode'];
-    this.isCreation = this.mode === ACTION_TYPE.CREATE;
-    this.title = `SERIES.FORM.TITLES.${this.mode.toUpperCase()}`;
+    formService.fields$.pipe(takeUntil(this.ngDestroy$)).subscribe(fields => {
+      this.fields = fields;
+    });
+    this.model$ = formService.model$;
+  }
+
+  ngOnDestroy(): void {
+    this.ngDestroy$.next();
+    this.ngDestroy$.complete();
   }
 
   async ngOnInit() {
-    this.collectionId = this.route.snapshot.params['collectionId'];
-    try {
-      if (!this.isCreation) {
-        const loading = await this.loadingCtrl.create({
-          message: this.translocoService.translate('GLOBAL.LOADING'),
-        });
-        await loading.present();
-        this.cdRef.markForCheck();
-        this.seriesStorageService
-          .seriesState()
-          .pipe(
-            switchMap(res => {
-              if (res) {
-                this.seriesId = this.route.snapshot.params['seriesId'];
-                return this.seriesStorageService.getSeriesById(this.seriesId);
-              } else {
-                return of(false);
-              }
-            }),
-          )
-          .subscribe(async (series: Series[] | boolean) => {
-            if (typeof series === 'object') {
-              if (!this.isCreation) {
-                this.series = (series?.[0] as Series) ?? undefined;
-                this.form.get('name')?.setValue(this.series.name);
-              }
-              await loading.dismiss();
-              this.cdRef.markForCheck();
-            }
-          });
-      }
-    } catch (e) {
-      console.error(e);
-    }
+    this.modalInfo
+      .asObservable()
+      .pipe(takeUntil(this.ngDestroy$))
+      .subscribe(async (data: ModalFormInfo) => {
+        const { mode = ACTION_TYPE.CREATE, parentId, elementId } = data;
+
+        try {
+          this.mode = mode;
+          this.isCreation = this.mode === ACTION_TYPE.CREATE;
+          this.collectionId = parentId;
+
+          this.formService.setModel({});
+          this.form.reset();
+
+          if (!this.isCreation) {
+            const loading = await this.loadingCtrl.create({
+              message: this.translocoService.translate('GLOBAL.LOADING'),
+            });
+            await loading.present();
+            this.cdRef.markForCheck();
+            this.seriesId = elementId;
+            this.series = (
+              (await this.seriesStorageService.getSeriesById(this.seriesId!)) as Series[]
+            )[0];
+            this.formService.setModel(this.series);
+            this.formService.buildFields();
+            await loading.dismiss();
+          } else {
+            this.formService.buildFields();
+          }
+          this.cdRef.markForCheck();
+        } catch (e) {
+          console.error(e);
+        }
+      });
   }
 
-  public async submit(): Promise<void> {
+  public async submit() {
     this.form.updateValueAndValidity();
     if (this.form.invalid) {
-      this.form.markAllAsTouched();
       return;
     }
 
-    const body = { ...this.form.getRawValue(), collectionId: this.collectionId } as Series;
-    if (this.isCreation) {
-      await this.seriesStorageService.addSeries(body);
-      await this.router.navigate(['/series', this.collectionId]);
-    } else {
-      await this.seriesStorageService.updateSeriesById(this.seriesId, body, this.collectionId);
-      await this.router.navigate(['/series', this.collectionId]);
+    let tmpData = {
+      ...nullifyValues(this.form.getRawValue()),
+      id: null,
+      collectionId: this.isCreation ? Number(this.collectionId) : null,
+    } as Series;
+    const data = SeriesZod.safeParse(tmpData);
+
+    if (data.error?.issues && data.error.issues.length > 0) {
+      for (const error of data.error.issues) {
+        await (
+          await this.toastController.create({
+            message: error.message,
+            duration: 5000,
+            position: 'bottom',
+          })
+        ).present();
+      }
+      return;
+    }
+
+    try {
+      if (this.isCreation) {
+        await this.seriesStorageService.addSeries(data.data);
+        this.reloadList.emit();
+      } else {
+        await this.seriesStorageService.updateSeriesById(
+          this.seriesId!,
+          data.data,
+          this.collectionId!,
+        );
+        this.reloadList.emit();
+      }
+    } catch (e) {
+      console.error(e);
     }
   }
 }

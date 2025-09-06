@@ -42,7 +42,7 @@ export class PicturePickerComponent extends FieldType<FieldTypeConfig<PicturePic
     }
 
     const image = await Camera.getPhoto({
-      quality: 70,
+      quality: 90,
       allowEditing: false,
       resultType: CameraResultType.Base64,
       width: 512,

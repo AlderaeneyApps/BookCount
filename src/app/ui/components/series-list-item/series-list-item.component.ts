@@ -1,24 +1,26 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ACTION_TYPE, ActionSheetOptions, Series } from '../../../models';
-import { AlertController, IonicModule, ViewDidEnter } from '@ionic/angular';
+import { AlertController, IonicModule } from '@ionic/angular';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { SeriesStorageService } from '../../../sql-services/series-storage/series-storage.service';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { VolumesStorageService } from '../../../sql-services/volumes-storage/volumes-storage.service';
 import { DBSQLiteValues } from '@capacitor-community/sqlite';
 import { addIcons } from 'ionicons';
 import { arrowForward, cogSharp } from 'ionicons/icons';
+import { ImageModalComponent } from '../image-modal/image-modal.component';
 
 @Component({
   selector: 'app-series-list-item',
   templateUrl: './series-list-item.component.html',
   styleUrls: ['./series-list-item.component.scss'],
-  imports: [IonicModule, TranslocoPipe, RouterLink],
+  imports: [IonicModule, TranslocoPipe, RouterLink, ImageModalComponent],
 })
-export class SeriesListItemComponent implements ViewDidEnter {
+export class SeriesListItemComponent implements OnInit {
   @Input() series!: Series;
 
   @Output() reloadSeries: EventEmitter<void> = new EventEmitter<void>();
+  @Output() openEditForm: EventEmitter<number> = new EventEmitter<number>();
 
   public volumesCount: number | undefined;
 
@@ -29,7 +31,6 @@ export class SeriesListItemComponent implements ViewDidEnter {
     private volumeStorageService: VolumesStorageService,
     private alertController: AlertController,
     private transloco: TranslocoService,
-    private router: Router,
     private cdRef: ChangeDetectorRef,
   ) {
     addIcons({
@@ -38,7 +39,7 @@ export class SeriesListItemComponent implements ViewDidEnter {
     });
   }
 
-  async ionViewDidEnter() {
+  async ngOnInit() {
     try {
       const values: DBSQLiteValues = await this.volumeStorageService.countVolumesRelatedToSeries(
         this.series.id!,
@@ -104,10 +105,10 @@ export class SeriesListItemComponent implements ViewDidEnter {
     await alert.present();
   }
 
-  public onActionClicked(event: any) {
+  public async onActionClicked(event: any) {
     switch (event?.detail?.data?.action) {
       case 'delete':
-        this.deleteSeries();
+        await this.deleteSeries();
         break;
       case 'edit':
         this.goToEdit();
@@ -119,6 +120,6 @@ export class SeriesListItemComponent implements ViewDidEnter {
   }
 
   private goToEdit(): void {
-    this.router.navigate(['/series/edit', this.series!.id, this.series!.collectionId]);
+    this.openEditForm.emit(this.series.id!);
   }
 }

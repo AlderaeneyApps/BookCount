@@ -14,7 +14,8 @@
     "PICK_IMAGE": "Seleccionar imagen",
     "EDIT": "Editar",
     "ACTIONS": "Acciones",
-    "VIEW": "Ver"
+    "VIEW": "Ver",
+    "PICTURES": "Imágenes"
   },
   "COLLECTIONS": {
     "FORM": {
@@ -70,6 +71,7 @@
     },
     "LIST": {
       "TITLE": "Tomo",
+      "DELETE_VOLUME": "Borrar tomo",
       "FIELDS": {
         "NAME": "Nombre",
         "VOLUME_NUMBER": "Numero",

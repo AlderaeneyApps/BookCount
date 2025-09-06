@@ -1,12 +1,6 @@
 <ion-card>
   <ion-card-header>
-    @if (series.picture) {
-      <ion-img
-        [alt]="series.name"
-        [src]="`data:image/jpeg;base64, ${series.picture}`"
-        style="height: 300px; object-fit: cover"
-      ></ion-img>
-    }
+    <app-image-modal [alt]="series.name" [picture]="series.picture"></app-image-modal>
     <ion-card-title>{{ series.name }}</ion-card-title>
   </ion-card-header>
   <ion-card-content>

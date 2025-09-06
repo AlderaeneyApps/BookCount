@@ -11,8 +11,8 @@ import { InfiniteScrollCustomEvent, IonicModule, ViewDidEnter, ViewDidLeave } fr
 import { addIcons } from 'ionicons';
 import { add } from 'ionicons/icons';
 import { ModalComponent } from '../../../ui/components/modal/modal.component';
-import { CollectionFormV2Page } from '../collection-form-v2/collection-form-v2.page';
 import { ModalFormInfo } from '../../../models/modal-form-info.model';
+import { CollectionFormPage } from '../collection-form/collection-form.page';
 
 @Component({
   selector: 'app-collections-home',
@@ -26,7 +26,7 @@ import { ModalFormInfo } from '../../../models/modal-form-info.model';
     CollectionListItemComponent,
     PageComponent,
     ModalComponent,
-    CollectionFormV2Page,
+    CollectionFormPage,
   ],
 })
 export class CollectionsHomePage implements ViewDidLeave, ViewDidEnter {

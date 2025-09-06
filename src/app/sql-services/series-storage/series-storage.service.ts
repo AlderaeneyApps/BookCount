@@ -85,7 +85,6 @@ export class SeriesStorageService {
       const sql = `UPDATE series
                  SET ${body.name ? `name='${body.name}',` : ''}
                    ${body.picture ? `picture='${body.picture}',` : ''}
-                   ${body.price ? `price=${body.price},` : ''}
                  WHERE id = ${id}`;
       await this.db.run(sql);
       await this.getSeries(collectionId);
