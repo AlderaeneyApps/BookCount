@@ -8,6 +8,7 @@ import {
   SQLiteConnection,
   SQLiteDBConnection,
 } from '@capacitor-community/sqlite';
+import { DB_BOOK_COUNTER } from '../constants';
 
 @Injectable()
 export class SQLiteService {
@@ -75,5 +76,20 @@ export class SQLiteService {
 
   async saveToStore(database: string): Promise<void> {
     return await this.sqliteConnection.saveToStore(database);
+  }
+
+  async exportDb() {
+    const db = await this.openDatabase(DB_BOOK_COUNTER, false, 'no-encryption', 1, true);
+    const exportedJSON = await db.exportToJson('full');
+    return JSON.stringify(exportedJSON);
+  }
+
+  async importDb(json: string) {
+    const isValid = await this.sqlitePlugin.isJsonValid({ jsonstring: json });
+    console.log(isValid);
+    return;
+    await this.sqlitePlugin.importFromJson({
+      jsonstring: json,
+    });
   }
 }

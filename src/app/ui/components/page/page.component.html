@@ -7,6 +7,11 @@
         </ion-button>
       }
     </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="showModal.next(true)">
+        <ion-icon name="cog"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>{{ title | transloco }}</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -20,4 +25,8 @@
 
   <!-- Body -->
   <ng-content></ng-content>
+
+  <app-modal [showModal]="showModal" [title]="'SETTINGS.TITLE'">
+    <app-settings-page></app-settings-page>
+  </app-modal>
 </ion-content>

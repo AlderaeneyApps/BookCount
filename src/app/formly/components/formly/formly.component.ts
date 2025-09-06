@@ -14,4 +14,5 @@ export class FormlyComponent {
   @Input() model!: any;
 
   @Output() submitEv: EventEmitter<any> = new EventEmitter();
+  @Output() modelChange: EventEmitter<any> = new EventEmitter();
 }

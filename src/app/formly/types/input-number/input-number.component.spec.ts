@@ -3,7 +3,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { InputNumberComponent } from './input-number.component';
 
-describe('InputTextComponent', () => {
+describe('InputSelectorComponent', () => {
   let component: InputNumberComponent;
   let fixture: ComponentFixture<InputNumberComponent>;
 

@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { InputTextareaComponent } from './input-textarea.component';
+import { SettingsPageComponent } from './settings-page.component';
 
-describe('InputSelectorComponent', () => {
-  let component: InputTextareaComponent;
-  let fixture: ComponentFixture<InputTextareaComponent>;
+describe('SettingsPageComponent', () => {
+  let component: SettingsPageComponent;
+  let fixture: ComponentFixture<SettingsPageComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [InputTextareaComponent],
+      declarations: [SettingsPageComponent],
       imports: [IonicModule.forRoot()],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(InputTextareaComponent);
+    fixture = TestBed.createComponent(SettingsPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

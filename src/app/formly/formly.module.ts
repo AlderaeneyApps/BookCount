@@ -13,6 +13,7 @@ import {
   PicturePickerComponent,
 } from './types';
 import { FormGridComponent } from './types/form-grid/form-grid.component';
+import { InputSelectorComponent } from './types/input-selector/input-selector.component';
 
 @NgModule({
   declarations: [],
@@ -40,6 +41,10 @@ import { FormGridComponent } from './types/form-grid/form-grid.component';
         {
           name: 'picture-picker',
           component: PicturePickerComponent,
+        },
+        {
+          name: 'input-selector',
+          component: InputSelectorComponent,
         },
         {
           name: 'grid',
