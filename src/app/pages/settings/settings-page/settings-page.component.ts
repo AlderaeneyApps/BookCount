@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { AsyncPipe } from '@angular/common';
 import { FormlyComponent } from '../../../formly';
@@ -6,17 +6,18 @@ import { SettingsFormService } from '../../../services/settings-form/settings-fo
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { FormGroup } from '@angular/forms';
-import { Settings } from '../../../models';
+import { Settings, SettingsKeys } from '../../../models';
 import { SQLiteService } from '../../../sql-services/sqlite.service';
 import { Directory, Encoding, Filesystem } from '@capacitor/filesystem';
 import { ToastController } from '@ionic/angular/standalone';
-import { TranslocoService } from '@jsverse/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
+import { Preferences } from '@capacitor/preferences';
 
 @Component({
   selector: 'app-settings-page',
   templateUrl: './settings-page.component.html',
   styleUrls: ['./settings-page.component.scss'],
-  imports: [IonicModule, AsyncPipe, FormlyComponent],
+  imports: [IonicModule, AsyncPipe, FormlyComponent, TranslocoPipe],
   providers: [SettingsFormService],
 })
 export class SettingsPageComponent implements OnInit, OnDestroy {
@@ -31,7 +32,6 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
     private sqliteService: SQLiteService,
     private toastController: ToastController,
     private transloco: TranslocoService,
-    private cdRef: ChangeDetectorRef,
   ) {}
 
   ngOnDestroy(): void {
@@ -39,13 +39,31 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.model$ = this.formService.model$;
     this.formService.fields$
       .pipe(takeUntil(this.destroy$))
       .subscribe((fields: FormlyFieldConfig[]) => {
         this.fields = fields;
       });
+
+    await this.setSettingsModel();
+    this.formService.buildFields();
+  }
+
+  public modelChange(model: Settings) {
+    Object.keys(model).forEach(async (key: string) => {
+      switch (key) {
+        case 'lang':
+          const lang = model[key];
+          if (lang) {
+            this.transloco.setDefaultLang(lang);
+            this.transloco.setActiveLang(lang);
+            await this.savePreferences(key, lang);
+          }
+          break;
+      }
+    });
   }
 
   public async saveSqlDatabaseAsJSON() {
@@ -85,5 +103,27 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
     const permissionStatus = await Filesystem.requestPermissions();
     const { publicStorage } = permissionStatus;
     return publicStorage === 'granted';
+  }
+
+  private async savePreferences(key: string, value: any) {
+    await Preferences.set({
+      key,
+      value,
+    });
+  }
+
+  private async getPreferences(key: string) {
+    return await Preferences.get({
+      key,
+    });
+  }
+
+  private async setSettingsModel() {
+    const model: Settings = {};
+    for (const key of SettingsKeys) {
+      const value = await this.getPreferences(key);
+      model[key as keyof Settings] = value.value ?? undefined;
+    }
+    this.formService.setModel(model);
   }
 }

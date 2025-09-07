@@ -2,13 +2,13 @@
   <ion-grid>
     <ion-row class="ion-justify-content-center">
       @for (serie of series; track serie.id) {
-        <ion-col size="12" size-sm="10" size-md="8" size-lg="6">
-          <app-series-list-item
-            [series]="serie"
-            (reloadSeries)="reloadSeries()"
-            (openEditForm)="openEditSeries($event)"
-          ></app-series-list-item>
-        </ion-col>
+      <ion-col size="12" size-sm="10" size-md="8" size-lg="6">
+        <app-series-list-item
+          [series]="serie"
+          (reloadSeries)="reloadSeries()"
+          (openEditForm)="openEditSeries($event)"
+        ></app-series-list-item>
+      </ion-col>
       }
     </ion-row>
   </ion-grid>

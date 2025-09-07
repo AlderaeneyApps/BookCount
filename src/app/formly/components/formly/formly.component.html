@@ -1,4 +1,9 @@
 <form (ngSubmit)="submitEv.emit(model)" [formGroup]="form">
-  <formly-form (modelChange)="modelChange.emit($event)" [fields]="fields" [form]="form" [model]="model"></formly-form>
+  <formly-form
+    (modelChange)="modelChange.emit($event)"
+    [fields]="fields"
+    [form]="form"
+    [model]="model"
+  ></formly-form>
   <ng-content></ng-content>
 </form>

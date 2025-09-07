@@ -80,5 +80,15 @@
         "QUANTITY": "Quantity"
       }
     }
+  },
+  "SETTINGS": {
+    "TITLE": "Settings",
+    "FORM": {
+      "LANG": "Language"
+    },
+    "BUTTONS": {
+      "CREATE_BACKUP": "Create backup",
+      "IMPORT_BACKUP": "Import backup"
+    }
   }
 }

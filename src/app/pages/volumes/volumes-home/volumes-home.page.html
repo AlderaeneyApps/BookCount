@@ -2,13 +2,13 @@
   <ion-grid>
     <ion-row class="ion-justify-content-center">
       @for (volume of volumes; track volume.id) {
-        <ion-col size="12" size-sm="10" size-md="8" size-lg="6">
-          <app-volume-list-item
-            [volume]="volume"
-            (reloadVolumes)="reloadVolumes()"
-            (openEditForm)="openEditVolumes($event)"
-          ></app-volume-list-item>
-        </ion-col>
+      <ion-col size="12" size-sm="10" size-md="8" size-lg="6">
+        <app-volume-list-item
+          [volume]="volume"
+          (reloadVolumes)="reloadVolumes()"
+          (openEditForm)="openEditVolumes($event)"
+        ></app-volume-list-item>
+      </ion-col>
       }
     </ion-row>
   </ion-grid>

@@ -1,39 +1,39 @@
 <app-page title="MENUS.COLLECTIONS">
   @if (!!collections && collections.length > 0) {
-    <ion-grid>
-      <ion-row class="ion-justify-content-center">
-        @for (collection of collections; track collection.id) {
-          <ion-col size="12" size-sm="10" size-md="8" size-lg="6">
-            <app-collection-list-item
-              [collection]="collection"
-              (reloadCollections)="reloadCollections()"
-              (openEditCollection)="openEditCollection($event)"
-            ></app-collection-list-item>
-          </ion-col>
-        }
-      </ion-row>
-    </ion-grid>
-    <ion-fab class="fixed-bottom">
-      <ion-fab-button (click)="openCreateForm()">
-        <ion-icon name="add"></ion-icon>
-      </ion-fab-button>
-    </ion-fab>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      @for (collection of collections; track collection.id) {
+      <ion-col size="12" size-sm="10" size-md="8" size-lg="6">
+        <app-collection-list-item
+          [collection]="collection"
+          (reloadCollections)="reloadCollections()"
+          (openEditCollection)="openEditCollection($event)"
+        ></app-collection-list-item>
+      </ion-col>
+      }
+    </ion-row>
+  </ion-grid>
+  <ion-fab class="fixed-bottom">
+    <ion-fab-button (click)="openCreateForm()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
-    <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
-      <ion-infinite-scroll-content></ion-infinite-scroll-content>
-    </ion-infinite-scroll>
+  <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
   } @else {
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>{{ 'COLLECTIONS.LIST.NO_COLLECTIONS' | transloco }}</ion-card-title>
-      </ion-card-header>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ 'COLLECTIONS.LIST.NO_COLLECTIONS' | transloco }}</ion-card-title>
+    </ion-card-header>
 
-      <ion-card-content>
-        <ion-button expand="block" (click)="openCreateForm()"
+    <ion-card-content>
+      <ion-button expand="block" (click)="openCreateForm()"
         >{{ 'MENUS.ADD_NEW_COLLECTION' | transloco }}
-        </ion-button>
-      </ion-card-content>
-    </ion-card>
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
   }
 
   <app-modal [showModal]="showModal" [title]="formTitle">

@@ -9,8 +9,8 @@ describe('ImageModalComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ImageModalComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [ImageModalComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ImageModalComponent);
