@@ -86,10 +86,13 @@ export class SQLiteService {
 
   async importDb(json: string) {
     const isValid = await this.sqlitePlugin.isJsonValid({ jsonstring: json });
-    console.log(isValid);
-    return;
-    await this.sqlitePlugin.importFromJson({
-      jsonstring: json,
-    });
+    if (isValid.result) {
+      await this.sqlitePlugin.closeConnection({
+        database: DB_BOOK_COUNTER,
+      });
+      await this.sqlitePlugin.importFromJson({
+        jsonstring: json,
+      });
+    }
   }
 }

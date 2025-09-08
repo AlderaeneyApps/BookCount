@@ -95,7 +95,7 @@ export class VolumesHomePage implements ViewDidEnter {
 
   public async reloadRows() {
     this.showModal.next(false);
-    this.volumes = await this.getPaginatedVolumes(50, 0);
+    this.volumes = await this.getPaginatedVolumes(0, 50);
     this.cdRef.markForCheck();
   }
 

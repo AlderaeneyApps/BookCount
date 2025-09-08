@@ -1,4 +1,9 @@
-<app-page [backRoute]="['/series', seriesId]" [showBackButton]="true" title="MENUS.VOLUMES">
+<app-page
+  (reloadPage)="reloadVolumes()"
+  [backRoute]="['/series', seriesId]"
+  [showBackButton]="true"
+  title="MENUS.VOLUMES"
+>
   <ion-grid>
     <ion-row class="ion-justify-content-center">
       @for (volume of volumes; track volume.id) {
@@ -19,11 +24,11 @@
     </ion-fab-button>
   </ion-fab>
 
-  <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
-    <ion-infinite-scroll-content></ion-infinite-scroll-content>
-  </ion-infinite-scroll>
-
   <app-modal [showModal]="showModal" [title]="formTitle">
     <app-volumes-form (reloadList)="reloadRows()" [modalInfo]="modalInfo"></app-volumes-form>
   </app-modal>
+
+  <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </app-page>

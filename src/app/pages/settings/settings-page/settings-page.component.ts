@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { AsyncPipe } from '@angular/common';
 import { FormlyComponent } from '../../../formly';
@@ -12,6 +12,8 @@ import { Directory, Encoding, Filesystem } from '@capacitor/filesystem';
 import { ToastController } from '@ionic/angular/standalone';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { Preferences } from '@capacitor/preferences';
+import { FilePicker } from '@capawesome/capacitor-file-picker';
+import { InitializeAppService } from '../../../sql-services/initialize.app.service';
 
 @Component({
   selector: 'app-settings-page',
@@ -25,6 +27,8 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
   public model$!: Observable<Settings>;
   public form: FormGroup = new FormGroup({});
 
+  @Output() reloadPage = new EventEmitter<void>();
+
   private destroy$: Subject<void> = new Subject();
 
   constructor(
@@ -32,6 +36,7 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
     private sqliteService: SQLiteService,
     private toastController: ToastController,
     private transloco: TranslocoService,
+    private initializeAppService: InitializeAppService,
   ) {}
 
   ngOnDestroy(): void {
@@ -88,6 +93,47 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
     });
   }
 
+  public async loadDatabaseJSON() {
+    const hasPermission = await this.getFilePickerPermision();
+    if (!hasPermission) {
+      const permissionGranted = await this.requestFilePickerPermision();
+      if (!permissionGranted) {
+        await this.toastController.create({
+          duration: 5000,
+          message: this.transloco.translate('SETTINGS.PERMISSION_NOT_GRANTED'),
+        });
+        return;
+      }
+    }
+
+    const pickedFiles = await FilePicker.pickFiles({
+      limit: 1,
+      types: ['application/json'],
+      readData: true,
+    });
+    const file = pickedFiles.files[0];
+    if (file.data) {
+      const blob = this.base64ToBlob(file.data, 'application/json');
+      const text = await blob.text();
+      const json = JSON.parse(text);
+      await this.sqliteService.importDb(JSON.stringify(json['export']));
+      await this.initializeAppService.initializeApp();
+      this.reloadPage.emit();
+    }
+  }
+
+  private async getFilePickerPermision() {
+    const hasPermission = await FilePicker.checkPermissions();
+    const { accessMediaLocation } = hasPermission;
+    return accessMediaLocation === 'granted';
+  }
+
+  private async requestFilePickerPermision() {
+    const hasPermission = await FilePicker.requestPermissions();
+    const { accessMediaLocation } = hasPermission;
+    return accessMediaLocation === 'granted';
+  }
+
   private async getFileSystemPermission() {
     const permissionStatus = await this.checkFileSystemPermission();
 
@@ -125,5 +171,14 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
       model[key as keyof Settings] = value.value ?? undefined;
     }
     this.formService.setModel(model);
+  }
+
+  private base64ToBlob(base64: string, mimeType: string): Blob {
+    const byteCharacters = atob(base64);
+    const byteNumbers = new Array(byteCharacters.length)
+      .fill(0)
+      .map((_, i) => byteCharacters.charCodeAt(i));
+    const byteArray = new Uint8Array(byteNumbers);
+    return new Blob([byteArray], { type: mimeType });
   }
 }

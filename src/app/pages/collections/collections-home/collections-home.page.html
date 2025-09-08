@@ -1,4 +1,4 @@
-<app-page title="MENUS.COLLECTIONS">
+<app-page (reloadPage)="reloadCollections()" title="MENUS.COLLECTIONS">
   @if (!!collections && collections.length > 0) {
   <ion-grid>
     <ion-row class="ion-justify-content-center">

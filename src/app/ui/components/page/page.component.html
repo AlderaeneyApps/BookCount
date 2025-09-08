@@ -27,6 +27,6 @@
   <ng-content></ng-content>
 
   <app-modal [showModal]="showModal" [title]="'SETTINGS.TITLE'">
-    <app-settings-page></app-settings-page>
+    <app-settings-page (reloadPage)="reloadPage.emit()"></app-settings-page>
   </app-modal>
 </ion-content>

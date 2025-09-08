@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { IonicModule } from '@ionic/angular';
 import { addIcons } from 'ionicons';
@@ -18,6 +18,7 @@ export class PageComponent {
   @Input() title!: string;
   @Input() showBackButton: boolean = false;
   @Input() backRoute!: any[];
+  @Output() reloadPage = new EventEmitter<void>();
 
   public showModal: BehaviorSubject<boolean> = new BehaviorSubject(false);
 

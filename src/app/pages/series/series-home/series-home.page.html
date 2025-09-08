@@ -1,4 +1,9 @@
-<app-page [backRoute]="['/collections']" [showBackButton]="true" title="MENUS.SERIES">
+<app-page
+  (reloadPage)="reloadSeries()"
+  [backRoute]="['/collections']"
+  [showBackButton]="true"
+  title="MENUS.SERIES"
+>
   <ion-grid>
     <ion-row class="ion-justify-content-center">
       @for (serie of series; track serie.id) {

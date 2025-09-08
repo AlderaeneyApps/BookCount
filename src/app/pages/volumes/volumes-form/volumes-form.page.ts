@@ -127,11 +127,10 @@ export class VolumesFormPage implements OnInit, OnDestroy {
     try {
       if (this.isCreation) {
         await this.volumeStorageService.addVolume(data!.data);
-        this.reloadList.emit();
       } else {
         await this.volumeStorageService.updateVolumeById(this.volumeId, data.data);
-        this.reloadList.emit();
       }
+      this.reloadList.emit();
     } catch (e) {
       console.error(e);
     }
