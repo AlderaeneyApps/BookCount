@@ -122,14 +122,15 @@ export class CollectionFormPage implements OnInit, OnDestroy {
     try {
       if (this.isCreation) {
         await this.collectionStorageService.addCollection(data?.data?.name!);
-        this.reloadList.emit();
       } else {
         await this.collectionStorageService.updateCollectionById(
           this.collectionId,
           data?.data?.name!,
         );
-        this.reloadList.emit();
       }
+      this.formService.setModel({});
+      this.form.reset();
+      this.reloadList.emit();
     } catch (e) {
       console.error(e);
     }

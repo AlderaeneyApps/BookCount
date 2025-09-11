@@ -1,12 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output, } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormsModule } from '@angular/forms';
 import { FormlyModule, SubmitButtonComponent } from '../../../formly';
@@ -130,6 +122,8 @@ export class VolumesFormPage implements OnInit, OnDestroy {
       } else {
         await this.volumeStorageService.updateVolumeById(this.volumeId, data.data);
       }
+      this.formService.setModel({});
+      this.form.reset();
       this.reloadList.emit();
     } catch (e) {
       console.error(e);

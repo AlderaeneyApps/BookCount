@@ -129,15 +129,16 @@ export class SeriesFormPage implements OnInit, OnDestroy {
     try {
       if (this.isCreation) {
         await this.seriesStorageService.addSeries(data.data);
-        this.reloadList.emit();
       } else {
         await this.seriesStorageService.updateSeriesById(
           this.seriesId!,
           data.data,
           this.collectionId!,
         );
-        this.reloadList.emit();
       }
+      this.formService.setModel({});
+      this.form.reset();
+      this.reloadList.emit();
     } catch (e) {
       console.error(e);
     }
