@@ -27,11 +27,19 @@ export class SeriesFormService {
             },
           },
           {
-            key: 'picture',
-            type: 'picture-picker',
+            key: 'pictures',
+            type: 'repeat',
             props: {
-              label: 'SERIES.FORM.FIELDS.PICTURE',
+              label: 'SERIES.FORM.FIELDS.PICTURES',
+              addText: 'GLOBAL.ADD_MORE',
               size: 12,
+            },
+            fieldArray: {
+              key: 'picture',
+              type: 'picture-picker',
+              props: {
+                label: 'VOLUMES.FORM.FIELDS.PICTURE',
+              },
             },
           },
         ],

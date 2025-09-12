@@ -7,7 +7,6 @@ export class VolumesUpgradeStatements {
                      id           INTEGER PRIMARY KEY AUTOINCREMENT,
                      volumeNumber INTEGER NOT NULL,
                      price        REAL,
-                     picture      BLOB,
                      name         TEXT,
                      quantity      INTEGER,
                      seriesId     INTEGER NOT NULL,

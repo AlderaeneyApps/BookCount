@@ -1,5 +1,6 @@
 export interface Picture {
   id?: number;
-  picture?: Blob;
+  picture?: string;
   volumeId?: number;
+  seriesId?: number;
 }

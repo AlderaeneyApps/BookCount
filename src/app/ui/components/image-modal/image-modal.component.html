@@ -1,12 +1,14 @@
-@if (picture) {
+@if (pictures && pictures.length > 0) {
   <ion-img
-    [alt]="alt"
-    [src]="`data:image/jpeg;base64, ${picture}`"
+    [alt]="alt ?? undefined"
+    [src]="`data:image/jpeg;base64, ${pictures[0]}`"
     style="height: 300px; object-fit: cover"
     (click)="openModal()"
   ></ion-img>
 
   <app-modal [showModal]="showModal" [title]="'GLOBAL.PICTURES'">
-    <ion-img [alt]="alt" [src]="`data:image/jpeg;base64, ${picture}`"></ion-img>
+    @for (picture of pictures; track picture) {
+      <ion-img [alt]="alt ?? undefined" [src]="`data:image/jpeg;base64, ${picture}`"></ion-img>
+    }
   </app-modal>
 }

@@ -1,0 +1,30 @@
+<ion-grid>
+  <ion-row>
+    @if (props.label) {
+      <ion-col size="12">
+        <ion-text>
+          <h2>{{ props.label | transloco }}</h2>
+        </ion-text>
+      </ion-col>
+    }
+
+    @for (field of field.fieldGroup; track field.id; let i = $index) {
+      <ion-col size="10" size-md="11">
+        <formly-field class="col" [field]="field"></formly-field>
+      </ion-col>
+
+      <ion-col size="2" size-md="1">
+        <ion-button color="danger" type="button" (click)="remove(i)">
+          <ion-icon name="close"></ion-icon>
+        </ion-button>
+      </ion-col>
+    }
+
+    <ion-col size="12">
+      <ion-button (click)="add()" type="button">
+        <ion-icon name="add" slot="start"></ion-icon>
+        {{ props['addText'] | transloco }}
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>

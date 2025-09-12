@@ -6,7 +6,7 @@ export interface Volume {
   price?: number | null;
   quantity?: number | null;
   seriesId?: number | null;
-  picture?: string | null;
+  pictures?: string[] | null;
   name?: string | null;
 }
 
@@ -16,6 +16,6 @@ export const VolumeZod = z.object({
   price: z.number().nullable(),
   quantity: z.number().nullable(),
   seriesId: z.number().nullable(),
-  picture: z.string().nullable(),
+  pictures: z.array(z.string()).nullable(),
   name: z.string().nullable(),
 });

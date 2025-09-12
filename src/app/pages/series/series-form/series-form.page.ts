@@ -12,7 +12,7 @@ import { FormGroup, FormsModule } from '@angular/forms';
 import { IonicModule, LoadingController } from '@ionic/angular';
 import { FormlyModule, SubmitButtonComponent } from '../../../formly';
 import { TranslocoService } from '@jsverse/transloco';
-import { ACTION_TYPE, Series, SeriesZod } from '../../../models';
+import { ACTION_TYPE, Picture, Series, SeriesZod } from '../../../models';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { SeriesFormService } from '../../../services';
@@ -20,6 +20,7 @@ import { SeriesStorageService } from '../../../sql-services/series-storage/serie
 import { nullifyValues } from '../../../functions';
 import { ToastController } from '@ionic/angular/standalone';
 import { ModalFormInfo } from '../../../models/modal-form-info.model';
+import { SeriesPicturesStorageService } from '../../../sql-services/series-pictures-storage/series-pictures-storage.service';
 
 @Component({
   selector: 'app-series-form',
@@ -41,11 +42,13 @@ export class SeriesFormPage implements OnInit, OnDestroy {
   private collectionId!: number | undefined;
   private seriesId!: number | undefined;
   private series!: Series;
+  private pictures: Picture[] | undefined;
   private ngDestroy$ = new Subject<void>();
 
   constructor(
     private formService: SeriesFormService,
     private seriesStorageService: SeriesStorageService,
+    private seriesPicturesStorageService: SeriesPicturesStorageService,
     private loadingCtrl: LoadingController,
     private toastController: ToastController,
     private translocoService: TranslocoService,

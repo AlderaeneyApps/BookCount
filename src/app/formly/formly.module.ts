@@ -11,6 +11,7 @@ import {
   InputTextareaComponent,
   InputTextComponent,
   PicturePickerComponent,
+  RepeatSectionComponent,
 } from './types';
 import { FormGridComponent } from './types/form-grid/form-grid.component';
 import { InputSelectorComponent } from './types/input-selector/input-selector.component';
@@ -45,6 +46,10 @@ import { InputSelectorComponent } from './types/input-selector/input-selector.co
         {
           name: 'input-selector',
           component: InputSelectorComponent,
+        },
+        {
+          name: 'repeat',
+          component: RepeatSectionComponent,
         },
         {
           name: 'grid',

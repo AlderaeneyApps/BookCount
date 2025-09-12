@@ -10,7 +10,7 @@ import { BehaviorSubject } from 'rxjs';
   imports: [IonicModule, ModalComponent],
 })
 export class ImageModalComponent {
-  @Input() picture!: string | null | undefined;
+  @Input() pictures!: string[] | null | undefined;
   @Input() alt!: string | null | undefined;
 
   public showModal: BehaviorSubject<boolean> = new BehaviorSubject(false);

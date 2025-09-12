@@ -12,6 +12,7 @@ import { FormColumnProps } from '../../models';
 import { ReactiveFormsModule } from '@angular/forms';
 import { addIcons } from 'ionicons';
 import { add } from 'ionicons/icons';
+import { Picture } from '../../../models';
 
 export interface PicturePickerOptions extends FormColumnProps {
   labelHeader: string;
@@ -55,8 +56,19 @@ export class PicturePickerComponent extends FieldType<FieldTypeConfig<PicturePic
     // get base64 image data
     const imageData = image.base64String;
 
+    const lastValue: Picture | undefined = this.formControl.value;
+
     // set the formControl value
-    this.formControl.setValue(imageData);
+    if (lastValue) {
+      this.formControl.setValue({
+        ...lastValue,
+        picture: imageData,
+      });
+    } else {
+      this.formControl.setValue({
+        picture: imageData,
+      } as Picture);
+    }
   }
 
   /**
